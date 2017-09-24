@@ -1,0 +1,13 @@
+# Bind multimedia keys
+"cmus-remote -u"
+	XF86AudioPlay
+"cmus-remote -s"
+	XF86AudioStop
+"cmus-remote -n"
+	XF86AudioNext
+"cmus-remote -r"
+	XF86AudioPrev
+"xtrlock"
+	mod4 + b
+"xdotool key Caps_Lock"
+	control + mod4 + l
