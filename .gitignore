@@ -5,7 +5,7 @@
 !.gitignore
 !LICENSE
 !.extend.Xresources
-!.mozilla/chrome/userChrome.css
+!.mozilla/firefox/chrome/userChrome.css
 !.extend.xprofile
 !.config/compton.conf
 !.config/mpv/mpv.conf
