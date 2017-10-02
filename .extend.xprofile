@@ -1,0 +1,4 @@
+xbindkeys
+urxvtd -q -o -f
+xinput --set-prop 12 278 1
+setxkbmap -option caps:super
