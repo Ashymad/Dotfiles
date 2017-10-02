@@ -1,0 +1,22 @@
+# ignore everything
+*
+
+# except:
+!.gitignore
+!LICENSE
+!.extend.Xresources
+!.mozilla/chrome/userChrome.css
+!.extend.xprofile
+!.config/compton.conf
+!.config/mpv/mpv.conf
+!.config/nvim/ginit.conf
+!.emacs
+!.notmuch-config
+!.offlineimap.py
+!.offlineimaprc
+!.xbindkeysrc
+!.emacs
+!.i3/config
+!.config/astroid/*
+!.config/fish/*
+!.config/whipper/*
