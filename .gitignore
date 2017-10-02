@@ -5,7 +5,7 @@
 !.gitignore
 !LICENSE
 !.extend.Xresources
-!.mozilla/firefox/chrome/userChrome.css
+!.mozilla/firefox/chrome/*
 !.extend.xprofile
 !.config/compton.conf
 !.config/mpv/mpv.conf
@@ -20,3 +20,4 @@
 !.config/astroid/*
 !.config/fish/*
 !.config/whipper/*
+!.cmus/*
