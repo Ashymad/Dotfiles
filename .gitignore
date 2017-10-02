@@ -9,7 +9,7 @@
 !.extend.xprofile
 !.config/compton.conf
 !.config/mpv/mpv.conf
-!.config/nvim/ginit.conf
+!.config/nvim/ginit.vim
 !.emacs
 !.notmuch-config
 !.offlineimap.py
