@@ -39,7 +39,7 @@
         }
     },
     "editor": {
-        "cmd": "emacsclient -q -c --parent-id %3 %1",
+        "cmd": "urxvt -embed %3 -e nvim %1",
         "external_editor": "false",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",

@@ -11,6 +11,7 @@
 !.config/mpv/mpv.conf
 !.config/nvim/init.vim
 !.emacs
+!.msmtprc
 !.notmuch-config
 !.offlineimap.py
 !.offlineimaprc
