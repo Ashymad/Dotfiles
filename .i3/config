@@ -149,7 +149,7 @@ mode "resize" {
 }
 set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
 mode  $power_control {
-    bindsym l exec ~/.i3/lock.sh; mode "default"
+    bindsym l exec xflock4; mode "default"
     bindsym o exec i3-msg exit; mode "default"
     bindsym s exec systemctl suspend; mode "default"
     bindsym h exec systemctl hibernate; mode "default"
@@ -160,23 +160,6 @@ mode  $power_control {
     bindsym Escape mode "default"
 }
 bindsym $mod+n mode $power_control
-
-mode "brightness" {
-    bindsym grave exec ~/.i3/brightness.sh 00
-    bindsym 1 exec ~/.i3/brightness.sh 10
-    bindsym 2 exec ~/.i3/brightness.sh 20
-    bindsym 3 exec ~/.i3/brightness.sh 30
-    bindsym 4 exec ~/.i3/brightness.sh 40
-    bindsym 5 exec ~/.i3/brightness.sh 50
-    bindsym 6 exec ~/.i3/brightness.sh 60
-    bindsym 7 exec ~/.i3/brightness.sh 70
-    bindsym 8 exec ~/.i3/brightness.sh 80
-    bindsym 9 exec ~/.i3/brightness.sh 90
-    bindsym 0 exec ~/.i3/brightness.sh 100
-
-    bindsym Return mode "default"
-}
-bindsym $mod+Shift+b mode "brightness"
 
 bindsym $mod+Shift+f focus_follows_mouse no
 bindsyn $mod+Alt+f focus_follows_mouse yes
@@ -206,5 +189,6 @@ for_window [instance="polybar"] gaps inner 0
 
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/.fehbg
+exec --no-startup-id compton -b
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 #exec --no-startup-id fish -c 'sleep 4; setxkbmap -option caps:super'

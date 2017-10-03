@@ -16,8 +16,9 @@
 !.offlineimaprc
 !.xbindkeysrc
 !.emacs
-!.i3/config
+!.i3/*
 !.config/astroid/*
 !.config/fish/*
 !.config/whipper/*
 !.cmus/*
+*~
