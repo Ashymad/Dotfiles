@@ -104,7 +104,7 @@
             "always_gpg_sign": "false",
             "sendmail": "msmtp -t",
             "default": "true",
-            "save_sent": "false",
+            "save_sent": "true",
             "save_sent_to": "\/home\/root\/Mail\/sent\/cur\/",
             "additional_sent_tags": "",
             "save_drafts_to": "\/home\/root\/Mail\/drafts\/",
