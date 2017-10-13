@@ -11,3 +11,5 @@
 	mod4 + b
 "xdotool key Caps_Lock"
 	control + mod4 + l
+"shutter -s"
+	control + mod4 + s
