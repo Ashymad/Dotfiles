@@ -4,9 +4,9 @@
 # except:
 !.gitignore
 !LICENSE
-!.extend.Xresources
+!Xresources
 !.mozilla/firefox/chrome/*
-!.extend.xprofile
+!xprofile
 !.config/compton.conf
 !.config/mpv/mpv.conf
 !.config/nvim/init.vim
