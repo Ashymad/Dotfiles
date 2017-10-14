@@ -72,7 +72,7 @@
 #
 # Always use ASCII characters only.
 #
-accounts = o2, freeos
+accounts = o2, freeos, agh
 
 
 # This option stands in the [general] section.
@@ -269,6 +269,12 @@ remoterepository = o2-remote
 
 localrepository = freeos-local
 remoterepository = freeos-remote
+
+[Account agh]
+
+localrepository = agh-local
+remoterepository = agh-remote
+
 
 ########## Advanced settings
 
@@ -474,6 +480,12 @@ localfolders = ~/.mail/o2
 type = Maildir
 
 localfolders = ~/.mail/freeos
+
+[Repository agh-local]
+
+type = Maildir
+
+localfolders = ~/.mail/agh
 
 # This option stands in the [Repository LocalExample] section.
 #
@@ -1380,3 +1392,15 @@ sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 remoteusereval = get_username( 'https://free.os.pl' )
 
 remotepasseval = get_password( 'https://free.os.pl' )
+
+[Repository agh-remote]
+
+type = IMAP
+
+remotehost = poczta.agh.edu.pl
+
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+
+remoteusereval = get_username( 'https://poczta.agh.edu.pl' )
+
+remotepasseval = get_password( 'https://poczta.agh.edu.pl' )

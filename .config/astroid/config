@@ -39,7 +39,7 @@
         }
     },
     "editor": {
-        "cmd": "emacsclient -q -c --parent-id %3 %1",
+        "cmd": "urxvt -embed %3 -e nvim %1",
         "external_editor": "false",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",
@@ -104,10 +104,10 @@
             "always_gpg_sign": "false",
             "sendmail": "msmtp -t",
             "default": "true",
-            "save_sent": "false",
-            "save_sent_to": "\/home\/root\/Mail\/sent\/cur\/",
-            "additional_sent_tags": "",
-            "save_drafts_to": "\/home\/root\/Mail\/drafts\/",
+            "save_sent": "true",
+            "save_sent_to": "\/home\/shyman\/.mail\/o2\/Sent\/cur\/",
+            "additional_sent_tags": "o2",
+            "save_drafts_to": "\/home\/shyman\/.mail\/o2\/Drafts\/cur\/",
             "signature_file": "",
             "signature_default_on": "true",
             "signature_attach": "false",
