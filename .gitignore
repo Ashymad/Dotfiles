@@ -22,4 +22,5 @@
 !.config/fish/*
 !.config/whipper/*
 !.cmus/*
+!.config/notifymuch/*
 *~

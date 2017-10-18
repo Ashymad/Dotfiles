@@ -32,5 +32,8 @@ notmuch tag --batch <<EOF
 	+inbox tag:new and folder:o2/INBOX or folder:freeos/INBOX or folder:agh/INBOX
 	+archive tag:new and folder:o2/INBOX.Archive or folder:freeos/Archive or folder:agh/Archives
 	+draft tag:new and folder:o2/Drafts or folder:freeos/Drafts or folder:agh/Drafts
-	-new tag:new
 EOF
+
+notifymuch
+
+notmuch tag -new tag:new
