@@ -1,7 +1,3 @@
-if exists('g:GuiLoaded')
-	Guifont DejaVu Sans Mono:h15
-endif
-
 call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'joshdick/onedark.vim'

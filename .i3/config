@@ -150,7 +150,7 @@ mode "resize" {
 set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
 mode  $power_control {
     bindsym l exec xflock4; mode "default"
-    bindsym o exec i3-msg exit; mode "default"
+    bindsym o exec xfce4-session-logout; mode "default"
     bindsym s exec systemctl suspend; mode "default"
     bindsym h exec systemctl hibernate; mode "default"
     bindsym r exec systemctl reboot; mode "default"
