@@ -1,7 +1,7 @@
 {
     "astroid": {
         "config": {
-            "version": "9"
+            "version": "10"
         },
         "notmuch_config": "\/home\/shyman\/.notmuch-config",
         "debug": {
@@ -44,7 +44,8 @@
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",
         "attachment_words": "attach",
-        "attachment_directory": "~"
+        "attachment_directory": "~",
+        "markdown_processor": "marked"
     },
     "mail": {
         "reply": {
@@ -112,7 +113,8 @@
             "signature_default_on": "true",
             "signature_attach": "false",
             "signature_separate": "false",
-            "select_query": ""
+            "select_query": "",
+            "signature_file_markdown": ""
         }
     },
     "startup": {

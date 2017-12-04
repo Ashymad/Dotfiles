@@ -26,7 +26,7 @@ URxvt.visualBell: true
 URxvt.fading: 15
 URxvt.font: xft:monaco:size=14
 ! URL launcher
-URxvt.matcher.button:         1
-URxvt.perl-ext:
-URxvt.perl-ext-common:        default,matcher
+!URxvt.matcher.button:         1
+!URxvt.perl-ext:
+!URxvt.perl-ext-common:        default,matcher
 URxvt.url-launcher:           firefox-developer
