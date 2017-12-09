@@ -8,11 +8,13 @@
 (require 'package)
 (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
 
-(setq load-path (cons "/usr/share/emacs/site-lisp/ess" load-path))
-(require 'ess-site)
+(require 'paradox)
+(paradox-enable)
 
-(load "auctex.el" nil t t)
-(load "preview-latex.el" nil t t)
+(require 'poly-R)
+(add-to-list 'auto-mode-alist '("\\.Rnw" . poly-noweb+r-mode))
+
+(require 'ess-site)
 
 (add-to-list 'load-path "~/.emacs.d/evil")
 (require 'evil)
@@ -60,7 +62,9 @@
  '(ansi-color-names-vector
    ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
  '(custom-enabled-themes (quote (tsdh-dark)))
- '(package-selected-packages (quote (evil ## polymode paradox)))
+ '(package-selected-packages
+   (quote
+    (async auctex ess evil-magit magit evil ## polymode paradox)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
