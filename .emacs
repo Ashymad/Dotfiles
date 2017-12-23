@@ -64,7 +64,7 @@
  '(custom-enabled-themes (quote (tsdh-dark)))
  '(package-selected-packages
    (quote
-    (async auctex ess evil-magit magit evil ## polymode paradox)))
+    (markdown-mode async auctex ess evil-magit magit evil ## polymode paradox)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
