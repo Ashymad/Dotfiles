@@ -2,5 +2,5 @@
 xbindkeys
 urxvtd -q -o -f
 [[ -f ~/.fehbg ]] && ~/.fehbg
-xinput set-prop 10 144 3.000000, 0.000000, 0.000000, 0.000000, 3.000000, 0.000000, 0.000000, 0.000000, 1.000000
+xinput set-prop 10 285 0, 1
 exec i3
