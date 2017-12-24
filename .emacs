@@ -28,9 +28,15 @@
 (setq ess-swv-processor 'knitr)
 
 (require 'ess-site)
-(with-eval-after-load "auctex"
+(with-eval-after-load "ess"
   (setq ess-swv-plug-into-AUCTeX-p t))
 
+(defun ess-noweb-post-command-function ()
+  "The hook being run after each command in noweb mode."
+  (condition-case err
+      (ess-noweb-select-mode)
+    (error 
+     (message "Error: in ess-noweb-post-command-function %s" (error-message-string err)))))
 (defun ess-swv-add-TeX-commands ()
   "Add commands to AUCTeX's \\[TeX-command-list]."
   (unless (and (featurep 'tex-site) (featurep 'tex))
