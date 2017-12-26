@@ -36,7 +36,7 @@
   (condition-case err
       (ess-noweb-select-mode)
     (error 
-     (message "Error: in ess-noweb-post-command-function %s" (error-message-string err)))))
+     ())))
 (defun ess-swv-add-TeX-commands ()
   "Add commands to AUCTeX's \\[TeX-command-list]."
   (unless (and (featurep 'tex-site) (featurep 'tex))
@@ -65,6 +65,11 @@
   (define-key LaTeX-mode-map (kbd "C-c C-d") (kbd "C-c C-c Knit RET")))
 (with-eval-after-load "latex"
   (define-key LaTeX-mode-map (kbd "C-c C-q") (kbd "C-c C-c LaTeXKnit RET")))
+
+(setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
+
+(global-set-key (kbd "C-x g") 'magit-status)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
