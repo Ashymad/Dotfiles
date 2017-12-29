@@ -71,6 +71,15 @@
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
+(load "auctex.el" nil t t)`
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+
+(setq TeX-parse-self t) ; Enable parse on load.
+(setq TeX-auto-save t) ; Enable parse on save.
+(setq TeX-auto-untabify t)
+(add-hook 'TeX-language-pl-hook
+	  (lambda () (ispell-change-dictionary "polish")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
