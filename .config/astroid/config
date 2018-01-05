@@ -11,31 +11,6 @@
             "level": "0"
         }
     },
-    "accounts": {
-        "o2": {
-            "name": "Szymon Mikulicz",
-            "email": "czilukim@o2.pl",
-            "gpgkey": "",
-            "always_gpg_sign": "false",
-            "sendmail": "msmtp -i -t",
-            "default": "true",
-            "save_sent": "true",
-            "save_sent_to": "\/home\/shyman\/.mail\/o2\/Sent\/cur\/",
-            "additional_sent_tags": "o2",
-            "save_drafts_to": "\/home\/shyman\/.mail\/o2\/Drafts\/cur\/",
-            "signature_separate": "false",
-	    "signature_file": "",
-	    "signature_file_markdown": "",
-            "signature_default_on": "true",
-            "signature_attach": "false",
-            "select_query": ""
-        }
-    },
-    "startup": {
-        "queries": {
-            "inbox": "tag:inbox"
-        }
-    },
     "thread_index": {
         "page_jump_rows": "6",
         "sort_order": "newest",
@@ -49,6 +24,8 @@
             "subject_color": "#ffffff",
             "subject_color_selected": "#000000",
             "background_color_selected": "",
+            "background_color_marked": "#770000",
+            "background_color_marked_selected": "#ce0000",
             "tags_length": "80",
             "tags_upper_color": "#e5e5e5",
             "tags_lower_color": "#333333",
@@ -121,5 +98,30 @@
         "save_history": "true",
         "history_lines_to_show": "15",
         "history_lines": "1000"
+    },
+    "accounts": {
+        "o2": {
+            "name": "Szymon Mikulicz",
+            "email": "czilukim@o2.pl",
+            "gpgkey": "",
+            "always_gpg_sign": "false",
+            "sendmail": "msmtp -i -t",
+            "default": "true",
+            "save_sent": "true",
+            "save_sent_to": "\/home\/shyman\/.mail\/o2\/Sent\/cur\/",
+            "additional_sent_tags": "o2",
+            "save_drafts_to": "\/home\/shyman\/.mail\/o2\/Drafts\/cur\/",
+            "signature_separate": "false",
+            "signature_file": "",
+            "signature_file_markdown": "",
+            "signature_default_on": "true",
+            "signature_attach": "false",
+            "select_query": ""
+        }
+    },
+    "startup": {
+        "queries": {
+            "inbox": "tag:inbox"
+        }
     }
 }
