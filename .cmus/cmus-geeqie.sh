@@ -23,8 +23,8 @@ if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
 	
 	# '200x200' is the window size for the artwork. '+1160+546' is the offset.
 	# For example, if you want a 250 by 250 window on the bottom right hand corner of a 1920 by 1080 screen: "250x250+1670+830"
-	geeqie -r "$ART"
+	geeqie -r File:"$ART"
 else
-	geeqie -r "/home/shyman/.cmus/none.jpg"
+	geeqie -r File:"/home/shyman/.cmus/none.jpg"
 	exit
 fi
