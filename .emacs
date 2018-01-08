@@ -28,8 +28,15 @@
 (setq ess-swv-processor 'knitr)
 
 (require 'ess-site)
-(setq ess-swv-plug-into-AUCTeX-p t)
+(with-eval-after-load "ess"
+  (setq ess-swv-plug-into-AUCTeX-p t))
 
+(defun ess-noweb-post-command-function ()
+  "The hook being run after each command in noweb mode."
+  (condition-case err
+      (ess-noweb-select-mode)
+    (error 
+     ())))
 (defun ess-swv-add-TeX-commands ()
   "Add commands to AUCTeX's \\[TeX-command-list]."
   (unless (and (featurep 'tex-site) (featurep 'tex))
@@ -39,7 +46,7 @@
                  TeX-run-command nil (latex-mode) :help
                  "Run Knitr") t)
   (add-to-list 'TeX-command-list
-               '("LaTeXKnit" "%l %(mode) %s"
+               '("LaTeXKnit" "%l %(mode) %s; Rscript -e \"require('patchSynctex'); patchSynctex('%s')\""
                  TeX-run-TeX nil (latex-mode) :help
                  "Run LaTeX after Knit") t)
   (setq TeX-command-default "Knit")
@@ -51,6 +58,27 @@
   "Helper function: check if car of X is one of the Knitr strings"
   (let ((swv-cmds '("Knit" "LaTeXKnit")))
     (unless (member (car x) swv-cmds) x)))
+(eval-after-load "tex"
+  '(add-to-list 'TeX-view-program-selection
+	       '(output-pdf "Zathura")))
+(with-eval-after-load "latex"
+  (define-key LaTeX-mode-map (kbd "C-c C-d") (kbd "C-c C-c Knit RET")))
+(with-eval-after-load "latex"
+  (define-key LaTeX-mode-map (kbd "C-c C-q") (kbd "C-c C-c LaTeXKnit RET")))
+
+(setq mouse-wheel-scroll-amount '(1))
+(setq mouse-wheel-progressive-speed nil)
+
+(global-set-key (kbd "C-x g") 'magit-status)
+
+(load "auctex.el" nil t t)`
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+
+(setq TeX-parse-self t) ; Enable parse on load.
+(setq TeX-auto-save t) ; Enable parse on save.
+(setq TeX-auto-untabify t)
+(add-hook 'TeX-language-pl-hook
+	  (lambda () (ispell-change-dictionary "polish")))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -64,7 +92,7 @@
  '(custom-enabled-themes (quote (tsdh-dark)))
  '(package-selected-packages
    (quote
-    (markdown-mode async auctex ess evil-magit magit evil ## polymode paradox)))
+    (ess markdown-mode async auctex evil-magit magit evil ## polymode paradox)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
