@@ -11,7 +11,7 @@
 	mod4 + b
 "xdotool key Caps_Lock"
 	control + mod4 + l
-"shutter -e -s"
+"xfce4-screenshooter -r -c"
 	control + mod4 + s
-"shutter -e -a"
+"xfce4-screenshooter -w -c"
 	control + mod4 + a
