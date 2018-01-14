@@ -1,1 +1,1 @@
-Guifont DejaVu Sans Mono:h15
+call rpcnotify(1, 'Gui', 'Font', 'Monaco 13')
