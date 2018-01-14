@@ -64,7 +64,8 @@
         "send_delay": "2"
     },
     "poll": {
-        "interval": "300"
+        "interval": "300",
+        "always_full_refresh": "false"
     },
     "attachment": {
         "external_open_cmd": "xdg-open"
