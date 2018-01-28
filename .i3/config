@@ -44,10 +44,10 @@ bindsym $mod+d exec rofi -show drun
 # bindsym $mod+d exec --no-startup-id i3-dmenu-desktop
 
 # change focus
-bindsym $mod+l focus left
-bindsym $mod+semicolon focus down
-bindsym $mod+apostrophe focus up
-bindsym $mod+backslash focus right
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Left focus left
@@ -56,10 +56,10 @@ bindsym $mod+Up focus up
 bindsym $mod+Right focus right
 
 # move focused window
-bindsym $mod+Shift+l move left
-bindsym $mod+Shift+semicolon move down
-bindsym $mod+Shift+apostrophe move up
-bindsym $mod+Shift+backslash move right
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
 
 # alternatively, you can use the cursor keys:
 bindsym $mod+Shift+Left move left
@@ -68,7 +68,7 @@ bindsym $mod+Shift+Up move up
 bindsym $mod+Shift+Right move right
 
 # split in horizontal orientation
-bindsym $mod+h split h
+bindsym $mod+g split h
 
 # split in vertical orientation
 bindsym $mod+v split v
@@ -175,6 +175,7 @@ mode "brightness" {
     bindsym 0 exec ~/.i3/brightness.sh 100
 
     bindsym Return mode "default"
+    bindsym Escape mode "default"
 }
 bindsym $mod+Shift+b mode "brightness"
 
