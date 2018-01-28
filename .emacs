@@ -65,14 +65,16 @@
   (define-key LaTeX-mode-map (kbd "C-c C-d") (kbd "C-c C-c Knit RET")))
 (with-eval-after-load "latex"
   (define-key LaTeX-mode-map (kbd "C-c C-q") (kbd "C-c C-c LaTeXKnit RET")))
+(with-eval-after-load "latex"
+  (add-hook 'LaTeX-mode-hook 'flyspell-mode))
 
 (setq mouse-wheel-scroll-amount '(1))
 (setq mouse-wheel-progressive-speed nil)
 
 (global-set-key (kbd "C-x g") 'magit-status)
 
-(load "auctex.el" nil t t)`
-(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(require 'flyspell-lazy)
+(flyspell-lazy-mode 1)
 
 (setq TeX-parse-self t) ; Enable parse on load.
 (setq TeX-auto-save t) ; Enable parse on save.
@@ -92,7 +94,7 @@
  '(custom-enabled-themes (quote (tsdh-dark)))
  '(package-selected-packages
    (quote
-    (ess markdown-mode async auctex evil-magit magit evil ## polymode paradox)))
+    (flyspell-lazy ess markdown-mode async auctex evil-magit magit evil ## polymode paradox)))
  '(tool-bar-mode nil))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
