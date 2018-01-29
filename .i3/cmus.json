@@ -22,8 +22,8 @@
             "swallows": [
                {
                // "class": "^URxvt$",
-               // "instance": "^urxvt$",
-               "title": "^cava$"
+               // "instance": "^cava$",
+               "title": "^CAVA$"
                // "transient_for": "^$"
                }
             ],
