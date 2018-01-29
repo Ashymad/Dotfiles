@@ -24,7 +24,22 @@
 (require 'evil)
 (evil-mode 1)
 
-;; AucTeX init
+;; Set inferior lisp
+(setq inferior-lisp-program "sbcl")
+
+;; Company-mode for all
+(global-company-mode)
+
+;; Enable SLIME company-mode
+(slime-setup '(slime-company))
+
+;; Enable rainbow  delimiters for most programming modes
+(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+
+;; SLIME SBCL helper init
+(load (expand-file-name "~/quicklisp/slime-helper.el"))
+
+;; AucTeX syncTeX init
 (setq TeX-source-correlate-mode t
       TeX-source-correlate-start-server t)
 
