@@ -122,6 +122,11 @@
   :config
   (zerodark-setup-modeline-format))
 
+;; Initialize hy-mode
+(use-package hy-mode
+  :init
+  (add-to-list 'auto-mode-alist '("\\.hy\\'" . hy-mode)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
