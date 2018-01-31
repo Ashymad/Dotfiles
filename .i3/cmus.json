@@ -52,7 +52,7 @@
                     "swallows": [
                        {
                        // "class": "^URxvt$",
-                       "instance": "^urxvt$"
+                       "instance": "^Alacritty$"
                        // "title": "^Me\\ Myself\\ And\\ I\\ \\-\\ Takadum\\!\\ \\-\\ Takadum\\ Old\\ \\(2011\\)$",
                        // "transient_for": "^$"
                        }
