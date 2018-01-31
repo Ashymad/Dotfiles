@@ -1,8 +1,5 @@
 ;; (package-initialize)
 
-;; Recompile emacs.d
-(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
-
 ;; Sane amount of scroll
 (setq mouse-wheel-scroll-amount '(1))
 (setq mouse-wheel-progressive-speed nil)
@@ -19,8 +16,10 @@
   (package-install 'use-package))
 
 ;; Initialize use-package
-(eval-when-compile
-  (require 'use-package))
+(require 'use-package)
+
+;; Recompile emacs.d
+(byte-recompile-directory (expand-file-name "~/.emacs.d") 0)
 
 ;; Initialize Paradox
 (use-package paradox
