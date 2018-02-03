@@ -8,7 +8,9 @@
 
 FOLDER=$( cmus-remote -Q | grep "file" | sed "s/file //" | rev | \
 cut -d"/" -f2- | rev )
-
+if [[ ${FOLDER:0:3} == "cue" ]]; then
+	FOLDER=$(echo "$FOLDER" | sed 's/cue:\/\///g' | rev | cut -d"/" -f2- | rev)
+fi
 FLIST=$( find "$FOLDER" -type f )
 
 if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
