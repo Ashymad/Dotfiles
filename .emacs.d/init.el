@@ -141,7 +141,7 @@
     ("f142c876b896c6ca19149cacd80ddd68a351f67f7fe3b786274ceee970276780" default)))
  '(package-selected-packages
    (quote
-    (use-package rainbow-delimiters zerodark-theme wc-mode flyspell-lazy ess markdown-mode async auctex evil-magit magit evil ## paradox)))
+    (hy-mode use-package rainbow-delimiters zerodark-theme wc-mode flyspell-lazy ess markdown-mode async auctex evil-magit magit evil ## paradox)))
  '(paradox-github-token t)
  '(tool-bar-mode nil))
 (custom-set-faces
