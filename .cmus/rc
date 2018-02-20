@@ -1,2 +1,4 @@
 set output_plugin=pulse
 set mouse=true
+set resume=true
+set status_display_program=/home/shyman/.cmus/cmus-geeqie.sh
