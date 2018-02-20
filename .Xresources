@@ -24,7 +24,7 @@ URxvt.scrollBar: false
 URxvt.visualBell: true
 ! this is SO AWESOME:
 URxvt.fading: 15
-URxvt.font: xft:monaco:size=14
+URxvt.font: xft:Monofur:size=16
 ! URL launcher
 !URxvt.matcher.button:         1
 !URxvt.perl-ext:
