@@ -34,6 +34,4 @@ notmuch tag --batch <<EOF
 	+draft tag:new and folder:o2/Drafts or folder:freeos/Drafts or folder:agh/Drafts
 EOF
 
-notifymuch
-
 notmuch tag -new tag:new
