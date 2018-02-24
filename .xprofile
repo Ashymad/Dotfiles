@@ -2,4 +2,4 @@
 
 xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1
 setxkbmap -option caps:super
-xrandr --dpi 144
+xrandr --dpi 96
