@@ -15,7 +15,7 @@
         "page_jump_rows": "6",
         "sort_order": "newest",
         "cell": {
-            "font_description": "Monaco 11",
+            "font_description": "Monofur 14",
             "line_spacing": "2",
             "date_length": "10",
             "message_count_length": "4",
