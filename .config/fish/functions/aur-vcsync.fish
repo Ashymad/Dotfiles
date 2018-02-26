@@ -1,15 +1,20 @@
 function aur-vcsync
 	set vcs_list git hg cvs svn bzr
 	echo -n "" > /tmp/vcs.tmp
-	set_color -o
-	echo "==> Checking newest commit of repositories..."
+	set_color -o green
+	echo -n "==> "
+	set_color -o white
+	echo "Checking newest commit of repositories..."
 	for vcs in $vcs_list
 		set repos ~/.cache/aurutils/sync/*-$vcs
 		for repo in $repos
 			aur srcver $repo >> /tmp/vcs.tmp 
 		end
 	end
-	echo "==> Comparing to locally installed versions..."
+	set_color -o green
+	echo -n "==> "
+	set_color -o white
+	echo "Comparing to locally installed versions..."
 	set updates (aur vercmp -p /tmp/vcs.tmp -d custom-aur)
 	for update in $updates
 		echo Updating $update...
