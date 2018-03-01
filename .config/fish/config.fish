@@ -9,6 +9,3 @@ alias psgr 'ps aux | grep'
 alias vim nvim
 
 source /usr/share/autojump/autojump.fish
-
-
-
