@@ -3,7 +3,7 @@
     "colors": {
         "is_airing": "#008284",
         "is_playing": "#9696FA",
-        "is_queued": "#D2FAD2",
+        "is_queued": "#287f00",
         "new_episode": "#00016b",
         "not_aired": "#FAFAD2",
         "progress_bg": "#F5F5F5",
@@ -32,6 +32,7 @@
         "Title",
         "Progress",
         "Score",
-        "Percent"
+        "Percent",
+        "Start date"
     ]
 }
