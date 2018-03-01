@@ -40,7 +40,7 @@
         }
     },
     "editor": {
-        "cmd": "urxvt -embed %3 -e nvim %1",
+        "cmd": "st -w %3 -e nvim %1",
         "external_editor": "false",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",
@@ -69,7 +69,7 @@
         "always_full_refresh": "false"
     },
     "attachment": {
-        "external_open_cmd": "xdg-open"
+        "external_open_cmd": "\/home\/shyman\/.config\/astroid\/saveto.sh"
     },
     "thread_view": {
         "open_html_part_external": "false",
