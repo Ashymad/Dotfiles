@@ -1,6 +1,5 @@
 #!/bin/sh
 
 xinput --set-prop 'SynPS/2 Synaptics TouchPad' 'libinput Tapping Enabled' 1
-setxkbmap -option caps:super
 xrandr --dpi 96
 export QT_QPA_PLATFORMTHEME="qt5ct"
