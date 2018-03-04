@@ -24,7 +24,8 @@ function aur-cleanup
 	for dir in *
 		set pkgname (bash -c "source $dir/PKGBUILD;"'echo $pkgname')
 		if not pacman -Qi $pkgname >/dev/null 2>/dev/null
-			rm -rvf -- $dir
+			echo "Removing $dir..."
+			rm -rf -- $dir
 		end
 	end
 end
