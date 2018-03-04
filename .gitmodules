@@ -1,3 +1,3 @@
 [submodule ".juliamodules"]
-	path = .juliamodules
+	path = julia/.juliamodules
 	url = git@github.com:Ashymad/JuliaModules
