@@ -5,6 +5,7 @@ function aur-vcsync
 	echo -n "==> "
 	set_color -o white
 	echo "Checking newest commit of repositories..."
+	set_color normal
 	for vcs in $vcs_list
 		set repos ~/.cache/aurutils/sync/*-$vcs
 		for repo in $repos
@@ -15,6 +16,7 @@ function aur-vcsync
 	echo -n "==> "
 	set_color -o white
 	echo "Comparing to locally installed versions..."
+	set_color normal
 	set updates (aur vercmp -p /tmp/vcs.tmp -d custom-aur)
 	for update in $updates
 		echo Updating $update...
