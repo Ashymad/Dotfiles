@@ -94,9 +94,9 @@ bindsym $mod+r mode "resize"
 
 set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
 mode  $power_control {
-    bindsym l exec ~/.i3/lock.sh off; mode "default"
+    bindsym l exec xset s activate; mode "default"
     bindsym o exec i3-msg exit; mode "default"
-    bindsym s exec systemctl suspend && ~/.i3/lock.sh; mode "default"
+    bindsym s exec systemctl suspend; mode "default"
     bindsym h exec systemctl hibernate; mode "default"
     bindsym r exec systemctl reboot; mode "default"
     bindsym p exec systemctl poweroff; mode "default"
@@ -129,5 +129,5 @@ for_window [instance="mpv"] pixel 0
 
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/.fehbg
-exec --no-startup-id xautolock -detectsleep -time 5 -locker "~/.i3/lock.sh off" -nowlocker "~/.i3/lock.sh"
+exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/Moon.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
