@@ -1,8 +1,8 @@
 function aur-vcsync
 	set vcs_list git hg cvs svn bzr
 	echo -n "" > /tmp/vcs.tmp
-	set_color -o green
-	echo -n "==> "
+	set_color -o blue
+	echo -n ":: "
 	set_color -o white
 	echo "Checking newest commit of repositories..."
 	set_color normal
@@ -12,8 +12,8 @@ function aur-vcsync
 			aur srcver $repo >> /tmp/vcs.tmp 
 		end
 	end
-	set_color -o green
-	echo -n "==> "
+	set_color -o blue
+	echo -n ":: "
 	set_color -o white
 	echo "Comparing to locally installed versions..."
 	set_color normal
