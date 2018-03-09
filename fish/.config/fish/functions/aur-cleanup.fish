@@ -4,7 +4,7 @@ function aur-cleanup
 	set_color -o white
 	echo "Cleaning pacman cache..."
 	set_color normal
-	sudo pacman -Sc
+	sudo pacman -Sc --noconfirm
 	set_color -o blue
 	echo -n ":: "
 	set_color -o white
