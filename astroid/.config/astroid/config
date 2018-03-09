@@ -13,13 +13,13 @@
     },
     "terminal": {
         "height": "10",
-        "font_description": "default"
+        "font_description": "Monofur Nerd Font"
     },
     "thread_index": {
         "page_jump_rows": "6",
         "sort_order": "newest",
         "cell": {
-            "font_description": "Monofur 14",
+            "font_description": "Monofur Nerd Font 14",
             "line_spacing": "2",
             "date_length": "10",
             "message_count_length": "4",

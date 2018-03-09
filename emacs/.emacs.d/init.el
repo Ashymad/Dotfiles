@@ -141,7 +141,7 @@
     ("f142c876b896c6ca19149cacd80ddd68a351f67f7fe3b786274ceee970276780" default)))
  '(package-selected-packages
    (quote
-    (use-package rainbow-delimiters zerodark-theme wc-mode flyspell-lazy ess markdown-mode async auctex evil-magit magit evil ## paradox)))
+    (hy-mode slime slime-company use-package rainbow-delimiters zerodark-theme wc-mode flyspell-lazy ess markdown-mode async auctex evil-magit magit evil ## paradox)))
  '(paradox-github-token t)
  '(tool-bar-mode nil))
 (custom-set-faces
@@ -149,4 +149,4 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(default ((t (:family "monofur" :foundry "unknown" :slant normal :weight normal :height 151 :width normal)))))
+ '(default ((t (:family "Monofur Nerd Font Mono" :foundry "unci" :slant normal :weight normal :height 158 :width normal)))))
