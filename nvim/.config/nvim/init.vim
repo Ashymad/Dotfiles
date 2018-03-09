@@ -11,13 +11,34 @@ Plug 'joshdick/onedark.vim'
 Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 
+Plug 'scrooloose/nerdtree'
+Plug 'ctrlpvim/ctrlp.vim'
+
+" For Python
+Plug 'vim-scripts/indentpython.vim'
+Plug 'Vimjas/vim-python-pep8-indent'
+
 call plug#end()
 
 let g:lightline = { 
 	\ 'colorscheme': 'onedark',
 	\ }
 
+autocmd Filetype python call SetPythonOptions()
+
+function SetPythonOptions()
+    setlocal tabstop=4
+    setlocal softtabstop=4
+    setlocal shiftwidth=4
+    setlocal textwidth=79
+    setlocal expandtab
+    setlocal autoindent
+    setlocal fileformat=unix
+endfunction
+
+map <C-n> :NERDTreeToggle<CR>
+
 syntax on
 colorscheme onedark
 set noshowmode
-
+set nu
