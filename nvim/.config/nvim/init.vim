@@ -42,3 +42,6 @@ syntax on
 colorscheme onedark
 set noshowmode
 set nu
+
+tnoremap <Esc> <C-\><C-n>
+au TermOpen * setlocal nonumber norelativenumbe
