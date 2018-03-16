@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 FILENAME="$(basename "$1" | sed -n 's/-/&\n/;s/.*\n//p')"
 DIRECTORY="$(yad --file-selection --directory)"
 
-cp "$1" "$DIRECTORY/$FILENAME"
+if [[ !  -z  $DIRECTORY  ]]; then
+	cp "$1" "$DIRECTORY/$FILENAME"
+fi
