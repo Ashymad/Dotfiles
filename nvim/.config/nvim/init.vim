@@ -7,16 +7,29 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
+" Visuals
 Plug 'joshdick/onedark.vim'
-Plug 'sheerun/vim-polyglot'
 Plug 'itchyny/lightline.vim'
 
+" Syntax highlighting
+Plug 'sheerun/vim-polyglot'
+
+" Filesystem
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
 
-" For Python
+" Python
 Plug 'vim-scripts/indentpython.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
+
+" LaTeX
+Plug 'vim-latex/vim-latex'
+
+" R
+Plug 'jalvesaq/Nvim-R'
+
+" Completion
+Plug 'Valloric/YouCompleteMe'
 
 call plug#end()
 
@@ -36,7 +49,17 @@ function SetPythonOptions()
     setlocal fileformat=unix
 endfunction
 
-map <C-n> :NERDTreeToggle<CR>
+filetype plugin on
+autocmd Filetype tex call SetTeXOptions()
+
+function SetTeXOptions()
+	setlocal sw=2
+	setlocal textwidth=79
+	setlocal iskeyword+=:
+	setlocal spell! spelllang=pl
+endfunction
+
+map <C-l> :NERDTreeToggle<CR>
 
 syntax on
 colorscheme onedark
@@ -44,4 +67,4 @@ set noshowmode
 set nu
 
 tnoremap <Esc> <C-\><C-n>
-au TermOpen * setlocal nonumber norelativenumbe
+au TermOpen * setlocal nonumber norelativenumber
