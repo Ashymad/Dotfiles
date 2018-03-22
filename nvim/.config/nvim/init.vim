@@ -31,6 +31,9 @@ Plug 'jalvesaq/Nvim-R'
 " Completion
 Plug 'Valloric/YouCompleteMe'
 
+" Git
+Plug 'tpope/vim-fugitive'
+
 call plug#end()
 
 let g:lightline = { 
@@ -59,7 +62,13 @@ function SetTeXOptions()
 	setlocal spell! spelllang=pl
 endfunction
 
+let g:Tex_DefaultTargetFormat = 'pdf'
+let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
+let g:Tex_ViewRule_pdf = 'zathura'
+
 map <C-l> :NERDTreeToggle<CR>
+
+let g:ycm_python_binary_path = 'python'
 
 syntax on
 colorscheme onedark
