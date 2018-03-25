@@ -1,25 +1,14 @@
 function aur-cleanup
-	set_color -o blue
-	echo -n ":: "
-	set_color -o white
-	echo "Cleaning pacman cache..."
-	set_color normal
+	source ~/.config/fish/utils/pacmsg.fish
+	msg1 "Cleaning pacman cache..."
 	sudo pacman -Sc --noconfirm
-	set_color -o blue
-	echo -n ":: "
-	set_color -o white
-	echo "Updating custom repositories..."
-	set_color normal
+	msg1 "Updating custom repositories..."
 	for repo in /var/cache/pacman/*custom*
 		cd $repo
 		repose -zvf (basename $repo)
 	end
 	sudo pacman -Sy
-	set_color -o blue
-	echo -n ":: "
-	set_color -o white
-	echo "Cleaning aur sync cache..."
-	set_color normal
+	msg1 "Cleaning aur sync cache..."
 	cd ~/.cache/aurutils/sync
 	for dir in *
 		set pkgname (bash -c "source $dir/PKGBUILD;"'echo $pkgname')
