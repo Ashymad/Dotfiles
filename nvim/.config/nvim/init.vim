@@ -29,7 +29,7 @@ Plug 'vim-latex/vim-latex'
 Plug 'jalvesaq/Nvim-R'
 
 " Completion
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --system-libclang' }
 
 " Git
 Plug 'tpope/vim-fugitive'
