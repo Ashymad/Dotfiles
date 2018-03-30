@@ -114,11 +114,17 @@ bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
 bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
 
+# C* Music Player controls
+bindsym XF86AudioPlay exec --no-startup-id cmus-remote -u
+bindsym XF86AudioStop exec --no-startup-id cmus-remote -s
+bindsym XF86AudioNext exec --no-startup-id cmus-remote -n
+bindsym XF86AudioPrev exec --no-startup-id cmus-remote -r
+
 # Sreen brightness controls
-bindsym XF86MonBrightnessUp exec xbacklight -inc 10 # increase screen brightness
-bindsym XF86MonBrightnessDown exec xbacklight -dec 10 # decrease screen brightness
-bindsym $mod+F12  exec xbacklight -inc 10 # increase screen brightness
-bindsym $mod+F11  exec xbacklight -dec 10 # decrease screen brightness
+bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
+bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
+bindsym $mod+F12  exec --no-startup-id xbacklight -inc 10 # increase screen brightness
+bindsym $mod+F11  exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
 # class                 border  backgr. text    indicator
 client.focused          #4f4f4f #4f4f4f #ffffff #4f4f4f
