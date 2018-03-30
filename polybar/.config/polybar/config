@@ -19,7 +19,7 @@ secondary = #e60053
 alert = #bd2c40
 
 [bar/example]
-;monitor = HDMI-0
+monitor = HDMI-0
 width = 100%
 height = 20
 ;offset-x = 1%
