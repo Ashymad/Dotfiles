@@ -49,7 +49,7 @@ font-2 = "Wuncon Siji:pixelsize=10;1"
 
 modules-left = i3
 modules-center = cmus
-modules-right = filesystem memory cpu backlight-acpi volume eth wlan battery xkeyboard date
+modules-right = filesystem memory cpu eth xkeyboard date
 
 tray-position = left
 tray-padding = 2
