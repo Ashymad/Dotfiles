@@ -137,4 +137,5 @@ for_window [instance="mpv"] pixel 0
 
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/.fehbg
+exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/Moon.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
