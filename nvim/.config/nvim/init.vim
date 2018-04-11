@@ -23,7 +23,8 @@ Plug 'vim-scripts/indentpython.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 
 " LaTeX
-Plug 'vim-latex/vim-latex'
+" Plug 'vim-latex/vim-latex'
+Plug 'lervag/vimtex'
 
 " R
 Plug 'jalvesaq/Nvim-R'
@@ -35,6 +36,9 @@ Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --system-
 Plug 'tpope/vim-fugitive'
 
 call plug#end()
+
+" Disable latexBox in polyglot
+let g:polyglot_disabled = ['latex']
 
 let g:lightline = { 
 	\ 'colorscheme': 'onedark',
@@ -62,13 +66,18 @@ function SetTeXOptions()
 	setlocal spell! spelllang=pl
 endfunction
 
-let g:Tex_DefaultTargetFormat = 'pdf'
-let g:Tex_CompileRule_pdf = 'latexmk -pdf -f $*'
-let g:Tex_ViewRule_pdf = 'zathura'
+let g:vimtex_view_method = 'zathura'
+
+let g:vimtex_view_zathura_options = '-x "nvr --servername ' . v:servername . ' +%{line} %{input}"'
 
 map <C-l> :NERDTreeToggle<CR>
 
 let g:ycm_python_binary_path = 'python'
+
+if !exists('g:ycm_semantic_triggers')
+let g:ycm_semantic_triggers = {}
+endif
+let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
 
 syntax on
 colorscheme onedark
