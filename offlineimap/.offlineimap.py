@@ -7,7 +7,7 @@ def blockPrint():
 def enablePrint():
     sys.stdout = sys.__stdout__
 
-session = keepasshttp.start('ofim')
+session = keepasshttp.start('oflima')
 
 def get_password( str ):
     blockPrint()
