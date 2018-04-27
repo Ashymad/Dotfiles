@@ -4,18 +4,12 @@ function aur-vcsync
 	msg1 "Checking newest commit of repositories..."
 	aur srcver ~/.cache/aurutils/sync/*-$vcs_list > /tmp/vcs.tmp 
 	msg1 "Comparing to locally installed versions..."
-	set updates (aur vercmp -p /tmp/vcs.tmp -d custom-aur)
+	set updates (aur vercmp -p /tmp/vcs.tmp -d custom-aur | awk '{print $1}' | sed 's/:$//')
 	if test -z "$updates"
 		msg3 "There is nothing to do"
 		exit
 	end
-	for update in $updates
-		echo Updating $update...
-		aur sync --no-ver \
-			--repo custom-aur \
-			(echo $update \
-				| awk '{print $1}' \
-				| sed 's/:$//')
-	end
+	msg1 "Updating $updates"
+	aur sync --no-ver --repo custom-aur $updates
 end
 
