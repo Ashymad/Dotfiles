@@ -4,7 +4,7 @@ font pango:Terminus 11px
 
 floating_modifier $mod
 
-bindsym $mod+Return exec st 
+bindsym $mod+Return exec st
 
 bindsym $mod+Shift+q kill
 
@@ -140,5 +140,5 @@ for_window [instance="mpv"] pixel 0
 
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/.fehbg
-exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/Moon.png
+exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/BG.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
