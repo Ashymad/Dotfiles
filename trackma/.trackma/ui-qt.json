@@ -5,7 +5,7 @@
         "is_playing": "#9696FA",
         "is_queued": "#287f00",
         "new_episode": "#00016b",
-        "not_aired": "#FAFAD2",
+        "not_aired": "#260000",
         "progress_bg": "#F5F5F5",
         "progress_complete": "#00D200",
         "progress_fg": "#74C0FA",
