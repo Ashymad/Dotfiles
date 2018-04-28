@@ -144,6 +144,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease
 bindsym $mod+F12  exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym $mod+F11  exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
+# Change wallpaper
+bindsym $mod+p exec --no-startup-id ~/.fehbg
+
 # class                 border  backgr. text    indicator
 client.focused          #4f4f4f #4f4f4f #ffffff #4f4f4f
 client.unfocused        #323232 #323232 #aaaaaa #323232
