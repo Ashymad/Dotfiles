@@ -7,7 +7,7 @@
 ; mode = normal
  
 # Accepts only non-negative values.
-; framerate = 60
+framerate = 60
 
 # 'autosens' will attempt to decrease sensitivity if the bars peak. 1 = on, 0 = off
 # new as of 0.6.0 autosens of low values (dynamic range)
@@ -106,7 +106,7 @@ source = auto
 # 'raw' defaults to 200 bars, which can be adjusted in the 'bars' option above.
 # 'sdl' is for a graphical window using OpenGL
 # 'x' is for a graphical window using XRender (usually faster, unsupported in wayland however)
-method = sdl
+method = x
 
 # Additionally with Xlib, you can enable OpenGL mode to make full use of your hardware.
 opengl = 1
@@ -161,7 +161,7 @@ foreground = '#00aa00'
 
 # Percentage value for integral smoothing. Takes values from 0 - 100.
 # Higher values means smoother, but less precise. 0 to disable.
-integral = 99
+; integral = 99
 
 # Disables or enables the so-called "Monstercat smoothing" with or without "waves". Set to 0 to disable. 
 ; monstercat = 1
