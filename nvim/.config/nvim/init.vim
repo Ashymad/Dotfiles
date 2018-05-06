@@ -22,6 +22,9 @@ Plug 'ctrlpvim/ctrlp.vim'
 Plug 'vim-scripts/indentpython.vim'
 Plug 'Vimjas/vim-python-pep8-indent'
 
+" Julia
+Plug 'JuliaEditorSupport/julia-vim'
+
 " LaTeX
 Plug 'lervag/vimtex'
 
@@ -29,12 +32,33 @@ Plug 'lervag/vimtex'
 Plug 'jalvesaq/Nvim-R'
 
 " Completion
-Plug 'Valloric/YouCompleteMe', { 'do': './install.py --clang-completer --system-libclang' }
+Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'branch': 'next',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'junegunn/fzf'
+
+" Snippets
+Plug 'Shougo/neosnippet'
+Plug 'Shougo/neosnippet-snippets'
 
 " Git
 Plug 'tpope/vim-fugitive'
 
 call plug#end()
+
+" Deoplete
+let g:deoplete#enable_at_startup = 1
+inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
+inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
+set completeopt+=noinsert
+
+" neosnippet
+
+let g:neosnippet#enable_completed_snippet = 1
 
 " Disable latexBox in polyglot
 let g:polyglot_disabled = ['latex']
@@ -43,8 +67,9 @@ let g:lightline = {
 	\ 'colorscheme': 'onedark',
 	\ }
 
-autocmd Filetype python call SetPythonOptions()
+filetype plugin on
 
+autocmd Filetype python call SetPythonOptions()
 function SetPythonOptions()
     setlocal tabstop=4
     setlocal softtabstop=4
@@ -55,9 +80,7 @@ function SetPythonOptions()
     setlocal fileformat=unix
 endfunction
 
-filetype plugin on
 autocmd Filetype tex call SetTeXOptions()
-
 function SetTeXOptions()
 	setlocal sw=2
 	setlocal textwidth=79
@@ -68,19 +91,40 @@ endfunction
 let g:vimtex_view_method = 'zathura'
 let g:vimtex_compiler_progname = 'nvr'
 
+if !exists('g:deoplete#omni#input_patterns')
+  let g:deoplete#omni#input_patterns = {}
+endif
+let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+
 map <C-l> :NERDTreeToggle<CR>
 
-let g:ycm_python_binary_path = 'python'
+" let g:ycm_python_binary_path = 'python'
+" 
+" if !exists('g:ycm_semantic_triggers')
+" 	let g:ycm_semantic_triggers = {}
+" endif
+" let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+set hidden
 
-if !exists('g:ycm_semantic_triggers')
-	let g:ycm_semantic_triggers = {}
-endif
-let g:ycm_semantic_triggers.tex = g:vimtex#re#youcompleteme
+let g:LanguageClient_serverCommands = {
+    \ 'javascript': ['javascript-typescript-stdio'],
+    \ 'javascript.jsx': ['javascript-typescript-stdio'],
+    \ "python": ['pyls'],
+    \ }
+
+nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 syntax on
 colorscheme onedark
 set noshowmode
 set nu
+
+set tabstop=8
+set softtabstop=4
+set shiftwidth=4
+set noexpandtab
 
 tnoremap <Esc> <C-\><C-n>
 au TermOpen * setlocal nonumber norelativenumber
