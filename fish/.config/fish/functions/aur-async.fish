@@ -1,5 +1,5 @@
 function aur-async
-	 aur sync --repo=custom-aur -f --no-ver $argv
-	 sudo pacman -S $argv[1]
+	 aur sync -f --no-ver $argv
+	 and sudo pacman -S $argv
 end
 
