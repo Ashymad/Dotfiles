@@ -4,13 +4,14 @@
 ## There are several album art viewers for Cmus but this I believe is the most
 ## compatible with different setups as it is simpler. No weird hacks.
 
-## Requires feh (light no-gui image viewer).
+STATUS=$( cmus-remote -Q | tee /tmp/cmus.status)
 
-FOLDER=$( cmus-remote -Q | grep "file" | sed "s/file //" | rev | \
-cut -d"/" -f2- | rev )
+FOLDER=$( echo "$STATUS" | grep "file" | sed "s/file //" | rev | cut -d"/" -f2- | rev )
+
 if [[ ${FOLDER:0:3} == "cue" ]]; then
 	FOLDER=$(echo "$FOLDER" | sed 's/cue:\/\///g' | rev | cut -d"/" -f2- | rev)
 fi
+
 FLIST=$( find "$FOLDER" -type f )
 
 if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
@@ -21,12 +22,7 @@ if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
 		ART=$( echo "$FLIST" | grep -i ".png\|.jpg\|.jpeg" | head -n1 )
 	fi
 	
-	
-	
-	# '200x200' is the window size for the artwork. '+1160+546' is the offset.
-	# For example, if you want a 250 by 250 window on the bottom right hand corner of a 1920 by 1080 screen: "250x250+1670+830"
 	geeqie -r File:"$ART"
 else
 	geeqie -r File:"/home/shyman/.cmus/none.jpg"
-	exit
 fi
