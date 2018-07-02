@@ -12,7 +12,7 @@ Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 
 " Syntax highlighting
-Plug 'sheerun/vim-polyglot'
+" Plug 'sheerun/vim-polyglot'
 
 " Filesystem
 Plug 'scrooloose/nerdtree'
@@ -50,6 +50,9 @@ Plug 'tpope/vim-fugitive'
 
 " Camel/Snake case movement
 Plug 'bkad/CamelCaseMotion'
+
+" Pweave
+Plug 'coyotebush/vim-pweave'
 
 call plug#end()
 
@@ -118,7 +121,7 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
-map <C-l> :NERDTreeToggle<CR>
+map <C-k> :NERDTreeToggle<CR>
 
 set hidden
 
@@ -132,12 +135,13 @@ nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
-let R_latexcmd = ['latexmk','-pdf','-pdflatex="xelatex -synctex=1 -interaction=nonstopmode"'] 
+" let R_latexcmd = ['latexmk','-pdf','-pdflatex="lualatex -synctex=1 -interaction=nonstopmode"'] 
 
 syntax on
 colorscheme onedark
 set noshowmode
 set nu
+set mouse=a
 
 set tabstop=8
 set softtabstop=4
