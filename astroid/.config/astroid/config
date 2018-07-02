@@ -13,13 +13,13 @@
     },
     "terminal": {
         "height": "10",
-        "font_description": "Monofur Nerd Font"
+        "font_description": "Overpass"
     },
     "thread_index": {
         "page_jump_rows": "6",
         "sort_order": "newest",
         "cell": {
-            "font_description": "Monofur Nerd Font 14",
+            "font_description": "Overpass 14",
             "line_spacing": "2",
             "date_length": "10",
             "message_count_length": "4",
@@ -96,7 +96,8 @@
     "crypto": {
         "gpg": {
             "path": "gpg2",
-            "always_trust": "true"
+            "always_trust": "true",
+            "enabled": "true"
         }
     },
     "saved_searches": {

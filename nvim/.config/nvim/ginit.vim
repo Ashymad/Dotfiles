@@ -1,5 +1,5 @@
 if exists('g:GtkGuiLoaded')
-	call rpcnotify(1, 'Gui', 'Font', 'FuraCode Nerd Font 13')
+	call rpcnotify(1, 'Gui', 'Font', 'Fira Code 13')
 elseif exists('g:GuiLoaded')
-	Guifont FuraCode Nerd Font Mono:h13
+	Guifont Fira Code:h13
 endif
