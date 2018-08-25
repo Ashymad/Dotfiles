@@ -11,9 +11,6 @@ call plug#begin('~/.local/share/nvim/plugged')
 Plug 'joshdick/onedark.vim'
 Plug 'itchyny/lightline.vim'
 
-" Syntax highlighting
-" Plug 'sheerun/vim-polyglot'
-
 " Filesystem
 Plug 'scrooloose/nerdtree'
 Plug 'ctrlpvim/ctrlp.vim'
@@ -50,9 +47,6 @@ Plug 'tpope/vim-fugitive'
 
 " Camel/Snake case movement
 Plug 'bkad/CamelCaseMotion'
-
-" Pweave
-Plug 'coyotebush/vim-pweave'
 
 call plug#end()
 
@@ -121,6 +115,11 @@ if !exists('g:deoplete#omni#input_patterns')
 endif
 let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
 
+call deoplete#custom#option('omni_patterns', {
+	    \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+	    \})
+
+
 map <C-k> :NERDTreeToggle<CR>
 
 set hidden
@@ -136,6 +135,8 @@ nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
 
 " let R_latexcmd = ['latexmk','-pdf','-pdflatex="lualatex -synctex=1 -interaction=nonstopmode"'] 
+
+au BufReadPost APKBUILD set syntax=sh noexpandtab
 
 syntax on
 colorscheme onedark

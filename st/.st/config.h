@@ -5,7 +5,7 @@
  *
  * font: see http://freedesktop.org/software/fontconfig/fontconfig-user.html
  */
-static char *font = "Monofur Nerd Font:size=16:antialias=true:autohint=true";
+static char *font = "Code New Roman:size=14:antialias=true:autohint=true";
 static int borderpx = 2;
 
 /*

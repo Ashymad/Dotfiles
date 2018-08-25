@@ -139,6 +139,7 @@ for_window [instance="polybar"] gaps inner 0
 for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 
+exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
 exec --no-startup-id ~/.fehbg
 exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/BG.png
