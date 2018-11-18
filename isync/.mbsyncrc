@@ -1,102 +1,36 @@
-# Global configuration section
-#   Values here are used as defaults for any following Channel section that
-#   doesn't specify them.
-Expunge None
-Create Both
+IMAPAccount posteo
+# Address to connect to
+Host posteo.de
+User szymon.mikulicz@posteo.net
+PassCmd "~/.config/astroid/get_pass.py \"https://posteo.de\""
+# Pass ***************
+# To store the password in an encrypted file use PassCmd instead of Pass
+# PassCmd "gpg2 -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
+#
+# Use SSL
+SSLType IMAPS
+# The following line should work. If get certificate errors, uncomment the two following lines and read the "Troubleshooting" section.
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+#CertificateFile ~/.cert/imap.gmail.com.pem
+#CertificateFile ~/.cert/Equifax_Secure_CA.pem
 
-MaildirStore local
-Path ~/.mail/
-Trash Trash
+IMAPStore posteo-remote
+Account posteo
 
+MaildirStore posteo-local
+Subfolders Verbatim
+# The trailing "/" is important
+Path ~/.mail/posteo/
+Inbox ~/.mail/posteo/Inbox
 
-IMAPStore work
-Host work.host.com
-User tehuser
-Pass xxxxxxxx
-# Fetch password from gnome-keyring:
-#PassCmd "gnome-keyring-query get mail_pw"
-# Fetch password from .netrc:
-#PassCmd "sed -n -e 's,^machine work\\.host\\.com login tehuser password \\(.*\\),\\1,p' < $HOME/.netrc"
-# Fetch password from a gpg-encrypted file:
-#PassCmd "gpg --quiet --for-your-eyes-only --decrypt $HOME/imappassword.gpg"
-# Fetch password from pwmd (http://pwmd.sourceforge.net/):
-#PassCmd "echo -ne 'GET myIsp\\tpassword' | pwmc datafile"
-# On Mac OS X, run "KeyChain Access" -- File->New Password Item. Fill out form using
-#  "Keychain Item Name" http://IMAPSERVER  (note: the "http://" is a hack)
-#  "Account Name" USERNAME
-#  "Password" PASSWORD
-#PassCmd "/usr/bin/security find-internet-password -w -a USERNAME -s IMAPSERVER ~/Library/Keychains/login.keychain"
-
-Channel work
-Master :work:
-Slave :local:work
-Expunge Slave
-Sync PullNew Push
-
-
-IMAPStore personal
-Host host.play.com
-Port 6789
-RequireSSL no
-
-Channel personal
-Master :personal:
-Slave :local:personal
-Expunge Both
-MaxMessages 150
-MaxSize 200k
-
-IMAPStore remote
-Tunnel "ssh -q host.remote.com /usr/sbin/imapd"
-
-Channel remote
-Master :remote:
-Slave :local:remote
-
-
-Group boxes
-Channels work personal remote
-
-
-IMAPStore st1
-Host st1.domain.com
-RequireCRAM yes
-CertificateFile ~/.st1-certificate.crt
-
-IMAPStore st2
-Host imap.another-domain.com
-Path non-standard/
-RequireSSL no
-UseTLSv1 no
-
-Channel rst
-Master :st1:somebox
-Slave :st2:
-
-
-IMAPAccount server
-Host imaps:foo.bar.com
-CertificateFile ~/.server-certificate.crt
-
-IMAPStore server
-Account server
-MapInbox inbox
-Trash ~/trash
-TrashRemoteNew yes
-
-MaildirStore mirror
-Path ~/Maildir/
-SubFolders Verbatim
-
-Channel o2o
-Master :server:
-Slave :mirror:
-Patterns %
-
-Group partial o2o:inbox,sent-mail,foobar
-
-# INBOX => server, INBOX.foo => server.foo, etc.
-Channel inbox
-Master :server:INBOX
-Slave :mirror:server
+Channel posteo
+Master :posteo-remote:
+Slave :posteo-local:
+# Exclude everything under the internal [Gmail] folder, except the interesting folders
+# Patterns * ![Gmail]* "[Gmail]/Sent Mail" "[Gmail]/Starred" "[Gmail]/All Mail"
+# Or include everything
 Patterns *
+# Automatically create missing mailboxes, both locally and on the server
+Create Both
+# Save the synchronization state files in the relevant directory
+SyncState *
