@@ -30,7 +30,7 @@ path=/home/shyman/.mail
 #
 [user]
 name=Szymon Mikulicz
-primary_email=czilukim@o2.pl
+primary_email=szymon.mikulicz@posteo.de
 
 # Configuration for "notmuch new"
 #
@@ -48,7 +48,7 @@ primary_email=czilukim@o2.pl
 #
 [new]
 tags=new;
-ignore=
+ignore=.mbsyncstate;.uidvalidity
 
 # Search configuration
 #
