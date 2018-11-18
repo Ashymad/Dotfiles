@@ -25,6 +25,9 @@ Plug 'JuliaEditorSupport/julia-vim'
 " LaTeX
 Plug 'lervag/vimtex'
 
+" Rust
+Plug 'rust-lang/rust.vim'
+
 " R
 Plug 'jalvesaq/Nvim-R'
 
