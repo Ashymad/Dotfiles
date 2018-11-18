@@ -126,6 +126,9 @@ bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease
 bindsym $mod+F12  exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym $mod+F11  exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
 
+# Touchpad toggle
+bindsym XF86TouchpadToggle exec --no-startup-id ~/.i3/toggle_touchpad.sh 'SynPS/2 Synaptics TouchPad'
+
 # Change wallpaper
 bindsym $mod+p exec --no-startup-id ~/.fehbg
 
