@@ -1,3 +1,6 @@
 [submodule ".juliamodules"]
 	path = julia/.juliamodules
 	url = git@github.com:Ashymad/JuliaModules
+[submodule "astroid/.config/astroid/kpxcnm"]
+	path = astroid/.config/astroid/kpxcnm
+	url = git@github.com:Ashymad/kpxcnm
