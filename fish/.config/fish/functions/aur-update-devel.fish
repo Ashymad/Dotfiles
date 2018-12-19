@@ -1,4 +1,6 @@
 function aur-update-devel
-        aur vercmp-devel | cut -d: -f1 >/tmp/vcs.txt
-	xargs -a /tmp/vcs.txt aur sync --no-ver-shallow
+    set packages (aur vercmp-devel | cut -d: -f1)
+    if not test -z "$packages"
+	aur sync $packages --no-ver-shallow
+    end
 end

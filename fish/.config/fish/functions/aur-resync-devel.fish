@@ -1,4 +1,5 @@
 function aur-resync-devel
-	aur sync --list | cut -f2 | grep -E -- "-$AURVCS" | xargs aur sync --no-ver --print
+	set packages (aur repo --list | cut -f1 | grep -E "$AURVCS")
+        aur sync $packages --no-ver --print
 end
 
