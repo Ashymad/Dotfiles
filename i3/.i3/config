@@ -129,6 +129,9 @@ bindsym $mod+F11  exec --no-startup-id xbacklight -dec 10 # decrease screen brig
 # Change wallpaper
 bindsym $mod+p exec --no-startup-id ~/.fehbg
 
+# Take screenshot
+bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+
 # class                 border  backgr. text    indicator
 client.focused          #4f4f4f #4f4f4f #ffffff #4f4f4f
 client.unfocused        #323232 #323232 #aaaaaa #323232
@@ -139,6 +142,7 @@ for_window [instance="polybar"] gaps inner 0
 for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 for_window [instance="^octave\-gui$"] floating enable
+for_window [instance="^matplotlib$"] floating enable
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
