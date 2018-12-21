@@ -64,8 +64,8 @@ wm-restack = i3
 ;scroll-up = bspwm-desknext
 ;scroll-down = bspwm-deskprev
 
-binding modescroll-up = i3wm-wsnext
-scroll-down = i3wm-wsprev
+;scroll-up = i3wm-wsnext
+;scroll-down = i3wm-wsprev
 
 [module/xwindow]
 type = internal/xwindow
