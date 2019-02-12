@@ -28,6 +28,9 @@ Plug 'lervag/vimtex'
 " Rust
 Plug 'rust-lang/rust.vim'
 
+" C#
+Plug 'OmniSharp/omnisharp-vim'
+
 " R
 Plug 'jalvesaq/Nvim-R'
 
@@ -41,9 +44,14 @@ Plug 'autozimu/LanguageClient-neovim', {
 
 Plug 'junegunn/fzf'
 
-" Snippets
-Plug 'Shougo/neosnippet'
-Plug 'Shougo/neosnippet-snippets'
+Plug 'ervandew/supertab'
+
+" UltiSnips
+
+Plug 'SirVer/ultisnips'
+
+" Mail
+Plug 'paretje/deoplete-notmuch', {'for': 'mail'}
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -57,14 +65,18 @@ call plug#end()
 call camelcasemotion#CreateMotionMappings('<leader>')
 
 " Deoplete
-let g:deoplete#enable_at_startup = 1
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
-set completeopt+=noinsert
 
-" neosnippet
+" supertab
 
-let g:neosnippet#enable_completed_snippet = 1
+let g:SuperTabDefaultCompletionType = "<c-n>"
+
+
+
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
 "Use 24-bit (true-color) mode in Vim/Neovim when outside tmux.
 "If you're using tmux version 2.2 or later, you can remove the outermost $TMUX check and use tmux's 24-bit color support
@@ -122,6 +134,11 @@ call deoplete#custom#option('omni_patterns', {
 	    \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
 	    \})
 
+call deoplete#custom#option('sources', {
+	    \ 'cs': ['omnisharp'],
+	    \ })
+
+let g:OmniSharp_server_use_mono = 1
 
 map <C-k> :NERDTreeToggle<CR>
 
@@ -130,14 +147,30 @@ let g:LanguageClient_autoStart = 1
 let g:LanguageClient_serverCommands = {
     \ 'javascript': ['javascript-typescript-stdio'],
     \ 'javascript.jsx': ['javascript-typescript-stdio'],
-    \ "python": ['pyls'],
+    \ 'python': ['pyls'],
     \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
     \     using LanguageServer;
-    \     server = LanguageServer.LanguageServerInstance(stdin, stdout, false);
+    \     using Pkg;
+    \     import StaticLint;
+    \     import SymbolServer;
+    \     env_path = dirname(Pkg.Types.Context().env.project_file);
+    \     debug = false; 
+    \     
+    \     server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
     \     server.runlinter = true;
     \     run(server);
     \ '],
+    \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
+    \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
     \ }
+
+let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
+let g:LanguageClient_settingsPath = '/home/shyman/.config/nvim/settings.json'
+let g:LanguageClient_hasSnippetSupport = 0
+
+let g:deoplete#enable_at_startup = 1
 
 nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
