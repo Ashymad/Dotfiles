@@ -149,6 +149,6 @@ for_window [instance="^matplotlib$"] floating enable
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk
-exec --no-startup-id ~/.fehbg
 exec --no-startup-id xss-lock -- i3lock -n -i ~/.i3/BG.png
+exec --no-startup-id feh --no-fehbg --bg-fill ~/.i3/BG.png
 exec_always --no-startup-id ~/.config/polybar/launch.sh
