@@ -1,5 +1,12 @@
 {
     "initializationOptions": {
-	"cacheDirectory": "/tmp/ccls"
+        "cacheDirectory": "/tmp/ccls"
+    },
+    "pyls": {
+        "plugins": {
+            "jedi_completion": {
+                "include_params": false
+            }
+        }
     }
 }
