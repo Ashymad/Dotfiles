@@ -53,5 +53,4 @@ st.color13: rgb:fc/54/fc
 st.color14: rgb:54/fc/fc
 st.color15: rgb:fc/fc/fc
 st.colorBD: rgb:fc/fc/fc
-st.font:     Monofur Nerd Font:size=16:antialias=true;autohint=true;
-st.boldFont: Monofurbold Nerd Font:size=16:antialias=true;autohint=true;
+st.font:    Code New Roman:size=14:antialias=true:autohint=true;
