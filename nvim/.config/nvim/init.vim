@@ -20,7 +20,6 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'lervag/vimtex'
 
 Plug 'rust-lang/rust.vim'
-Plug 'racer-rust/vim-racer'
 
 Plug 'OmniSharp/omnisharp-vim'
 
@@ -31,19 +30,15 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
-Plug 'autozimu/LanguageClient-neovim', {
-            \ 'branch': 'next',
-            \ 'do': 'bash install.sh',
-            \ }
-
-Plug '/usr/share/vim/vimfiles/plugin/fzf.vim'
-Plug 'junegunn/fzf.vim'
+Plug 'natebosch/vim-lsc'
 
 Plug 'paretje/deoplete-notmuch', {'for': 'mail'}
 
 Plug 'tpope/vim-fugitive'
 
 Plug 'chaoren/vim-wordmotion'
+
+Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
 
 call plug#end()
 
@@ -69,15 +64,6 @@ let g:deoplete#enable_at_startup = 1
 imap <C-j>     <Plug>(neosnippet_expand_or_jump)
 smap <C-j>     <Plug>(neosnippet_expand_or_jump)
 xmap <C-j>     <Plug>(neosnippet_expand_target)
-
-" SuperTab like snippets behavior.
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-"imap <expr><TAB>
-" \ pumvisible() ? "\<C-n>" :
-" \ neosnippet#expandable_or_jumpable() ?
-" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
-" smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
-"             \ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
 
 " For conceal markers.
 if has('conceal')
@@ -110,15 +96,12 @@ call deoplete#custom#option('sources', {
             \ 'cs': ['omnisharp'],
             \ })
 
-let g:OmniSharp_server_use_mono = 1
-
 "NERDTree
 map <C-k> :NERDTreeToggle<CR>
 
-" LanguageClient
-"
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_serverCommands = {
+" vim-lsc
+
+let g:lsc_server_commands = {
             \ 'javascript': ['javascript-typescript-stdio'],
             \ 'javascript.jsx': ['javascript-typescript-stdio'],
             \ 'python': ['pyls'],
@@ -138,17 +121,15 @@ let g:LanguageClient_serverCommands = {
             \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
             \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
             \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
+            \ 'rust': ['rls'],
             \ }
 
-let g:LanguageClient_loadSettings = 1 " Use an absolute configuration path if you want system-wide settings
-let g:LanguageClient_settingsPath = '/home/shyman/.config/nvim/settings.json'
+let g:lsc_auto_map = v:true
+autocmd CompleteDone * silent! pclose
 
-nnoremap <silent> K :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> <F2> :call LanguageClient#textDocument_rename()<CR>
-
-" vim-racer
-let g:racer_experimental_completer = 1
+" vimwiki
+" Workaround for https://github.com/lervag/vimtex/issues/1354
+let g:vimtex_syntax_enabled = 1
 
 " vim settings
 
@@ -165,11 +146,9 @@ set shiftwidth=4
 set expandtab
 set autoindent
 
-syntax on
+filetype plugin indent on
 
-filetype on
-filetype plugin on
-filetype indent on
+syntax on
 
 colorscheme onedark
 
