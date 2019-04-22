@@ -5,3 +5,4 @@
 	user = Ashymad
 [core]
 	editor = nvim
+	autocrlf = input
