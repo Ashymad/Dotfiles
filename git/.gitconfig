@@ -1,3 +1,8 @@
 [user]
 	email = szymon.mikulicz@posteo.net
-	name = Ashymad
+	name = Szymon Mikulicz
+[github]
+	user = Ashymad
+[core]
+	editor = nvim
+	autocrlf = input

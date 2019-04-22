@@ -1,0 +1,14 @@
+font=DejaVu Sans Mono 11
+background-color=#000000
+text-color=#ffffff
+border-color=#333333
+#border-size=10
+#border-color=#00000055
+#margin=25
+
+[hidden]
+format=(and %h more)
+text-color=#777777
+
+[urgency=high]
+background-color=#ff0000
