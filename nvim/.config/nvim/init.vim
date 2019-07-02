@@ -1,3 +1,7 @@
+if &shell =~# 'fish$'
+    set shell=bash
+endif
+
 " Install vim-plug if not isntalled
 if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
     silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
@@ -20,6 +24,8 @@ Plug 'JuliaEditorSupport/julia-vim'
 Plug 'lervag/vimtex'
 
 Plug 'rust-lang/rust.vim'
+
+Plug 'dag/vim-fish'
 
 Plug 'OmniSharp/omnisharp-vim'
 
@@ -83,6 +89,11 @@ if !exists('g:deoplete#omni#input_patterns')
     let g:deoplete#omni#input_patterns = {}
 endif
 let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
+
+" eclim
+let g:EclimCompletionMethod = 'omnifunc'
+let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*'
+
 
 " Nvim-R
 call deoplete#custom#option('omni_patterns', {
