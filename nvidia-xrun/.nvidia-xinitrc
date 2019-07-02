@@ -1,3 +1,2 @@
 #!/bin/sh
-source ~/.xprofile
-openbox-session
+exec openbox-session
