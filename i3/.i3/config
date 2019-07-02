@@ -161,6 +161,7 @@ for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
+for_window [instance="^gnuplot_qt$"] floating enable
 
 exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
 exec --no-startup-id redshift-gtk

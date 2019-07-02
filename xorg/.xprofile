@@ -3,3 +3,4 @@
 xinput set-prop 'Razer Razer Abyssus' 'libinput Accel Profile Enabled' 0, 1
 xrdb -merge ~/.Xresources
 export QT_QPA_PLATFORMTHEME="qt5ct"
+export NVIM_GTK_NO_HEADERBAR=1
