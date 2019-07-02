@@ -2,6 +2,11 @@
 
 set -e
 
+if ! ping -w 1 -W 1 -c 1 posteo.de; then
+    echo "No connection to posteo"
+    exit
+fi
+
 export MAILDIR="/home/shyman/.mail"
 
 moveIt()
@@ -32,13 +37,14 @@ mbsync posteo
 notmuch new
 
 notmuch tag --batch <<EOF
-        +posteo tag:new and path:"posteo/**"
-	+deleted tag:new and folder:posteo/Trash
-	+sent tag:new and folder:posteo/Sent
-	+inbox tag:new and folder:posteo/Inbox
-	+draft tag:new and folder:posteo/Drafts
-	+note tag:new and folder:posteo/Notes
-	+migration tag:new and folder:"posteo/Migration_*"
+    +posteo tag:new and path:"posteo/**"
+    +o2 tag:new and to:czilukim@o2.pl
+    +deleted tag:new and folder:posteo/Trash
+    +sent tag:new and folder:posteo/Sent
+    +inbox tag:new and folder:posteo/Inbox
+    +draft tag:new and folder:posteo/Drafts
+    +note tag:new and folder:posteo/Notes
+    +migration tag:new and folder:"posteo/Migration_*"
 EOF
 
 notmuch tag -new tag:new
