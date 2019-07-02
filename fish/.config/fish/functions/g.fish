@@ -2,23 +2,28 @@
 function g
     set len (count $argv)
     if test $len -gt 0
+        if test $len -gt 1
+            set rest $argv[2..$len]
+        else
+            set rest
+        end
         switch $argv[1]
         case "s"
-            git status $argv[2..$len]
+            git status 
         case "a"
-            git add $argv[2..$len]
+            git add $rest
         case "c"
-            git commit $argv[2..$len]
+            git commit $rest
         case "p"
-            git push $argv[2..$len]
+            git push $rest
         case "pl"
-            git pull $argv[2..$len]
+            git pull $rest
         case "ch"
-            git checkout $argv[2..$len]
+            git checkout $rest
         case "d"
-            git diff $argv[2..$len]
+            git diff $rest
         case "m"
-            git merge $argv[2..$len]
+            git merge $rest
         case '*'
             git $argv
         end
