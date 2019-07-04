@@ -2,10 +2,12 @@ function aur-cleanup
 	source ~/.config/fish/utils/pacmsg.fish
 	msg1 "Cleaning pacman cache..."
 	sudo pacman -Sc --noconfirm
-	msg1 "Updating custom repositories..."
+	msg1 "Rebuilding custom repositories..."
 	for repo in /var/cache/pacman/*custom*
 		cd $repo
-		repose -zvf (basename $repo)
+        set reponame (basename $repo)
+        rm $reponame.db*
+        repo-add -n $reponame.db.tar *.pkg.tar.xz
 	end
 	sudo pacman -Sy
 	msg1 "Cleaning aur sync cache..."
