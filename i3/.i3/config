@@ -106,6 +106,24 @@ mode  $power_control {
 }
 bindsym $mod+n mode $power_control
 
+mode "brightness" {
+    bindsym grave exec ~/.i3/brightness.sh 00
+    bindsym 1 exec ~/.i3/brightness.sh 10
+    bindsym 2 exec ~/.i3/brightness.sh 20
+    bindsym 3 exec ~/.i3/brightness.sh 30
+    bindsym 4 exec ~/.i3/brightness.sh 40
+    bindsym 5 exec ~/.i3/brightness.sh 50
+    bindsym 6 exec ~/.i3/brightness.sh 60
+    bindsym 7 exec ~/.i3/brightness.sh 70
+    bindsym 8 exec ~/.i3/brightness.sh 80
+    bindsym 9 exec ~/.i3/brightness.sh 90
+    bindsym 0 exec ~/.i3/brightness.sh 100
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+b mode "brightness"
+
 new_window pixel 2
 gaps inner 10
 
