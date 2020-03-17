@@ -20,6 +20,7 @@ alert = #bd2c40
 
 [bar/example]
 ;monitor = HDMI-0
+;monitor = ${env:MONITOR:fallback-value}
 width = 100%
 height = 20
 ;offset-x = 1%
@@ -45,7 +46,7 @@ module-margin-right = 2
 
 font-0 = fixed:pixelsize=10;1
 font-1 = unifont:fontformat=truetype:size=8:antialias=false;0
-font-2 = "Wuncon Siji:pixelsize=10;1"
+font-2 = "Siji:pixelsize=10;1"
 
 modules-left = i3
 modules-center = cmus
