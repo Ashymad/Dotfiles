@@ -23,7 +23,7 @@ autosens = 1
 # Bars' width and space between bars in number of characters.
 # These options DO NOT apply if you're using 'sdl' or 'x' modes.
 ; bars = 20
-bar_width = 4
+bar_width = 1
 ; bar_spacing = 1
 
 # Lower and higher cutoff frequencies for lowest and highest bars
@@ -39,7 +39,7 @@ bar_width = 4
 
 # Bars' width and space between bars in pixels.
 # Doesn't apply to terminal or serial modes.
-bar_width = 31
+; bar_width = 31
 ; bar_spacing = 4
 
 # Window width and height
@@ -106,10 +106,10 @@ source = auto
 # 'raw' defaults to 200 bars, which can be adjusted in the 'bars' option above.
 # 'sdl' is for a graphical window using OpenGL
 # 'x' is for a graphical window using XRender (usually faster, unsupported in wayland however)
-method = x
+method = ncurses
 
 # Additionally with Xlib, you can enable OpenGL mode to make full use of your hardware.
-opengl = 1
+l opengl = 1
 
 # Visual channels. Can be 'stereo' or 'mono'.
 # 'stereo' mirrors both channels with low frequencies in center.
