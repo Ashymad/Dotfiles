@@ -22,12 +22,11 @@ Plug 'Vimjas/vim-python-pep8-indent'
 Plug 'JuliaEditorSupport/julia-vim'
 
 Plug 'lervag/vimtex'
+Plug 'PietroPate/vim-tex-conceal'
 
 Plug 'rust-lang/rust.vim'
 
 Plug 'dag/vim-fish'
-
-Plug 'OmniSharp/omnisharp-vim'
 
 Plug 'jalvesaq/Nvim-R'
 
@@ -36,17 +35,48 @@ Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 
-Plug 'natebosch/vim-lsc'
-
 Plug 'paretje/deoplete-notmuch', {'for': 'mail'}
 
 Plug 'tpope/vim-fugitive'
 
 Plug 'chaoren/vim-wordmotion'
 
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+Plug 'neovim/nvim-lsp'
+
+Plug 'Shougo/deoplete-lsp'
 
 call plug#end()
+
+" Neosnipet
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+" For conceal markers.
+if has('conceal')
+    set conceallevel=2
+    let g:tex_conceal="abdgms"
+endif
+
+" lightline
+let g:lightline = { 
+            \ 'colorscheme': 'onedark',
+            \ }
+
+" vimtex
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_quickfix_enabled = 0
+
+" nvim-lsp
+lua require'nvim_lsp'.rust_analyzer.setup{}
+lua require'nvim_lsp'.texlab.setup{}
+
+autocmd Filetype rust setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+"NERDTree
+map <C-k> :NERDTreeToggle<CR>
 
 " Deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -63,84 +93,16 @@ imap <silent><expr> <TAB>
             \ "\<Plug>(neosnippet_expand_or_jump)" :
             \ deoplete#manual_complete()
 
-let g:deoplete#enable_at_startup = 1
-
-" Neosnipet
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-j>     <Plug>(neosnippet_expand_or_jump)
-smap <C-j>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-j>     <Plug>(neosnippet_expand_target)
-
-" For conceal markers.
-if has('conceal')
-    set conceallevel=2 concealcursor=niv
-endif
-
-" lightline
-let g:lightline = { 
-            \ 'colorscheme': 'onedark',
-            \ }
-
-" vimtex
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_progname = 'nvr'
-
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
-
-" eclim
-let g:EclimCompletionMethod = 'omnifunc'
-let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*'
-
-
-" Nvim-R
 call deoplete#custom#option('omni_patterns', {
-            \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+      \ 'tex': g:vimtex#re#deoplete,
+      \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+      \})
+
+call deoplete#custom#option('sources', {
+            \ 'notmuch': ['notmuch', 'address', '--format=json', '--deduplicate=address', '*'],
             \})
 
-" let R_latexcmd = ['latexmk','-pdf','-pdflatex="lualatex -synctex=1 -interaction=nonstopmode"'] 
-
-" OmniSharp
-call deoplete#custom#option('sources', {
-            \ 'cs': ['omnisharp'],
-            \ })
-
-"NERDTree
-map <C-k> :NERDTreeToggle<CR>
-
-" vim-lsc
-
-let g:lsc_server_commands = {
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'javascript.jsx': ['javascript-typescript-stdio'],
-            \ 'python': ['pyls'],
-            \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-            \     using LanguageServer;
-            \     using Pkg;
-            \     import StaticLint;
-            \     import SymbolServer;
-            \     env_path = dirname(Pkg.Types.Context().env.project_file);
-            \     debug = false; 
-            \     
-            \     server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
-            \     server.runlinter = true;
-            \     run(server);
-            \ '],
-            \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'rust': ['rls'],
-            \ }
-
-let g:lsc_auto_map = v:true
-autocmd CompleteDone * silent! pclose
-
-" vimwiki
-" Workaround for https://github.com/lervag/vimtex/issues/1354
-let g:vimtex_syntax_enabled = 1
+let g:deoplete#enable_at_startup = 1
 
 " vim settings
 
@@ -179,5 +141,7 @@ function SetTeXOptions()
     setlocal sw=2
     setlocal textwidth=79
     setlocal iskeyword+=:
-    setlocal spell! spelllang=pl
+    setlocal spell! spelllang=en
 endfunction
+
+autocmd BufNewFile,BufRead *.none set filetype=mail
