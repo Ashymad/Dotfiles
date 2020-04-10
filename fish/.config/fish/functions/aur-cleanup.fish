@@ -19,7 +19,11 @@ function aur-cleanup
             rm -rf -- $dir
         else
             set reponame (pacman -Ss '^'(string escape --style=regex $pkgname)'$' | head -1 | sed 's@/.*$@@g')
-            if not string match -q 'custom*' $reponame
+            if string match -q 'custom*' $reponame
+                cd $dir
+                git clean -xdf
+                cd ..
+            else
                 echo "Removing $dir..."
                 rm -rf -- $dir
             end

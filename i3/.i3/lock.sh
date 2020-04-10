@@ -6,4 +6,8 @@ export XSECURELOCK_LIST_VIDEOS_COMMAND="echo ~/.i3/BG.png"
 export XSECURELOCK_IMAGE_DURATION_SECONDS=inf
 export XSECURELOCK_BLANK_TIMEOUT=30
 export XSECURELOCK_AUTH_TIMEOUT=10
-exec xsecurelock
+xsecurelock&
+sleep 0.5
+pkill -SIGSTOP picom
+wait < <(jobs -p)
+pkill -SIGCONT picom

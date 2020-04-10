@@ -16,7 +16,7 @@ FLIST=$( find "$FOLDER" -type f )
 
 if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
 	ART=$( echo "$FLIST" | grep -i "cover.jpg\|cover.png\|front.jpg\|front.png\
-	\|folder.jpg\|folder.png" | head -n1 )
+	\|folder.jpg\|folder.png" | grep -vi "backcover" | head -n1 )
 	
 	if [[ -z "$ART" ]]; then
 		ART=$( echo "$FLIST" | grep -i ".png\|.jpg\|.jpeg" | head -n1 )
