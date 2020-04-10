@@ -2,51 +2,87 @@ if &shell =~# 'fish$'
     set shell=bash
 endif
 
-" Install vim-plug if not isntalled
-if empty(glob('~/.local/share/nvim/site/autoload/plug.vim'))
-    silent !curl -fLo ~/.local/share/nvim/site/autoload/plug.vim --create-dirs
-                \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
-    autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+if &compatible
+  set nocompatible
 endif
 
-call plug#begin('~/.local/share/nvim/plugged')
+function! PackInit() abort
+  packadd minpac
 
-Plug 'joshdick/onedark.vim'
-Plug 'itchyny/lightline.vim'
+  call minpac#init()
 
-Plug 'scrooloose/nerdtree'
+  call minpac#add('k-takata/minpac', {'type': 'opt', 'branch': 'devel'})
 
-Plug 'vim-scripts/indentpython.vim'
-Plug 'Vimjas/vim-python-pep8-indent'
+  call minpac#add('vim-scripts/indentpython.vim', {'type': 'opt'})
+  call minpac#add('Vimjas/vim-python-pep8-indent', {'type': 'opt'})
 
-Plug 'JuliaEditorSupport/julia-vim'
+  call minpac#add('JuliaEditorSupport/julia-vim', {'type': 'opt'})
 
-Plug 'lervag/vimtex'
+  call minpac#add('lervag/vimtex', {'type': 'opt'})
+  call minpac#add('PietroPate/vim-tex-conceal', {'type': 'opt'})
 
-Plug 'rust-lang/rust.vim'
+  call minpac#add('rust-lang/rust.vim', {'type': 'opt'})
 
-Plug 'dag/vim-fish'
+  call minpac#add('dag/vim-fish', {'type': 'opt'})
 
-Plug 'OmniSharp/omnisharp-vim'
+  call minpac#add('jalvesaq/Nvim-R', {'type': 'opt'})
 
-Plug 'jalvesaq/Nvim-R'
+  call minpac#add('mboughaba/i3config.vim', {'type': 'opt'})
 
-Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+  call minpac#add('paretje/deoplete-notmuch', {'type': 'opt'})
 
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+  call minpac#add('sonph/onehalf', {'subdir': 'vim'})
 
-Plug 'natebosch/vim-lsc'
+  call minpac#add('itchyny/lightline.vim')
+  call minpac#add('scrooloose/nerdtree')
 
-Plug 'paretje/deoplete-notmuch', {'for': 'mail'}
+  call minpac#add('Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' })
+  call minpac#add('Shougo/neosnippet.vim')
+  call minpac#add('Shougo/neosnippet-snippets')
 
-Plug 'tpope/vim-fugitive'
+  call minpac#add('tpope/vim-fugitive')
 
-Plug 'chaoren/vim-wordmotion'
+  call minpac#add('chaoren/vim-wordmotion')
 
-Plug 'vimwiki/vimwiki', { 'branch': 'dev' }
+  call minpac#add('neovim/nvim-lsp')
+  call minpac#add('Shougo/deoplete-lsp')
+endfunction
 
-call plug#end()
+command! PackUpdate call PackInit() | call minpac#update()
+command! PackClean  call PackInit() | call minpac#clean()
+command! PackStatus call PackInit() | call minpac#status()
+
+packloadall
+
+" Neosnipet
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-j>     <Plug>(neosnippet_expand_or_jump)
+smap <C-j>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-j>     <Plug>(neosnippet_expand_target)
+
+" lightline
+let g:lightline = { 
+            \ 'colorscheme': 'onehalfdark',
+            \ }
+
+" For conceal markers.
+if has('conceal')
+    set conceallevel=2
+    let g:tex_conceal="abdgms"
+endif
+
+" vimtex
+let g:vimtex_view_method = 'zathura'
+let g:vimtex_compiler_progname = 'nvr'
+let g:vimtex_quickfix_enabled = 0
+
+"NERDTree
+map <C-k> :NERDTreeToggle<CR>
+
+" nvim-lsp
+lua require'nvim_lsp'.rust_analyzer.setup{}
+lua require'nvim_lsp'.pyls_ms.setup{cmd={"mspyls"}}
+lua require'nvim_lsp'.texlab.setup{}
 
 " Deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -63,89 +99,101 @@ imap <silent><expr> <TAB>
             \ "\<Plug>(neosnippet_expand_or_jump)" :
             \ deoplete#manual_complete()
 
-let g:deoplete#enable_at_startup = 1
-
-" Neosnipet
-" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
-imap <C-j>     <Plug>(neosnippet_expand_or_jump)
-smap <C-j>     <Plug>(neosnippet_expand_or_jump)
-xmap <C-j>     <Plug>(neosnippet_expand_target)
-
-" For conceal markers.
-if has('conceal')
-    set conceallevel=2 concealcursor=niv
-endif
-
-" lightline
-let g:lightline = { 
-            \ 'colorscheme': 'onedark',
-            \ }
-
-" vimtex
-let g:vimtex_view_method = 'zathura'
-let g:vimtex_compiler_progname = 'nvr'
-
-if !exists('g:deoplete#omni#input_patterns')
-    let g:deoplete#omni#input_patterns = {}
-endif
-let g:deoplete#omni#input_patterns.tex = g:vimtex#re#deoplete
-
-" eclim
-let g:EclimCompletionMethod = 'omnifunc'
-let g:deoplete#omni#input_patterns.java = '[^. *\t]\.\w*'
-
-
-" Nvim-R
 call deoplete#custom#option('omni_patterns', {
-            \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+      \ 'r': ['[^. *\t]\.\w*', '\h\w*::\w*', '\h\w*\$\w*'],
+      \})
+
+call deoplete#custom#option('sources', {
+            \ 'notmuch': ['notmuch', 'address', '--format=json', '--deduplicate=address', '*'],
             \})
 
-" let R_latexcmd = ['latexmk','-pdf','-pdflatex="lualatex -synctex=1 -interaction=nonstopmode"'] 
+call deoplete#enable()
 
-" OmniSharp
-call deoplete#custom#option('sources', {
-            \ 'cs': ['omnisharp'],
-            \ })
+" Autocmds
 
-"NERDTree
-map <C-k> :NERDTreeToggle<CR>
+autocmd Filetype python call SetPythonOptions()
+function SetPythonOptions()
+    packadd indentpython.vim
+    packadd vim-python-pep8-indent
+    setlocal textwidth=79
+    setlocal fileformat=unix
+endfunction
 
-" vim-lsc
+autocmd Filetype tex call SetTeXOptions()
+function SetTeXOptions()
+    packadd vim-tex-conceal
+    packadd vimtex
+    let g:vimteplete = '\\(?:'
+      \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|(text|block)cquote\*?(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|(for|hy)\w*cquote\*?{[^}]*}(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|\w*ref(?:\s*{[^}]*|range\s*{[^,}]*(?:}{)?)'
+      \ . '|hyperref\s*\[[^]]*'
+      \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
+      \ . '|(?:include(?:only)?|input|subfile)\s*{[^}]*'
+      \ . '|([cpdr]?(gls|Gls|GLS)|acr|Acr|ACR)[a-zA-Z]*\s*{[^}]*'
+      \ . '|(ac|Ac|AC)\s*{[^}]*'
+      \ . '|includepdf(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|includestandalone(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|(usepackage|RequirePackage|PassOptionsToPackage)(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|documentclass(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|begin(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|end(\s*\[[^]]*\])?\s*{[^}]*'
+      \ . '|\w*'
+      \ .')'
+          " \ 'tex': g:vimtex#re#deoplete,
+    call deoplete#custom#option('omni_patterns', {
+          \ 'tex': g:vimteplete,
+          \})
+    setlocal sw=2
+    setlocal textwidth=79
+    setlocal iskeyword+=:
+    setlocal spell! spelllang=en
+endfunction
 
-let g:lsc_server_commands = {
-            \ 'javascript': ['javascript-typescript-stdio'],
-            \ 'javascript.jsx': ['javascript-typescript-stdio'],
-            \ 'python': ['pyls'],
-            \ 'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-            \     using LanguageServer;
-            \     using Pkg;
-            \     import StaticLint;
-            \     import SymbolServer;
-            \     env_path = dirname(Pkg.Types.Context().env.project_file);
-            \     debug = false; 
-            \     
-            \     server = LanguageServer.LanguageServerInstance(stdin, stdout, debug, env_path, "", Dict());
-            \     server.runlinter = true;
-            \     run(server);
-            \ '],
-            \ 'c': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'cpp': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'cuda': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'objc': ['ccls', '--log-file=/tmp/cc.log'],
-            \ 'rust': ['rls'],
-            \ }
+autocmd Filetype rust call SetRustOptions()
+function SetRustOptions()
+    packadd rust.vim
+    setlocal omnifunc=v:lua.vim.lsp.omnifunc
+endfunction
 
-let g:lsc_auto_map = v:true
+autocmd BufNewFile,BufRead *.jl set filetype=julia
+autocmd Filetype julia call SetJuliaOptions()
+function SetJuliaOptions()
+    packadd julia-vim
+endfunction
+
+autocmd Filetype R call SetROptions()
+autocmd Filetype noweb call SetROptions()
+function SetROptions()
+    packadd Nvim-R
+endfunction
+
+autocmd BufNewFile,BufRead *.none set filetype=mail
+autocmd Filetype mail call SetMailOptions()
+function SetMailOptions()
+    packadd deoplete-notmuch
+endfunction
+
+autocmd BufNewFile,BufRead *.fish set filetype=fish
+autocmd Filetype fish call SetFishOptions()
+function SetFishOptions()
+    packadd vim-fish
+endfunction
+
+autocmd Filetype i3config call SetI3Options()
+function SetI3Options()
+    packadd i3config.vim
+endfunction
+
 autocmd CompleteDone * silent! pclose
-
-" vimwiki
-" Workaround for https://github.com/lervag/vimtex/issues/1354
-let g:vimtex_syntax_enabled = 1
 
 " vim settings
 
 set hidden
 set lazyredraw
+let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
 set noshowmode
 set wildmenu
@@ -156,28 +204,17 @@ set softtabstop=4
 set shiftwidth=4
 set expandtab
 set autoindent
+set noea
 
 filetype plugin indent on
 
 syntax on
 
-colorscheme onedark
+colorscheme onehalfdark
+hi Normal guibg=none
+hi LineNr guibg=none
 
 tnoremap <Esc> <C-\><C-n>
 au TermOpen * setlocal nonumber norelativenumber
 
 au BufReadPost APKBUILD set syntax=sh noexpandtab
-
-autocmd Filetype python call SetPythonOptions()
-function SetPythonOptions()
-    setlocal textwidth=79
-    setlocal fileformat=unix
-endfunction
-
-autocmd Filetype tex call SetTeXOptions()
-function SetTeXOptions()
-    setlocal sw=2
-    setlocal textwidth=79
-    setlocal iskeyword+=:
-    setlocal spell! spelllang=pl
-endfunction

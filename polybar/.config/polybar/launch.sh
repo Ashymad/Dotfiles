@@ -1,3 +1,4 @@
 #!/bin/sh
 killall polybar
-polybar example
+#env MONITOR=$(polybar -m|head -1|sed -e 's/:.*$//g')
+exec polybar -r example
