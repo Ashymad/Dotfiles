@@ -16,4 +16,6 @@ alias wine32 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 wine'
 alias wine32cfg 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 winecfg'
 alias wine32tricks 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 winetricks'
 
+alias cmus='tmux attach-session -t cmus || tmux new-session -A -D -s cmus cmus'
+
 source /usr/share/autojump/autojump.fish
