@@ -1,0 +1,48 @@
+// vim: filetype=i3config
+mode "resize" {
+        bindsym l resize shrink width 10 px or 10 ppt
+        bindsym semicolon resize grow height 10 px or 10 ppt
+        bindsym apostrophe resize shrink height 10 px or 10 ppt
+        bindsym backslash resize grow width 10 px or 10 ppt
+
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
+mode  $power_control {
+    bindsym l exec xset s activate; mode "default"
+    bindsym o exec i3-msg exit; mode "default"
+    bindsym s exec systemctl suspend; mode "default"
+    bindsym h exec systemctl hibernate; mode "default"
+    bindsym r exec systemctl reboot; mode "default"
+    bindsym p exec systemctl poweroff; mode "default"
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+n mode $power_control
+
+mode "brightness" {
+    bindsym grave exec ~/.i3/brightness.sh 00
+    bindsym 1 exec ~/.i3/brightness.sh 10
+    bindsym 2 exec ~/.i3/brightness.sh 20
+    bindsym 3 exec ~/.i3/brightness.sh 30
+    bindsym 4 exec ~/.i3/brightness.sh 40
+    bindsym 5 exec ~/.i3/brightness.sh 50
+    bindsym 6 exec ~/.i3/brightness.sh 60
+    bindsym 7 exec ~/.i3/brightness.sh 70
+    bindsym 8 exec ~/.i3/brightness.sh 80
+    bindsym 9 exec ~/.i3/brightness.sh 90
+    bindsym 0 exec ~/.i3/brightness.sh 100
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+b mode "brightness"

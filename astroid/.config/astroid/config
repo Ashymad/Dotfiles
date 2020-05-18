@@ -44,7 +44,7 @@
         }
     },
     "editor": {
-        "cmd": "st -w %3 -e nvim %1",
+        "cmd": "alacritty --embed %3 -e nvim %1",
         "external_editor": "false",
         "charset": "utf-8",
         "save_draft_on_force_quit": "true",

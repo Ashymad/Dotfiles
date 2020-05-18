@@ -22,7 +22,7 @@ if echo "$FLIST" | grep -i ".jpeg\|.png\|.jpg" &>/dev/null; then
 		ART=$( echo "$FLIST" | grep -i ".png\|.jpg\|.jpeg" | head -n1 )
 	fi
 	
-	geeqie -r File:"$ART"
+	#geeqie -r File:"$ART"
 else
-	geeqie -r File:"/home/shyman/.cmus/none.jpg"
+	#geeqie -r File:"/home/shyman/.cmus/none.jpg"
 fi
