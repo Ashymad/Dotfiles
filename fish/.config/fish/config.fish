@@ -28,4 +28,6 @@ else
     alias :vsplit 'swaymsg split h\; exec alacritty'
 end
 
+alias noproxy 'env http_proxy="" https_proxy="" ftp_proxy=""'
+
 source /usr/share/autojump/autojump.fish
