@@ -1,14 +1,88 @@
+# vim: filetype=i3config
 set $mod Mod4
 
-font pango:Terminus 11px
+font pango:Tamsyn 7
 
 floating_modifier $mod
+
+workspace 1 output HDMI-A-1
+workspace 2 output VGA-1
 
 bindsym $mod+Return exec alacritty
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec rofi -modi drun -show drun
+bindsym $mod+d exec wofi --show drun
+
+bindsym $mod+Shift+d mode "remote" 
+mode "remote" {
+    bindsym $mod+d exec ssh mikulicz@N-20L6PF16PQSK dmenu_path | dmenu | xargs ssh -X mikulicz@N-20L6PF16PQSK
+    bindsym $mod+Return exec alacritty -e ssh -X mikulicz@N-20L6PF16PQSK
+
+    bindsym $mod+Shift+d mode "default"
+
+    bindsym $mod+Shift+q kill
+
+    bindsym $mod+h focus left
+    bindsym $mod+j focus down
+    bindsym $mod+k focus up
+    bindsym $mod+l focus right
+
+    bindsym $mod+Left focus left
+    bindsym $mod+Down focus down
+    bindsym $mod+Up focus up
+    bindsym $mod+Right focus right
+
+    bindsym $mod+Shift+h move left
+    bindsym $mod+Shift+j move down
+    bindsym $mod+Shift+k move up
+    bindsym $mod+Shift+l move right
+
+    bindsym $mod+Shift+Left move left
+    bindsym $mod+Shift+Down move down
+    bindsym $mod+Shift+Up move up
+    bindsym $mod+Shift+Right move right
+
+    bindsym $mod+g split h
+
+    bindsym $mod+v split v
+
+    bindsym $mod+f fullscreen toggle
+
+    bindsym $mod+s layout stacking
+    bindsym $mod+w layout tabbed
+    bindsym $mod+e layout toggle split
+
+    bindsym $mod+Shift+space floating toggle
+
+    bindsym $mod+space focus mode_toggle
+
+    bindsym $mod+a focus parent
+
+    #bindsym $mod+d focus child
+
+    bindsym $mod+1 workspace 1 output HDMI-A-1
+    bindsym $mod+2 workspace 2 output VGA-1
+    bindsym $mod+3 workspace 3
+    bindsym $mod+4 workspace 4
+    bindsym $mod+5 workspace 5
+    bindsym $mod+6 workspace 6
+    bindsym $mod+7 workspace 7
+    bindsym $mod+8 workspace 8
+    bindsym $mod+9 workspace 9
+    bindsym $mod+0 workspace 10
+
+    bindsym $mod+Shift+1 move container to workspace 1
+    bindsym $mod+Shift+2 move container to workspace 2
+    bindsym $mod+Shift+3 move container to workspace 3
+    bindsym $mod+Shift+4 move container to workspace 4
+    bindsym $mod+Shift+5 move container to workspace 5
+    bindsym $mod+Shift+6 move container to workspace 6
+    bindsym $mod+Shift+7 move container to workspace 7
+    bindsym $mod+Shift+8 move container to workspace 8
+    bindsym $mod+Shift+9 move container to workspace 9
+    bindsym $mod+Shift+0 move container to workspace 10
+}
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -92,7 +166,7 @@ bindsym $mod+r mode "resize"
 
 set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
 mode  $power_control {
-    bindsym l exec swaylock -n -i ~/.i3/BG.png; mode "default"
+    bindsym l exec ~/.config/sway/lock.sh; mode "default"
     bindsym o exec swaymsg exit; mode "default"
     bindsym s exec systemctl suspend; mode "default"
     bindsym h exec systemctl hibernate; mode "default"
@@ -104,7 +178,27 @@ mode  $power_control {
 }
 bindsym $mod+n mode $power_control
 
-new_window pixel 2
+mode "brightness" {
+    bindsym grave exec ~/.i3/brightness.sh 00
+    bindsym 1 exec ~/.i3/brightness.sh 10
+    bindsym 2 exec ~/.i3/brightness.sh 20
+    bindsym 3 exec ~/.i3/brightness.sh 30
+    bindsym 4 exec ~/.i3/brightness.sh 40
+    bindsym 5 exec ~/.i3/brightness.sh 50
+    bindsym 6 exec ~/.i3/brightness.sh 60
+    bindsym 7 exec ~/.i3/brightness.sh 70
+    bindsym 8 exec ~/.i3/brightness.sh 80
+    bindsym 9 exec ~/.i3/brightness.sh 90
+    bindsym 0 exec ~/.i3/brightness.sh 100
+
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+Shift+b mode "brightness"
+
+default_border pixel 2
+titlebar_border_thickness 1
+titlebar_padding 2 2
 gaps inner 10
 
  # Pulse Audio controls
@@ -118,6 +212,8 @@ bindsym XF86AudioStop exec --no-startup-id cmus-remote -s
 bindsym XF86AudioNext exec --no-startup-id cmus-remote -n
 bindsym XF86AudioPrev exec --no-startup-id cmus-remote -r
 
+bindsym $mod+c exec alacritty --class CMUS -e fish -c cmus
+
 # Screen brightness controls
 bindsym XF86MonBrightnessUp exec --no-startup-id xbacklight -inc 10 # increase screen brightness
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -dec 10 # decrease screen brightness
@@ -128,51 +224,46 @@ bindsym $mod+F11  exec --no-startup-id xbacklight -dec 10 # decrease screen brig
 bindsym XF86TouchpadToggle exec --no-startup-id ~/.i3/toggle_touchpad.sh 'SynPS/2 Synaptics TouchPad'
 
 # Input configuration
-input 9390:16389:Rapoo_Rapoo_Gaming_Keyboard {
+input type:keyboard {
     xkb_layout pl
     xkb_options caps:super
 }
 
-input 1:1:AT_Translated_Set_2_keyboard {
-    xkb_layout pl
-    xkb_options caps:super
-}
-
-input 2:7:SynPS/2_Synaptics_TouchPad {
+input type:touchpad {
     tap enabled
 }
 
 # Change wallpaper
-bindsym $mod+p exec ~/.fehbg Sway
+bindsym $mod+p exec ~/.fehbg -r
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
 
-# class                 border  backgr. text    indicator child_border
-client.focused          #4f4f4f #4f4f4f #ffffff #4f4f4f   #4f4f4f
-client.unfocused        #323232 #323232 #aaaaaa #323232   #4f4f4f
-client.focused_inactive #323232 #333333 #aaaaaa #323232   #4f4f4f
-client.urgent           #383a3b #383a3b #ee0000 #383a3b   #4f4f4f
+# class                 border    bg        text    indicator
+client.focused          #5c6370e6 #5c6370e6 #ffffff #5c6370e6
+client.unfocused        #282c34e6 #282c34e6 #dcdfe4 #282c34e6
+client.focused_inactive #282c34e6 #282c34e6 #dcdfe4 #282c34e6
+client.urgent           #383a3be6 #383a3be6 #e06c75 #383a3be6
 
 for_window [instance="polybar"] gaps inner 0
 for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
+for_window [app_id="CMUS"] floating enable
 
-exec /usr/lib/geoclue-2.0/demos/agent
 exec redshift-gtk
 exec mako
 
-output "*" background ~/.i3/BG.png fill
+exec ~/.fehbg
 exec swayidle \
-         timeout 300 'swaylock -n -i ~/.i3/BG.png' \
+         timeout 300 '~/.config/sway/lock.sh' \
          timeout 600 'swaymsg "output * dpms off"' \
          resume 'swaymsg "output * dpms on"' \
-         before-sleep 'swaylock -n -i ~/.i3/BG.png'
+         before-sleep '~/.config/sway/lock.sh'
 
 exec_always "killall waybar; waybar"
 exec_always ~/.config/sway/import-gsettings.sh \
                 gtk-theme:gtk-theme-name \
                 icon-theme:gtk-icon-theme-name \
-                cursor-theme:gtk-cursor-theme-name
+
