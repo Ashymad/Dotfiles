@@ -1,12 +1,14 @@
+// vim: filetype=json
 {
     "layer": "top", // Waybar at top layer
-    "position": "bottom", // Waybar position (top|bottom|left|right)
-    "height": 20, // Waybar height
+    "position": "top", // Waybar position (top|bottom|left|right)
+    "output": "HDMI-A-1",
+    //"height": 10, // Waybar height
     // "width": 1280, // Waybar width
     // Choose the order of the modules
     "modules-left": ["tray", "sway/workspaces", "sway/mode"],
     "modules-center": ["custom/cmus"],
-    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "backlight", "battery", "clock"],
+    "modules-right": ["idle_inhibitor", "pulseaudio", "network", "cpu", "memory", "temperature", "clock"],
     // Modules configuration
     // "sway/workspaces": {
     //     "disable-scroll": true,
@@ -34,7 +36,7 @@
         }
     },
     "tray": {
-        // "icon-size": 21,
+         "icon-size": 15,
         "spacing": 10
     },
     "clock": {
@@ -49,7 +51,7 @@
     },
     "temperature": {
         // "thermal-zone": 2,
-        // "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
+         "hwmon-path": "/sys/class/hwmon/hwmon2/temp1_input",
         "critical-threshold": 80,
         // "format-critical": "{temperatureC}°C ",
         "format": "{temperatureC}°C "
@@ -100,7 +102,7 @@
         "max-length": 40,
         "escape": true,
         "interval": 1,
-        "exec": "$HOME/.config/polybar/cmus.sh 2> /dev/null",
+        "exec": "$HOME/.config/waybar/cmus.sh 2> /dev/null",
         "on-click": "cmus-remote --pause",
         "exec-if": "pgrep cmus"
     }
