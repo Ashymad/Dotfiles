@@ -1,7 +1,7 @@
 // vim: filetype=i3config
 exec ~/.screenlayout/default.sh
-exec ~/.fehbg
 // exec --no-startup-id picom --experimental-backends
 exec --no-startup-id xss-lock -l -- ~/.i3/lock.sh
 exec --no-startup-id redshift-gtk
-exec --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec sleep 1 && ~/.fehbg
