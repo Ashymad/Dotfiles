@@ -141,7 +141,7 @@ function SetTeXOptions()
       \ . '|end(\s*\[[^]]*\])?\s*{[^}]*'
       \ . '|\w*'
       \ .')'
-          " \ 'tex': g:vimtex#re#deoplete,
+         " \ 'tex': g:vimtex#re#deoplete,
     call deoplete#custom#option('omni_patterns', {
           \ 'tex': g:vimteplete,
           \})
@@ -186,6 +186,8 @@ function SetI3Options()
     packadd i3config.vim
 endfunction
 
+au BufReadPost APKBUILD set syntax=sh noexpandtab
+
 autocmd CompleteDone * silent! pclose
 
 " vim settings
@@ -217,4 +219,16 @@ hi LineNr guibg=none
 tnoremap <Esc> <C-\><C-n>
 au TermOpen * setlocal nonumber norelativenumber
 
-au BufReadPost APKBUILD set syntax=sh noexpandtab
+" readline bindings for command mode
+cnoremap <c-a> <home>
+cnoremap <c-e> <end>
+cnoremap <c-p> <up>
+cnoremap <c-n> <down>
+cnoremap <c-b> <left>
+cnoremap <c-f> <right>
+cnoremap <c-k> <c-\>estrpart(getcmdline(), 0, getcmdpos() - 1)<cr>
+cnoremap <A-b> <s-left>
+cnoremap <A-f> <s-right>
+cnoremap <A-left> <s-left>
+cnoremap <A-right> <s-right>
+cnoremap <A-backspace> <c-w>
