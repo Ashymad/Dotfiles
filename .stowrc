@@ -1,1 +1,1 @@
---target=/home/shyman --no-folding
+--target=$HOME --no-folding

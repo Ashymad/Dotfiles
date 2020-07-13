@@ -1,0 +1,25 @@
+// vim: filetype=i3config
+
+set $mod Mod4
+
+font pango:Terminus 11px
+
+floating_modifier $mod
+
+bindsym $mod+Return exec alacritty
+bindsym $mod+d exec rofi -modi drun -show drun
+
+bindsym $mod+Shift+d exec xhost + N-20L6PF16PQSK; mode "remote" 
+mode "remote" {
+    bindsym $mod+d exec ssh mikulicz@N-20L6PF16PQSK env DISPLAY=SKRADAK:0 rofi -modi drun -show drun
+    bindsym $mod+Return exec alacritty -e ssh -t mikulicz@N-20L6PF16PQSK env DISPLAY=SKRADAK:0 '$SHELL'
+
+#include "config.d/bindsyms"
+
+    bindsym $mod+Shift+d mode "default"
+}
+
+#include "config.d/bindsyms"
+#include "config.d/modes"
+#include "config.d/windows"
+#include "config.d/execs"

@@ -16,6 +16,18 @@ alias wine32 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 wine'
 alias wine32cfg 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 winecfg'
 alias wine32tricks 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 winetricks'
 
-alias cmus='tmux attach-session -t cmus || tmux new-session -A -D -s cmus cmus'
+alias cmus='tmux attach-session -t cmus || tmux new-session -A -D -s cmus /usr/bin/cmus'
+
+alias :q exit
+alias :e nvim
+if test "$XDG_SESSION_TYPE" = "x11"
+    alias :split 'i3-msg split v\; exec alacritty > /dev/null'
+    alias :vsplit 'i3-msg split h\; exec alacritty > /dev/null'
+else
+    alias :split 'swaymsg split v\; exec alacritty'
+    alias :vsplit 'swaymsg split h\; exec alacritty'
+end
+
+alias noproxy 'env http_proxy="" https_proxy="" ftp_proxy=""'
 
 source /usr/share/autojump/autojump.fish
