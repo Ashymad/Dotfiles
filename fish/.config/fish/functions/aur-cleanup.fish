@@ -7,7 +7,8 @@ function aur-cleanup
         cd $repo
         set reponame (basename $repo)
         rm $reponame.db*
-        repo-add -n $reponame.db.tar *.pkg.tar.xz
+	set pkgs *.pkg.tar.xz
+        repo-add -n $reponame.db.tar $pkgs
     end
     sudo pacman -Sy
     msg1 "Cleaning aur sync cache..."

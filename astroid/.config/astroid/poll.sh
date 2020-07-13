@@ -2,12 +2,18 @@
 
 set -e
 
+if ! pgrep -x keepassxc; then
+    echo "KeePassXC is not running!"
+    exit
+fi
+
 if ! ping -w 1 -W 1 -c 1 posteo.de; then
     echo "No connection to posteo"
     exit
 fi
 
-export MAILDIR="/home/shyman/.mail"
+MAILDIR="/home/shyman/.mail"
+TAGSTRING=""
 
 moveIt()
 {
@@ -18,33 +24,38 @@ moveIt()
 }
 export -f moveIt
 
-#notmuch search --output=files tag:deleted and tag:o2 and not folder:o2/Trash | xargs -I {} mv -f "{}" $MAILDIR/o2/Trash/cur/
-#notmuch search --output=files tag:deleted and tag:freeos and not folder:freeos/Trash | xargs -I {} mv -f "{}" $MAILDIR/freeos/Trash/cur/
-#notmuch search --output=files tag:deleted and tag:agh and not folder:agh/Trash | xargs -I {} mv -f "{}" $MAILDIR/agh/Trash/cur/
-notmuch search --output=files tag:deleted and tag:posteo and not folder:posteo/Trash | xargs -I{} bash -c 'moveIt "{}" $MAILDIR/posteo/Trash/new/'
+movemail() {
+    notmuch search --output=files tag:$2 and tag:$1 and not folder:$1/$3 | xargs -I{} bash -c "moveIt '{}' $MAILDIR/$1/$3/new/"
+}
 
-#    +o2 tag:new and path:"o2/**"
-#+freeos tag:new and path:"freeos/**"
-#    +agh tag:new and path:"agh/**"
-#	+deleted tag:new and folder:o2/Trash or folder:freeos/Trash or folder:agh/Trash
-#	+sent tag:new and folder:o2/Sent or folder:freeos/Sent or folder:"freeos/Sent Items" or folder:agh/Sent
-#	+spam tag:new and folder:o2/Spam or folder:freeos/Spam or folder:freeos/Junk or folder:agh/Spam
-#	+inbox tag:new and folder:o2/INBOX or folder:freeos/INBOX or folder:agh/INBOX
-#	+archive tag:new and folder:o2/INBOX.Archive or folder:freeos/Archive or folder:agh/Archives
-#	+draft tag:new and folder:o2/Drafts or folder:freeos/Drafts or folder:agh/Drafts
+tag() {
+    TAGSTRING="$TAGSTRING$1 tag:new and $2\n"
+}
+
+tag_exec() {
+    TAGSTRING="$TAGSTRING-new tag:new\n"
+    printf "Tagging:\n$TAGSTRING"
+    printf "$TAGSTRING" | notmuch tag --batch
+}
+
+
+movemail posteo deleted Trash
+movemail posteo archived Archive
+movemail posteo note Notes
 
 mbsync posteo
-notmuch new
+if ! notmuch new | grep "No new mail"; then
+    notify-send "New mail
+    $(notmuch search tag:new | sed 's/^thread:[0-9a-z]*[ ]*//')"
+fi
 
-notmuch tag --batch <<EOF
-    +posteo tag:new and path:"posteo/**"
-    +o2 tag:new and to:czilukim@o2.pl
-    +deleted tag:new and folder:posteo/Trash
-    +sent tag:new and folder:posteo/Sent
-    +inbox tag:new and folder:posteo/Inbox
-    +draft tag:new and folder:posteo/Drafts
-    +note tag:new and folder:posteo/Notes
-    +migration tag:new and folder:"posteo/Migration_*"
-EOF
+tag +posteo path:"posteo/**" 
+tag +o2 to:czilukim@o2.pl 
+tag +deleted folder:posteo/Trash 
+tag +sent folder:posteo/Sent 
+tag +inbox folder:posteo/Inbox 
+tag +draft folder:posteo/Drafts 
+tag +note folder:posteo/Notes 
+tag_exec
 
-notmuch tag -new tag:new
+pkill -SIGUSR1 alot

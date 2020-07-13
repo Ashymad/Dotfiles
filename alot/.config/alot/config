@@ -1,0 +1,627 @@
+# vim: filetype=cfg
+#
+# ask_subject
+#     Type:	boolean
+#     Default:	True
+# 
+attachment_prefix = "~/Downloads"
+# 
+#         directory prefix for downloading attachments
+# 
+#     Type:	string
+#     Default:	“~”
+# 
+# auto_remove_unread
+# 
+#         automatically remove ‘unread’ tag when focussing messages in thread mode
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# auto_replyto_mailinglist
+# 
+#         Automatically switch to list reply mode if appropriate
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# bounce_force_address
+# 
+#         Always use the accounts main address when constructing “Resent-From” headers for bounces. Set this to False to use the address string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# bounce_force_realname
+# 
+#         Always use the proper realname when constructing “Resent-From” headers for bounces. Set this to False to use the realname string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# bufferclose_focus_offset
+# 
+#         offset of next focused buffer if the current one gets closed
+# 
+#     Type:	integer
+#     Default:	-1
+# 
+# bufferlist_statusbar
+# 
+#         Format of the status-bar in bufferlist mode. This is a pair of strings to be left and right aligned in the status-bar that may contain variables:
+# 
+#             {buffer_no}: index of this buffer in the global buffer list
+#             {total_messages}: total numer of messages indexed by notmuch
+#             {pending_writes}: number of pending write operations to the index
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: bufferlist], {input_queue} total messages: {total_messages}
+# 
+# bug_on_exit
+# 
+#         confirm exit
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# colourmode
+# 
+#         number of colours to use on the terminal
+# 
+#     Type:	option, one of [‘1’, ‘16’, ‘256’]
+#     Default:	256
+# 
+# complete_matching_abook_only
+# 
+#         in case more than one account has an address book: Set this to True to make tab completion for recipients during compose only look in the abook of the account matching the sender address
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# compose_ask_tags
+# 
+#         prompt for initial tags when compose
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# displayed_headers
+# 
+#         headers that get displayed by default
+# 
+#     Type:	string list
+#     Default:	From, To, Cc, Bcc, Subject
+# 
+# edit_headers_blacklist
+# 
+#         see edit_headers_whitelist
+# 
+#     Type:	string list
+#     Default:	Content-Type, MIME-Version, References, In-Reply-To
+# 
+# edit_headers_whitelist
+# 
+#         Which header fields should be editable in your editor used are those that match the whitelist and don’t match the blacklist. in both cases ‘*’ may be used to indicate all fields.
+# 
+#     Type:	string list
+#     Default:	*,
+# 
+editor_cmd = "nvim"
+# 
+#         editor command if unset, alot will first try the EDITOR env variable, then /usr/bin/editor
+# 
+#     Type:	string
+#     Default:	None
+# 
+editor_in_thread = True
+# 
+#         call editor in separate thread. In case your editor doesn’t run in the same window as alot, setting true here will make alot non-blocking during edits
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+editor_spawn = True
+# 
+#         use terminal_cmd to spawn a new terminal for the editor? equivalent to always providing the –spawn=yes parameter to compose/edit commands
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# editor_writes_encoding
+# 
+#         file encoding used by your editor
+# 
+#     Type:	string
+#     Default:	“UTF-8”
+# 
+# envelope_edit_default_alternative
+# 
+#         always edit the given body text alternative when editing outgoing messages in envelope mode. alternative, and not the html source, even if that is currently displayed. If unset, html content will be edited unless the current envelope shows the plaintext alternative.
+# 
+#     Type:	option, one of [‘plaintext’, ‘html’]
+#     Default:	None
+# 
+# envelope_headers_blacklist
+# 
+#         headers that are hidden in envelope buffers by default
+# 
+#     Type:	string list
+#     Default:	In-Reply-To, References
+# 
+envelope_html2txt = "pandoc -f html -t markdown"
+# 
+#         Use this command to turn a html message body to plaintext in envelope mode. The command will receive the html on stdin and should produce text on stdout (as pandoc -f html -t markdown does for example).
+# 
+#     Type:	string
+#     Default:	None
+# 
+# envelope_statusbar
+# 
+#         Format of the status-bar in envelope mode. This is a pair of strings to be left and right aligned in the status-bar. Apart from the global variables listed at bufferlist_statusbar these strings may contain variables:
+# 
+#             {to}: To-header of the envelope
+#             {displaypart}: which body part alternative is currently in view (can be ‘plaintext,’src’, or ‘html’)
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: envelope ({displaypart})], {input_queue} total messages: {total_messages}
+# 
+envelope_txt2html = "pandoc -f markdown -t html -s --self-contained"
+# 
+#         Use this command to construct a html alternative message body text in envelope mode. If unset, we send only the plaintext part, without html alternative. The command will receive the plaintex on stdin and should produce html on stdout. (as pandoc -t html does for example).
+# 
+#     Type:	string
+#     Default:	None
+# 
+# exclude_tags
+# 
+#         A list of tags that will be excluded from search results by default. Using an excluded tag in a query will override that exclusion. .. note:: this config setting is equivalent to, but independent of, the ‘search.exclude_tags’ in the notmuch config.
+# 
+#     Type:	string list
+#     Default:	,
+# 
+# flush_retry_timeout
+# 
+#         timeout in seconds after a failed attempt to writeout the database is repeated. Set to 0 for no retry.
+# 
+#     Type:	integer
+#     Default:	5
+# 
+# followup_to
+# 
+#         When one of the recipients of an email is a subscribed mailing list, set the “Mail-Followup-To” header to the list of recipients without yourself
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# forward_force_address
+# 
+#         Always use the accounts main address when constructing “From” headers for forwards. Set this to False to use the address string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# forward_force_realname
+# 
+#         Always use the proper realname when constructing “From” headers for forwards. Set this to False to use the realname string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# forward_subject_prefix
+# 
+#         String prepended to subject header on forward only if original subject doesn’t start with ‘Fwd:’ or this prefix
+# 
+#     Type:	string
+#     Default:	“Fwd: “
+# 
+handle_mouse = True
+# 
+#         enable mouse support - mouse tracking will be handled by urwid
+# 
+#         Note
+# 
+#         If this is set to True mouse events are passed from the terminal to urwid/alot. This means that normal text selection in alot will not be possible. Most terminal emulators will still allow you to select text when shift is pressed.
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# history_size
+# 
+#         The number of command line history entries to save
+# 
+#         Note
+# 
+#         You can set this to -1 to save all entries to disk but the history file might get very long.
+# 
+#     Type:	integer
+#     Default:	50
+# 
+# honor_followup_to
+# 
+#         When group-reply-ing to an email that has the “Mail-Followup-To” header set, use the content of this header as the new “To” header and leave the “Cc” header empty
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# hooksfile
+# 
+#         where to look up hooks
+# 
+#     Type:	string
+#     Default:	“~/.config/alot/hooks.py”
+# 
+initial_command = "search tag:inbox AND NOT tag:deleted"
+# 
+#         initial command when none is given as argument:
+# 
+#     Type:	string
+#     Default:	“search tag:inbox AND NOT tag:killed”
+# 
+# input_timeout
+# 
+#         timeout in (floating point) seconds until partial input is cleared
+# 
+#     Type:	float
+#     Default:	1.0
+# 
+# interpret_ansi_background
+# 
+#         display background colors set by ANSI character escapes
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# mailinglists
+# 
+#         The list of addresses associated to the mailinglists you are subscribed to
+# 
+#     Type:	string list
+#     Default:	,
+# 
+# msg_summary_hides_threadwide_tags
+# 
+#         In a thread buffer, hide from messages summaries tags that are commom to all messages in that thread.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# namedqueries_statusbar
+# 
+#         Format of the status-bar in named query list mode. This is a pair of strings to be left and right aligned in the status-bar. These strings may contain variables listed at bufferlist_statusbar that will be substituted accordingly.
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: namedqueries], {query_count} named queries
+# 
+# notify_timeout
+# 
+#         time in secs to display status messages
+# 
+#     Type:	integer
+#     Default:	2
+# 
+# periodic_hook_frequency
+# 
+#         The number of seconds to wait between calls to the loop_hook
+# 
+#     Type:	integer
+#     Default:	300
+# 
+# prefer_plaintext
+# 
+#         prefer plaintext alternatives over html content in multipart/alternative
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+prefer_plaintext = True
+# print_cmd
+# 
+#         how to print messages: this specifies a shell command used for printing. threads/messages are piped to this command as plain text. muttprint/a2ps works nicely
+# 
+#     Type:	string
+#     Default:	None
+# 
+# prompt_suffix
+# 
+#         Suffix of the prompt used when waiting for user input
+# 
+#     Type:	string
+#     Default:	“:”
+# 
+# quit_on_last_bclose
+# 
+#         shut down when the last buffer gets closed
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# quote_prefix
+# 
+#         String prepended to line when quoting
+# 
+#     Type:	string
+#     Default:	“> “
+# 
+# reply_account_header_priority
+# 
+#         The list of headers to match to determine sending account for a reply. Headers are searched in the order in which they are specified here, and the first header containing a match is used. If multiple accounts match in that header, the one defined first in the account block is used.
+# 
+#     Type:	string list
+#     Default:	From, To, Cc, Envelope-To, X-Envelope-To, Delivered-To
+# 
+# reply_force_address
+# 
+#         Always use the accounts main address when constructing “From” headers for replies. Set this to False to use the address string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	False
+# 
+# reply_force_realname
+# 
+#         Always use the proper realname when constructing “From” headers for replies. Set this to False to use the realname string as received in the original message.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# reply_subject_prefix
+# 
+#         String prepended to subject header on reply only if original subject doesn’t start with ‘Re:’ or this prefix
+# 
+#     Type:	string
+#     Default:	“Re: “
+# 
+# search_statusbar
+# 
+#         Format of the status-bar in search mode. This is a pair of strings to be left and right aligned in the status-bar. Apart from the global variables listed at bufferlist_statusbar these strings may contain variables:
+# 
+#             {querystring}: search string
+#             {result_count}: number of matching messages
+#             {result_count_positive}: ‘s’ if result count is greater than 0.
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: search] for “{querystring}”, {input_queue} {result_count} of {total_messages} messages
+# 
+# search_threads_rebuild_limit
+# 
+#         maximum amount of threads that will be consumed to try to restore the focus, upon triggering a search buffer rebuild when set to 0, no limit is set (can be very slow in searches that yield thousands of results)
+# 
+#     Type:	integer
+#     Default:	0
+# 
+# search_threads_sort_order
+# 
+#         default sort order of results in a search
+# 
+#     Type:	option, one of [‘oldest_first’, ‘newest_first’, ‘message_id’, ‘unsorted’]
+#     Default:	newest_first
+# 
+# show_statusbar
+# 
+#         display status-bar at the bottom of the screen?
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+tabwidth = 4
+# 
+#         number of spaces used to replace tab characters
+# 
+#     Type:	integer
+#     Default:	8
+# 
+# taglist_statusbar
+# 
+#         Format of the status-bar in taglist mode. This is a pair of strings to be left and right aligned in the status-bar. These strings may contain variables listed at bufferlist_statusbar that will be substituted accordingly.
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: taglist], {input_queue} total messages: {total_messages}
+# 
+# template_dir
+# 
+#         templates directory that contains your message templates. It will be used if you give compose –template a filename without a path prefix.
+# 
+#     Type:	string
+#     Default:	“$XDG_CONFIG_HOME/alot/templates”
+# 
+terminal_cmd = "alacritty -e"
+# 
+#         set terminal command used for spawning shell commands
+# 
+#     Type:	string
+#     Default:	“x-terminal-emulator -e”
+# 
+# theme
+# 
+#         name of the theme to use
+# 
+#     Type:	string
+#     Default:	None
+# 
+# themes_dir
+# 
+#         directory containing theme files.
+# 
+#     Type:	string
+#     Default:	“$XDG_CONFIG_HOME/alot/themes”
+# 
+# thread_authors_me
+# 
+#         Word to replace own addresses with. Works in combination with thread_authors_replace_me
+# 
+#     Type:	string
+#     Default:	“Me”
+# 
+# thread_authors_order_by
+# 
+#         When constructing the unique list of thread authors, order by date of author’s first or latest message in thread
+# 
+#     Type:	option, one of [‘first_message’, ‘latest_message’]
+#     Default:	first_message
+# 
+# thread_authors_replace_me
+# 
+#         Replace own email addresses with “me” in author lists Uses own addresses and aliases in all configured accounts.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# thread_focus_linewise
+# 
+#         Split message body linewise and allows to (move) the focus to each individual line. Setting this to False will result in one potentially big text widget for the whole message body.
+# 
+#     Type:	boolean
+#     Default:	True
+# 
+# thread_indent_replies
+# 
+#         number of characters used to indent replies relative to original messages in thread mode
+# 
+#     Type:	integer
+#     Default:	2
+# 
+# thread_statusbar
+# 
+#         Format of the status-bar in thread mode. This is a pair of strings to be left and right aligned in the status-bar. Apart from the global variables listed at bufferlist_statusbar these strings may contain variables:
+# 
+#             {tid}: thread id
+#             {subject}: subject line of the thread
+#             {authors}: abbreviated authors string for this thread
+#             {message_count}: number of contained messages
+#             {thread_tags}: displays all tags present in the current thread.
+#             {intersection_tags}: displays tags common to all messages in the current thread.
+#             {mimetype}: content type of the mime part displayed in the focused message.
+# 
+#     Type:	mixed_list
+#     Default:	[{buffer_no}: thread] {subject}, [{mimetype}] {input_queue} total messages: {total_messages}
+# 
+# thread_subject
+# 
+#         What should be considered to be “the thread subject”. Valid values are:
+# 
+#             ‘notmuch’ (the default), will use the thread subject from notmuch, which depends on the selected sorting method
+#             ‘oldest’ will always use the subject of the oldest message in the thread as the thread subject
+# 
+#     Type:	option, one of [‘oldest’, ‘notmuch’]
+#     Default:	notmuch
+# 
+# timestamp_format
+# 
+#         timestamp format in strftime format syntax
+# 
+#     Type:	string
+#     Default:	None
+# 
+# user_agent
+# 
+#         value of the User-Agent header used for outgoing mails. setting this to the empty string will cause alot to omit the header all together. The string ‘{version}’ will be replaced by the version string of the running instance.
+# 
+#     Type:	string
+#     Default:	“alot/{version}”
+[accounts]
+    [[posteo]]
+        realname = Szymon Mikulicz
+        address = szymon.mikulicz@posteo.net
+        aliases = s_m@posteo.net, ashymad@posteo.net
+        sendmail_command = msmtp --account=posteo -t
+        sent_box = maildir://~/.mail/posteo/Sent
+        draft_box = maildir://~/.mail/posteo/Drafts
+        [[[abook]]]
+          type = shellcommand
+          command = 'notmuch address --format=json date:1Y..'
+          regexp = '\[?{"name": "(?P<name>.*)", "address": "(?P<email>.+)", "name-addr": ".*"}[,\]]?'
+          shellcommand_external_filtering = False
+
+[bindings]
+    up = move up
+    down = move down
+    page up = move page up
+    page down = move page down
+    mouse press 4 = move up
+    mouse press 5 = move down
+    j = move down
+    k = move up
+    'g g' = move first
+    G = move last
+    ' ' = move page down
+    'ctrl d' = move halfpage down
+    'ctrl u' = move halfpage up
+    @ = refresh
+    ? = help bindings
+    I = search tag:inbox AND NOT tag:deleted
+    '#' = taglist
+    shift tab = bprevious
+    U = search tag:unread
+    tab = bnext
+    \ = prompt 'search '
+    d = bclose
+    $ = flush
+    m = compose
+    o = prompt 'search '
+    q = exit
+    ';' = bufferlist
+    ':' = prompt
+    . = repeat
+
+    [[bufferlist]]
+        x = close
+        enter = open
+
+    [[search]]
+        enter = untag unread; select
+        a = toggletags archived; toggletags inbox
+        & = toggletags deleted
+        ! = toggletags flagged
+        s = toggletags unread
+        l = retagprompt
+        O = refineprompt
+        | = refineprompt
+
+    [[envelope]]
+        a = prompt 'attach ~/'
+        y = send
+        P = save
+        s = 'refine Subject'
+        f = prompt 'set From '
+        t = 'refine To'
+        b = 'refine Bcc'
+        c = 'refine Cc'
+        S = togglesign
+        enter = edit
+        'g f' = togglesource
+
+    [[taglist]]
+        enter = select
+
+    [[namedqueries]]
+        enter = select
+
+    [[thread]]
+        enter = select
+        C = fold *
+        E = unfold *
+        c = fold
+        e = unfold
+        < = fold
+        > = unfold
+        [ = indent -
+        ] = indent +
+        'g f' = togglesource
+        H = toggleheaders
+        P = print --all --separately --add_tags
+        S = save --all
+        g = reply --all
+        f = forward
+        p = print --add_tags
+        n = editnew
+        b= bounce
+        s = save
+        r = reply
+        | = prompt 'pipeto '
+        t = togglemimetree
+        h = togglemimepart
+
+        'g j' = move next sibling
+        'g k' = move previous sibling
+        'g h' = move parent
+        'g l' = move first reply
+        ' ' = move next
