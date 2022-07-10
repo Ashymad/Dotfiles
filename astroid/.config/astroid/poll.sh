@@ -46,7 +46,7 @@ movemail posteo note Notes
 mbsync posteo
 if ! notmuch new | grep "No new mail"; then
     notify-send "New mail
-    $(notmuch search tag:new | sed 's/^thread:[0-9a-z]*[ ]*//')"
+    $(notmuch search tag:new | sed 's/^thread:[0-9a-z]*[ ]*//')" | true
 fi
 
 tag +posteo path:"posteo/**" 
