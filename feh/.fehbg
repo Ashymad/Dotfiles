@@ -2,7 +2,7 @@
 WP=$(find Pictures/Desktopography/2014/ -type f | shuf -n 1)
 convert -resize 1920x1080 $WP ~/.i3/BG.png &
 
-if [[ "$1" == "Sway" ]]; then
+if type swaymsg; then
     swaymsg "output * background $WP fill"
 else
     feh --no-fehbg --bg-fill $WP
