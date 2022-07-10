@@ -1,4 +1,4 @@
 #!/bin/sh
 
-cpp ~/.i3/config.in > ~/.i3/config
+cpp $HOME/.i3/config.in > $HOME/.i3/config
 exec i3

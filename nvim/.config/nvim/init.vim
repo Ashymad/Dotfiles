@@ -21,6 +21,8 @@ function! PackInit() abort
   call minpac#add('lervag/vimtex', {'type': 'opt'})
   call minpac#add('PietroPate/vim-tex-conceal', {'type': 'opt'})
 
+  call minpac#add('davisdude/vim-love-docs', {'type': 'opt', 'branch': 'build'})
+
   call minpac#add('rust-lang/rust.vim', {'type': 'opt'})
 
   call minpac#add('dag/vim-fish', {'type': 'opt'})
@@ -145,6 +147,11 @@ gcct:close()
 clang:close()
 EOF
 
+lua require'lspconfig'.rust_analyzer.setup{}
+lua require'lspconfig'.jedi_language_server.setup{}
+" lua require'lspconfig'.sumneko_lua.setup{cmd={"lua-language-server"}}
+lua require'lspconfig'.texlab.setup{}
+
 " Deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
 inoremap <expr><BS> deoplete#smart_close_popup()."\<C-h>"
@@ -257,6 +264,11 @@ endfunction
 autocmd Filetype i3config call SetI3Options()
 function SetI3Options()
     packadd i3config.vim
+endfunction
+
+autocmd Filetype lua call SetLuaOptions()
+function SetLuaOptions()
+    packadd vim-love-docs
 endfunction
 
 au BufReadPost APKBUILD set syntax=sh noexpandtab

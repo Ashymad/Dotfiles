@@ -1,0 +1,17 @@
+{
+  "host": "posteo.de",
+  "port": 993,
+  "tls": true,
+  "tlsOptions": {
+    "rejectUnauthorized": false
+  },
+  "username": "szymon.mikulicz@posteo.net",
+  "password": "",
+  "passwordCmd": "~/.config/astroid/get_pass.py \"https://posteo.de\"",
+  "onNewMail": "~/.config/astroid/poll.sh",
+  "onNewMailPost": "",
+  "boxes": [
+    "INBOX"
+  ]
+}
+
