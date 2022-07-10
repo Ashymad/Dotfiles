@@ -21,6 +21,8 @@ function! PackInit() abort
   call minpac#add('lervag/vimtex', {'type': 'opt'})
   call minpac#add('PietroPate/vim-tex-conceal', {'type': 'opt'})
 
+  call minpac#add('davisdude/vim-love-docs', {'type': 'opt', 'branch': 'build'})
+
   call minpac#add('rust-lang/rust.vim', {'type': 'opt'})
 
   call minpac#add('dag/vim-fish', {'type': 'opt'})
@@ -44,7 +46,7 @@ function! PackInit() abort
 
   call minpac#add('chaoren/vim-wordmotion')
 
-  call minpac#add('neovim/nvim-lsp')
+  call minpac#add('neovim/nvim-lspconfig')
   call minpac#add('Shougo/deoplete-lsp')
 endfunction
 
@@ -80,9 +82,10 @@ let g:vimtex_quickfix_enabled = 0
 map <C-k> :NERDTreeToggle<CR>
 
 " nvim-lsp
-lua require'nvim_lsp'.rust_analyzer.setup{}
-lua require'nvim_lsp'.pyls_ms.setup{cmd={"mspyls"}}
-lua require'nvim_lsp'.texlab.setup{}
+lua require'lspconfig'.rust_analyzer.setup{}
+lua require'lspconfig'.jedi_language_server.setup{}
+" lua require'lspconfig'.sumneko_lua.setup{cmd={"lua-language-server"}}
+lua require'lspconfig'.texlab.setup{}
 
 " Deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -184,6 +187,11 @@ endfunction
 autocmd Filetype i3config call SetI3Options()
 function SetI3Options()
     packadd i3config.vim
+endfunction
+
+autocmd Filetype lua call SetLuaOptions()
+function SetLuaOptions()
+    packadd vim-love-docs
 endfunction
 
 au BufReadPost APKBUILD set syntax=sh noexpandtab
