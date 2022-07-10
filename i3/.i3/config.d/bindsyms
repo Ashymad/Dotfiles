@@ -61,7 +61,7 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 bindsym $mod+Shift+0 move container to workspace 10
 
-bindsym $mod+Shift+c exec cpp ~/.i3/config.in > ~/.i3/config; reload
+bindsym $mod+Shift+c exec cpp ~/.i3/config.in > ~/.i3/config && i3-msg 'reload'
 
 bindsym $mod+Shift+r restart
 
@@ -91,3 +91,6 @@ bindsym $mod+p exec --no-startup-id ~/.fehbg -r
 
 // Take screenshot
 bindsym $mod+Shift+s exec --no-startup-id flameshot gui
+
+// Toggle touvhpad
+bindsym $mod+F10 exec ~/.i3/toggle_touchpad.sh "Synaptics TM3276-022"
