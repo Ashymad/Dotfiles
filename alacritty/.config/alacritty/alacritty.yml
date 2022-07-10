@@ -14,24 +14,12 @@ env:
   # `infocmp xterm-256color`.
   TERM: xterm-256color
 
-# Window dimensions in character columns and lines
-# Falls back to size specified by window manager if set to 0x0.
-# (changes require restart)
-window.dimensions:
-  columns: 80
-  lines: 24
 
 # Scrollback buffer
 scrollback:
   enabled: true
   max_lines: 10000
 
-# Adds this many blank pixels of padding around the window
-# Units are physical pixels; this is not DPI aware.
-# (change requires restart)
-window.padding:
-  x: 0
-  y: 0
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: false
@@ -96,7 +84,8 @@ font:
   use_thin_strokes: false
 
 # Should display the render timer
-debug.render_timer: false
+debug:
+  render_timer: false
 
 colors:
   primary:
@@ -145,12 +134,25 @@ colors:
 #
 # To completely disable the visual bell, set its duration to 0.
 #
-visual_bell:
+bell:
   animation: EaseOutExpo
   duration: 0
 
 # Background opacity
-background_opacity: 0.9019607843137255
+window:
+  opacity: 0.9019607843137255
+# Window dimensions in character columns and lines
+# Falls back to size specified by window manager if set to 0x0.
+# (changes require restart)
+  dimensions:
+    columns: 80
+    lines: 24
+# Adds this many blank pixels of padding around the window
+# Units are physical pixels; this is not DPI aware.
+# (change requires restart)
+  padding:
+    x: 0
+    y: 0
 
 # Mouse bindings
 #
@@ -177,7 +179,8 @@ mouse:
 selection:
   semantic_escape_chars: ",│`|:\"' ()[]{}<>"
 
-mouse.hide_when_typing: false
+mouse:
+  hide_when_typing: false
 
 # Style of the cursor
 #
@@ -185,7 +188,8 @@ mouse.hide_when_typing: false
 # - Block
 # - Underline
 # - Beam
-cursor.style: Block
+cursor:
+  style: Block
 
 # Live config reload (changes require restart)
 live_config_reload: true
@@ -244,7 +248,7 @@ key_bindings:
   - { key: Insert,   mods: Shift,            action: PasteSelection      }
   - { key: Key0,     mods: Control,          action: ResetFontSize       }
   - { key: Equals,   mods: Control,          action: IncreaseFontSize    }
-  - { key: Subtract, mods: Control,          action: DecreaseFontSize    }
+  - { key: Minus,    mods: Control,          action: DecreaseFontSize    }
   - { key: Up,       mods: Control|Shift,    action: ScrollToTop         }
   - { key: Down,     mods: Control|Shift,    action: ScrollToBottom      }
   - { key: PageUp,   mods: Shift,            action: ScrollPageUp              }
