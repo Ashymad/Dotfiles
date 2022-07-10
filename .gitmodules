@@ -4,3 +4,6 @@
 [submodule "astroid/.config/astroid/kpxcnm"]
 	path = astroid/.config/astroid/kpxcnm
 	url = git@github.com:Ashymad/kpxcnm
+[submodule "polybar/.config/polybar/polybar-scripts"]
+	path = polybar/.config/polybar/polybar-scripts
+	url = https://github.com/polybar/polybar-scripts.git
