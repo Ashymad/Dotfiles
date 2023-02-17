@@ -11,8 +11,18 @@ elseif exists('g:fvim_loaded')
     nnoremap <A-CR> :FVimToggleFullScreen<CR>
 endif
 
-set guifont=Fira\ Code:h12
-nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
-nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
+let s:font = "Fira\\ Code"
+let s:fontsize = 9
+:execute "set guifont=" . s:font . ":h" . s:fontsize
+
+function! AdjustFontSize(amount)
+    let s:fontsize = s:fontsize+a:amount
+    :execute "set guifont=" . s:font . ":h" . s:fontsize
+endfunction
+
+noremap <C-ScrollWheelUp> :call AdjustFontSize(1)<CR>
+noremap <C-ScrollWheelDown> :call AdjustFontSize(-1)<CR>
+inoremap <C-ScrollWheelUp> <Esc>:call AdjustFontSize(1)<CR>a
+inoremap <C-ScrollWheelDown> <Esc>:call AdjustFontSize(-1)<CR>a
 colorscheme onehalfdark
 let g:neovide_transparency=0.9

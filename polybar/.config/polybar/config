@@ -8,20 +8,27 @@
 ;=====================================================
 
 [colors]
-black = #282c34
-red = #e06c75
-green = #98c379
-yellow = #e5c07b
-blue = #61afef
-magenta = #c678dd
-cyan = #56b6c2
-white = #dcdfe4
+black = #6e6a86
+red = #eb6f92
+green = #9ccfd8
+yellow = #f6c177
+blue = #31748f
+magenta = #c4a7e7
+cyan = #ebbcba
+white = #e0def4
+altblack = #6e6a86
+altred = #eb6f92
+altgreen = #9ccfd8
+altyellow = #f6c177
+altblue = #31748f
+altmagenta = #c4a7e7
+altcyan = #ebbcba
+altwhite = #e0def4
 
-background = #e6282c34
-background-alt = #e65c6370
-
-foreground = #dcdfe4
-foreground-alt = #ffffff
+foreground = #e0def4
+foreground-alt = #f0eeg4
+background = #191724
+background-alt = #292734
 
 primary = ${colors.green}
 secondary = ${colors.yellow}
@@ -58,8 +65,8 @@ font-1 = "Noto Sans Mono CJK JP:pixelsize=9;1"
 font-2 = "Siji:pixelsize=10;1"
 
 modules-left = i3
-modules-center = cmus
-modules-right = filesystem memory cpu backlight-acpi volume eth wlan battery xkeyboard date
+modules-center = mpd
+modules-right = filesystem memory cpu volume vpn docketh eth wlan battery0 ibacklight xkeyboard date
 
 tray-position = left
 tray-padding = 2
@@ -200,11 +207,11 @@ bar-width = 10
 bar-indicator = |
 bar-indicator-foreground = ${colors.foreground}
 bar-indicator-font = 2
-bar-fill = ―
+bar-fill = ─
 bar-fill-font = 2
-bar-fill-foreground = ${colors.magenta}
-bar-empty = ―
+bar-empty = ─
 bar-empty-font = 2
+bar-fill-foreground = ${colors.magenta}
 bar-empty-foreground = ${colors.foreground}
 
 [module/cpu]
