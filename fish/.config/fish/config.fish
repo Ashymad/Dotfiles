@@ -8,7 +8,7 @@ alias bash 'env FISH_RAMP_DISABLE=1 bash'
 alias psgr 'ps aux | grep'
 
 if test -n "$NVIM"
-    alias nvim nvr
+    alias nvim 'nvr -s'
 end
 
 alias vim nvim
@@ -24,7 +24,7 @@ alias wine32tricks 'env WINEPREFIX=/home/shyman/.wine32 WINEARCH=win32 winetrick
 alias cmus='tmux attach-session -t cmus || tmux new-session -A -D -s cmus /usr/bin/cmus'
 
 alias :q exit
-alias :e nvr
+alias :e 'nvr -s'
 if test "$XDG_SESSION_TYPE" = "x11"
     alias :split 'i3-msg split v\; exec alacritty > /dev/null'
     alias :vsplit 'i3-msg split h\; exec alacritty > /dev/null'

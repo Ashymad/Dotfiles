@@ -1,7 +1,3 @@
-if &shell =~# 'fish$'
-    set shell=bash
-endif
-
 if &compatible
   set nocompatible
 endif
@@ -21,9 +17,9 @@ function! PackInit() abort
   call minpac#add('lervag/vimtex', {'type': 'opt'})
   call minpac#add('PietroPate/vim-tex-conceal', {'type': 'opt'})
 
-  call minpac#add('davisdude/vim-love-docs', {'type': 'opt', 'branch': 'build'})
-
   call minpac#add('rust-lang/rust.vim', {'type': 'opt'})
+
+  call minpac#add('ziglang/zig.vim')
 
   call minpac#add('dag/vim-fish', {'type': 'opt'})
 
@@ -33,16 +29,12 @@ function! PackInit() abort
 
   call minpac#add('paretje/deoplete-notmuch', {'type': 'opt'})
 
-  call minpac#add('rasjani/robotframework-vim', {'type': 'opt', 'subdir': 'after'})
-  
   call minpac#add('stephpy/vim-yaml', {'type': 'opt', 'subdir': 'after'})
-
-  call minpac#add('burnettk/vim-jenkins', {'type': 'opt'})
 
   call minpac#add('godlygeek/tabular')
   call minpac#add('plasticboy/vim-markdown', {'type': 'opt'})
 
-  call minpac#add('jackguo380/vim-lsp-cxx-highlight', {'type': 'opt'})
+  call minpac#add('nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'})
 
   call minpac#add('sonph/onehalf', {'subdir': 'vim'})
 
@@ -55,11 +47,12 @@ function! PackInit() abort
 
   call minpac#add('chaoren/vim-wordmotion')
 
-  call minpac#add("williamboman/nvim-lsp-installer")
   call minpac#add('neovim/nvim-lspconfig')
   call minpac#add('Shougo/deoplete-lsp')
 
-  call minpac#add('grafi-tt/lunajson', {'name': 'lunajson/lua', 'subdir': 'src'})
+  call minpac#add('folke/lsp-colors.nvim')
+  call minpac#add('kyazdani42/nvim-web-devicons')
+  call minpac#add('folke/trouble.nvim')
 endfunction
 
 command! PackUpdate call PackInit() | call minpac#update()
@@ -97,60 +90,24 @@ let g:vimtex_compiler_latexmk = {
 "NERDTree
 map <C-k> :NERDTreeToggle<CR>
 
-"Jenkins
-let g:jenkins_url = 'http://krk-sb13-19.soc-mgt.krk-lab.nsn-rdnet.net:8080'
-let g:jenkins_username = 'admin'
-let g:jenkins_password = 'egenrules'
-
 " nvim-lsp
-lua << EOF
-
-function nil2em(str)
-    if str == nil then
-        return ""
-    else 
-        return str
-    end
-end
-
-require("nvim-lsp-installer").setup {}
-
-local clang = io.popen('clang -print-resource-dir')
-local lspconfig = require'lspconfig'
-local json = require'lunajson'
-local compc = io.open("compile_commands.json","r")
-local gccp = "gcc"
-
-if compc ~= nil then
-    gccp = json.decode(compc:read("*a"))[1].arguments[1]
-end
-
-local gccs = io.popen(gccp .. " -print-sysroot")
-local gcct = io.popen(gccp .. " -dumpmachine")
-
-lspconfig.ccls.setup { 
-    init_options = { 
-        clang = {
-            resourceDir = clang:read("*l");
-            extraArgs = {
-                "--sysroot="..nil2em(gccs:read("*l")).."/",
-                "-target="..gcct:read("*l")
-                };
-            };
-        highlight = {
-            lsRanges = true;
-            };
-        };
-    };
-
-gcct:close()
-clang:close()
-EOF
-
 lua require'lspconfig'.rust_analyzer.setup{}
 lua require'lspconfig'.jedi_language_server.setup{}
-" lua require'lspconfig'.sumneko_lua.setup{cmd={"lua-language-server"}}
+lua require'lspconfig'.serve_d.setup{}
 lua require'lspconfig'.texlab.setup{}
+lua require'lspconfig'.zls.setup{}
+
+" Trouble
+lua require("trouble").setup{}
+
+" Zig
+let g:zig_fmt_autosave = 0
+
+" treesitter
+lua require'nvim-treesitter.configs'.setup {
+            \ highlight = { enable = true },
+            \ incremental_selection = { enable = true }
+            \ }
 
 " Deoplete
 inoremap <expr><C-h> deoplete#smart_close_popup()."\<C-h>"
@@ -163,8 +120,6 @@ endfunction"}}}
 imap <silent><expr> <TAB>
             \ pumvisible() ? "\<C-n>" :
             \ <SID>check_back_space() ? "\<TAB>" :
-            \ neosnippet#expandable_or_jumpable() ?
-            \ "\<Plug>(neosnippet_expand_or_jump)" :
             \ deoplete#manual_complete()
 
 call deoplete#custom#option('omni_patterns', {
@@ -191,28 +146,6 @@ autocmd Filetype tex call SetTeXOptions()
 function SetTeXOptions()
     packadd vim-tex-conceal
     packadd vimtex
-    let g:vimteplete = '\\(?:'
-      \ .  '\w*cite\w*(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-      \ . '|(text|block)cquote\*?(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-      \ . '|(for|hy)\w*cquote\*?{[^}]*}(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-      \ . '|\w*ref(?:\s*{[^}]*|range\s*{[^,}]*(?:}{)?)'
-      \ . '|hyperref\s*\[[^]]*'
-      \ . '|includegraphics\*?(?:\s*\[[^]]*\]){0,2}\s*{[^}]*'
-      \ . '|(?:include(?:only)?|input|subfile)\s*{[^}]*'
-      \ . '|([cpdr]?(gls|Gls|GLS)|acr|Acr|ACR)[a-zA-Z]*\s*{[^}]*'
-      \ . '|(ac|Ac|AC)\s*{[^}]*'
-      \ . '|includepdf(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|includestandalone(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|(usepackage|RequirePackage|PassOptionsToPackage)(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|documentclass(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|begin(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|end(\s*\[[^]]*\])?\s*{[^}]*'
-      \ . '|\w*'
-      \ .')'
-         " \ 'tex': g:vimtex#re#deoplete,
-    call deoplete#custom#option('omni_patterns', {
-          \ 'tex': g:vimteplete,
-          \})
     setlocal sw=2
     setlocal textwidth=79
     setlocal iskeyword+=:
@@ -300,7 +233,6 @@ autocmd CompleteDone * silent! pclose
 " vim settings
 
 set hidden
-" set lazyredraw
 let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
 let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 set termguicolors
@@ -321,8 +253,10 @@ filetype plugin indent on
 syntax on
 
 colorscheme onehalfdark
-hi Normal guibg=none
-hi LineNr guibg=none
+if !exists('g:neovide')
+    hi Normal guibg=none
+    hi LineNr guibg=none
+endif
 nmap ,d :b#<bar>bd#<CR>
 
 tnoremap <Esc> <C-\><C-n>

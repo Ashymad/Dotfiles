@@ -5,7 +5,8 @@ client.unfocused        #282c34e6 #282c34e6 #dcdfe4 #282c34e6
 client.focused_inactive #282c34e6 #282c34e6 #dcdfe4 #282c34e6
 client.urgent           #383a3be6 #383a3be6 #e06c75 #383a3be6
 
-new_window pixel 2
+default_border pixel 1
+default_floating_border pixel 1
 gaps inner 10
 
 for_window [instance="polybar"] gaps inner 0

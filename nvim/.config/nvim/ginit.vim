@@ -14,5 +14,4 @@ endif
 set guifont=Fira\ Code:h12
 nnoremap <silent> <C-ScrollWheelUp> :set guifont=+<CR>
 nnoremap <silent> <C-ScrollWheelDown> :set guifont=-<CR>
-colorscheme onehalfdark
 let g:neovide_transparency=0.9
