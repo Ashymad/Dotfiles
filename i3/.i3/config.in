@@ -9,10 +9,10 @@ floating_modifier $mod
 bindsym $mod+Return exec alacritty
 bindsym $mod+d exec rofi -modi drun -show drun
 
-bindsym $mod+Shift+d exec xhost + 192.168.100.103; mode "remote" 
+bindsym $mod+Shift+d exec xhost + 192.168.100.123; mode "remote" 
 mode "remote" {
-    bindsym $mod+d exec ssh mikulicz@192.168.100.103 env DISPLAY=192.168.100.102:0 rofi -modi drun -show drun
-    bindsym $mod+Return exec alacritty -e ssh -t mikulicz@192.168.100.103 env DISPLAY=192.168.100.102:0 '$SHELL'
+    bindsym $mod+d exec ssh mikulicz@192.168.100.123 env DISPLAY=192.168.100.102:0 rofi -modi drun -show drun
+    bindsym $mod+Return exec alacritty -e ssh -t mikulicz@192.168.100.123 env DISPLAY=192.168.100.102:0 '$SHELL'
 
 #include "config.d/bindsyms"
 

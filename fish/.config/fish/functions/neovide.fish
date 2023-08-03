@@ -6,6 +6,6 @@ function neovide
         disown
         ssh -T shyman@$DISADR "env DISPLAY=:0 neovide --remote-tcp $LOCADR:8118"
     else
-        /home/mikulicz/Workspace/neovide/target/release/neovide -- $argv
+        env neovide -- $argv
     end
 end

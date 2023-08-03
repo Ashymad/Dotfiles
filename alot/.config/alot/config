@@ -4,7 +4,7 @@
 #     Type:	boolean
 #     Default:	True
 # 
-attachment_prefix = "~/Downloads"
+attachment_prefix = "~/Downloads/fordenmark/"
 # 
 #         directory prefix for downloading attachments
 # 
