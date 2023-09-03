@@ -9,7 +9,7 @@ alias fcd 'cd (fd -I -L -d 8 -t d . ~ | fzf)'
 alias bash 'env FISH_RAMP_DISABLE=1 bash'
 alias psgr 'ps aux | grep'
 
-set -g PATH (bash -c -i 'source ~/.bash_profile; echo $PATH') ~/.deno/bin/
+set -g PATH (bash -c -i 'source ~/.bash_profile; echo $PATH') ~/.local/bin /usr/bin/core_perl/
 
 if test -n "$NVIM"
     alias nvim 'nvr -s'

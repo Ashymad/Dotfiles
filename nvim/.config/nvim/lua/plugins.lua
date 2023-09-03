@@ -18,37 +18,30 @@ require('packer').startup(function(use)
 
     use { 'stephpy/vim-yaml', rtp = 'after', ft = {'yaml'}}
 
-    use { 'burnettk/vim-jenkins',
-        ft = {'Jenkinsfile'},
+    use { "nvimdev/lspsaga.nvim",
         config = function()
-            vim.g.jenkins_url = 'http://krk-sb13-19.soc-mgt.krk-lab.nsn-rdnet.net:8080'
-            vim.g.jenkins_username = 'admin'
-            vim.g.jenkins_password = 'egenrules'
+            require('lspsaga').setup({})
+            vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>")
+            vim.keymap.set("n", "gt", ":Lspsaga peek_type_definition<CR>")
+            vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>")
+            vim.keymap.set("n", "gi", ":Lspsaga incoming_calls<CR>")
+            vim.keymap.set("n", "go", ":Lspsaga outgoing_calls<CR>")
         end
     }
 
-    use { "glepnir/lspsaga.nvim",
-        branch = "main",
+    use { "nvimdev/guard.nvim",
         config = function()
-            require('lspsaga').setup({})
-            vim.keymap.set("n", "gh", "<cmd>Lspsaga lsp_finder<CR>", { silent = true })
-            vim.keymap.set({"n","v"}, "<leader>ca", "<cmd>Lspsaga code_action<CR>", { silent = true })
-            vim.keymap.set("n", "gr", "<cmd>Lspsaga rename<CR>", { silent = true })
-            vim.keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_line_diagnostics<CR>", { silent = true })
-            vim.keymap.set("n", "<leader>cd", "<cmd>Lspsaga show_cursor_diagnostics<CR>", { silent = true })
-            vim.keymap.set("n", "[e", "<cmd>Lspsaga diagnostic_jump_prev<CR>", { silent = true })
-            vim.keymap.set("n", "]e", "<cmd>Lspsaga diagnostic_jump_next<CR>", { silent = true })
-            vim.keymap.set("n", "[E", function()
-                require("lspsaga.diagnostic").goto_prev({ severity = vim.diagnostic.severity.ERROR })
-            end, { silent = true })
-            vim.keymap.set("n", "]E", function()
-                require("lspsaga.diagnostic").goto_next({ severity = vim.diagnostic.severity.ERROR })
-            end, { silent = true })
-            vim.keymap.set("n","<leader>o", "<cmd>LSoutlineToggle<CR>",{ silent = true })
-            vim.keymap.set("n", "K", "<cmd>Lspsaga hover_doc<CR>", { silent = true })
-            vim.keymap.set("n", "<A-d>", "<cmd>Lspsaga open_floaterm<CR>", { silent = true })
-            vim.keymap.set("t", "<A-d>", [[<C-\><C-n><cmd>Lspsaga close_floaterm<CR>]], { silent = true })
+            local ft = require('guard.filetype')
+
+            ft('cpp'):fmt('clang-format')
+            ft('c'):fmt('clang-format')
+
+            require('guard').setup({
+                -- the only options for the setup function
+                fmt_on_save = true,
+                -- Use lsp if no formatter was defined for this filetype
+                lsp_as_default_formatter = false,
+            })
         end
     }
 
@@ -121,7 +114,12 @@ require('packer').startup(function(use)
             require("nvim-tree").setup({
                 view = {
                     preserve_window_proportions = true,
-                }
+                },
+                actions = {
+                    open_file = {
+                        resize_window = false,
+                    },
+                },
             })
 
             vim.keymap.set("n", "<C-k>", ":NvimTreeToggle<CR>")
@@ -132,12 +130,10 @@ require('packer').startup(function(use)
 
     use { "lukas-reineke/indent-blankline.nvim",
         config = function()
-            require("indent_blankline").setup({
-                char = "⸾",
-                space_char_blankline = " ",
+            require("indent_blankline").setup {
                 show_current_context = true,
                 show_current_context_start = true,
-            })
+            }
         end
     }
     use 'chaoren/vim-wordmotion'
@@ -152,9 +148,20 @@ require('packer').startup(function(use)
     }
 
     use { 'neovim/nvim-lspconfig',
+        requires = { 'creativenull/efmls-configs-nvim' },
         config = function()
-            require'lspconfig'.clangd.setup{}
-            require'lspconfig'.zls.setup{}
+            local lspconfig = require("lspconfig");
+            lspconfig.clangd.setup{}
+            lspconfig.zls.setup{}
+            lspconfig.efm.setup{
+                settings = {
+                    rootMarkers = { '.git/' },
+                    languages = {
+                        sh = { require('efmls-configs.linters.shellcheck') },
+                    },
+                },
+                filetypes = { 'sh' }
+            }
         end
     }
 

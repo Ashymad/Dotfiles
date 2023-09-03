@@ -1,7 +1,3 @@
-if &shell =~# 'fish$'
-   set shell=bash
-endif
-
 if &compatible
   set nocompatible
 endif
