@@ -30,10 +30,16 @@ require('packer').startup(function(use)
     }
 
     use { "nvimdev/guard.nvim",
+        requires = {
+            'nvimdev/guard-collection',
+        },
         config = function()
             local ft = require('guard.filetype')
 
-            ft('cpp'):fmt('clang-format')
+            ft('cpp'):fmt({
+                cmd = '/opt/clang/latest/bin/clang-format',
+                stdin = true,
+            })
             ft('c'):fmt('clang-format')
 
             require('guard').setup({
@@ -126,14 +132,13 @@ require('packer').startup(function(use)
         end
     }
 
+    use 'vimwiki/vimwiki'
+
     use 'godlygeek/tabular'
 
     use { "lukas-reineke/indent-blankline.nvim",
         config = function()
-            require("indent_blankline").setup {
-                show_current_context = true,
-                show_current_context_start = true,
-            }
+            require("ibl").setup() 
         end
     }
     use 'chaoren/vim-wordmotion'
@@ -151,22 +156,22 @@ require('packer').startup(function(use)
         requires = { 'creativenull/efmls-configs-nvim' },
         config = function()
             local lspconfig = require("lspconfig");
-            lspconfig.clangd.setup{}
-            lspconfig.zls.setup{}
-            lspconfig.efm.setup{
-                settings = {
-                    rootMarkers = { '.git/' },
-                    languages = {
-                        sh = { require('efmls-configs.linters.shellcheck') },
-                    },
-                },
-                filetypes = { 'sh' }
+            lspconfig.clangd.setup{
+                cmd = { "/opt/clang/latest/bin/clangd" },
             }
+            lspconfig.pylsp.setup{}
+            lspconfig.zls.setup{}
+            lspconfig.bashls.setup{}
         end
     }
 
     use { 'Shougo/ddc-source-nvim-lsp',
         requires = {'Shougo/ddc.vim', 'neovim/nvim-lspconfig'}
+    }
+    use { 'vim-denops/denops.vim',
+        config = function()
+            -- vim.g.denops_server_addr = '127.0.0.1:32123'
+        end
     }
 
     use { 'Shougo/ddc.vim',

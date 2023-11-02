@@ -6,6 +6,8 @@ autocmd BufNewFile,BufRead *.fish set filetype=fish
 
 autocmd BufNewFile,BufRead Jenkinsfile,*.Jenkinsfile set filetype=groovy
 
+autocmd BufNewFile,BufRead *.bats set filetype=sh
+
 autocmd CompleteDone * silent! pclose
 
 set termguicolors

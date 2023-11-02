@@ -3,29 +3,35 @@ function aur-cleanup
     msg1 "Cleaning pacman cache..."
     sudo pacman -Sc --noconfirm
     msg1 "Rebuilding custom repositories..."
-    for repo in /var/cache/pacman/*custom*
-        cd $repo
-        set reponame (basename $repo)
-        rm $reponame.db*
-	set pkgs *.pkg.tar.xz
-        repo-add -n $reponame.db.tar $pkgs
+    set repos (awk '{
+        if ($1 ~ /\[.*\]/) {
+            name = gensub(/\[(.*)\]/, "\\\\1", 1, $1)
+        } else if ($1 ~ /Server/) {
+            sub(/.*Server.*=.*file:\/\//, "");
+            print name ":" $0
+        }
+    }' /etc/pacman.conf)
+
+    for i in (seq (count $repos))
+        set reponames[$i] (echo $repos[$i] | cut -d':' -f1)
+        set repodirs[$i] (echo $repos[$i] | cut -d':' -f2)
+        set pkgs $repodirs[$i]/*.pkg.tar.xz
+        rm $repodirs[$i]/$reponames[$i].db.tar
+        repo-add -n $repodirs[$i]/$reponames[$i].db.tar $pkgs
     end
     sudo pacman -Sy
     msg1 "Cleaning aur sync cache..."
-    cd ~/.cache/aurutils/sync
-    for dir in *
+    for dir in ~/.cache/aurutils/sync/*
         set pkgname (bash -c "source $dir/PKGBUILD;"'echo $pkgname')
         if not pacman -Qi $pkgname >/dev/null 2>/dev/null
-            echo "Removing $dir..."
+            echo Removing $dir...
             rm -rf -- $dir
         else
             set reponame (pacman -Ss '^'(string escape --style=regex $pkgname)'$' | head -1 | sed 's@/.*$@@g')
-            if string match -q 'custom*' $reponame
-                cd $dir
-                git clean -xdf
-                cd ..
+            if contains $reponame $reponames
+                git -C $dir clean -xdf
             else
-                echo "Removing $dir..."
+                echo Removing $dir...
                 rm -rf -- $dir
             end
         end
