@@ -1,66 +1,83 @@
-require('packer').startup(function(use)
-    use 'wbthomason/packer.nvim'
+local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        "git",
+        "clone",
+        "--filter=blob:none",
+        "https://github.com/folke/lazy.nvim.git",
+        "--branch=stable", -- latest stable release
+        lazypath,
+    })
+end
+vim.opt.rtp:prepend(lazypath)
 
-    use { 'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = function()
-            require'nvim-treesitter.configs'.setup({
+vim.g.mapleader = " "
+
+require('lazy').setup({
+    { "nvim-treesitter/nvim-treesitter",
+        build = ":TSUpdate",
+        config = function () 
+            require("nvim-treesitter.configs").setup({
+                ensure_installed = { "c", "cpp", "python", "bash", "lua", "vim", "vimdoc", "fish", "yaml", "markdown", "markdown_inline" },
                 highlight = { enable = true },
-                incremental_selection = { enable = true },
-                textobjects = { enable = true },
+                indent = { enable = true },  
             })
         end
-    }
+    },
 
-    use { 'dag/vim-fish', ft = {'fish'}}
+    { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
-    use { 'mboughaba/i3config.vim', ft = {'i3config'}}
-
-    use { 'stephpy/vim-yaml', rtp = 'after', ft = {'yaml'}}
-
-    use { "nvimdev/lspsaga.nvim",
+    { "nvimdev/lspsaga.nvim",
         config = function()
             require('lspsaga').setup({})
-            vim.keymap.set("n", "gd", ":Lspsaga peek_definition<CR>")
-            vim.keymap.set("n", "gt", ":Lspsaga peek_type_definition<CR>")
-            vim.keymap.set("n", "ga", ":Lspsaga code_action<CR>")
-            vim.keymap.set("n", "gi", ":Lspsaga incoming_calls<CR>")
-            vim.keymap.set("n", "go", ":Lspsaga outgoing_calls<CR>")
-        end
-    }
+        end,
+        keys = {
+            {"gd", "<cmd>Lspsaga peek_definition<CR>"},
+            {"gt", "<cmd>Lspsaga peek_type_definition<CR>"},
+            {"ga", "<cmd>Lspsaga code_action<CR>"},
+            {"gi", "<cmd>Lspsaga incoming_calls<CR>"},
+            {"go", "<cmd>Lspsaga outgoing_calls<CR>"},
+        }
+    },
 
-    use { "nvimdev/guard.nvim",
-        requires = {
+    { "nvimdev/guard.nvim",
+        dependencies = {
             'nvimdev/guard-collection',
         },
         config = function()
             local ft = require('guard.filetype')
 
-            ft('cpp'):fmt({
-                cmd = '/opt/clang/latest/bin/clang-format',
-                stdin = true,
-            })
+            ft('cpp'):fmt('clang-format')
             ft('c'):fmt('clang-format')
 
             require('guard').setup({
-                -- the only options for the setup function
                 fmt_on_save = true,
-                -- Use lsp if no formatter was defined for this filetype
                 lsp_as_default_formatter = false,
             })
         end
-    }
+    },
 
-    use { 'rose-pine/neovim',
-     as = 'rose-pine',
-     config = function()
-         vim.cmd('colorscheme rose-pine')
-     end
-    }
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",         -- required
+            "nvim-telescope/telescope.nvim", -- optional
+            "sindrets/diffview.nvim",        -- optional
+            "ibhagwan/fzf-lua",              -- optional
+        },
+        config = true
+    },
 
-    use { 'nvim-lualine/lualine.nvim',
-        requires = {
-            'kyazdani42/nvim-web-devicons',
+    { 'rose-pine/neovim',
+        name = 'rose-pine',
+        config = function()
+            vim.cmd('colorscheme rose-pine')
+        end
+    },
+
+    { 'nvim-lualine/lualine.nvim',
+        dependencies = {
+            'nvim-tree/nvim-web-devicons',
             'rose-pine'
         },
         config = function()
@@ -71,9 +88,9 @@ require('packer').startup(function(use)
                 extensions = {'nvim-tree'}
             }
         end
-    }
+    },
 
-    use { 'xiyaowong/nvim-transparent',
+    { 'xiyaowong/nvim-transparent',
         config = function()
             require("transparent").setup({
                 extra_groups = {
@@ -87,10 +104,10 @@ require('packer').startup(function(use)
                 exclude_groups = {}, -- table: groups you don't want to clear
             })
         end
-    }
+    },
 
-    use {'akinsho/bufferline.nvim',
-        requires = 'nvim-tree/nvim-web-devicons',
+    {'akinsho/bufferline.nvim',
+        dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             vim.opt.termguicolors = true
             require("bufferline").setup({
@@ -106,11 +123,10 @@ require('packer').startup(function(use)
                 }
             })
         end
-    }
+    },
 
-    use { 'nvim-tree/nvim-tree.lua',
-        requires = 'nvim-tree/nvim-web-devicons',
-        tag = 'nightly',
+    { 'nvim-tree/nvim-tree.lua',
+        dependencies = 'nvim-tree/nvim-web-devicons',
         config = function()
             vim.g.loaded_netrw = 1
             vim.g.loaded_netrwPlugin = 1
@@ -127,75 +143,81 @@ require('packer').startup(function(use)
                     },
                 },
             })
+        end,
+        keys = {
+            { "<C-k>", "<cmd>NvimTreeToggle<CR>" }
+        }
+    },
 
-            vim.keymap.set("n", "<C-k>", ":NvimTreeToggle<CR>")
-        end
-    }
+    'vimwiki/vimwiki',
 
-    use 'vimwiki/vimwiki'
-
-    use 'godlygeek/tabular'
-
-    use { "lukas-reineke/indent-blankline.nvim",
+    { "lukas-reineke/indent-blankline.nvim",
         config = function()
             require("ibl").setup() 
         end
-    }
-    use 'chaoren/vim-wordmotion'
+    },
+    'chaoren/vim-wordmotion',
 
-    use { 'goolord/alpha-nvim',
-        requires = { 'nvim-tree/nvim-web-devicons' },
+    { 'goolord/alpha-nvim',
+        dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function ()
             local theme = require("alpha.themes.startify") --or require("alpha.themes.startify")
             theme.mru_opts.autocd = true
             require'alpha'.setup(theme.config)
         end
-    }
+    },
 
-    use { 'neovim/nvim-lspconfig',
-        requires = { 'creativenull/efmls-configs-nvim' },
+    { 'neovim/nvim-lspconfig',
         config = function()
             local lspconfig = require("lspconfig");
-            lspconfig.clangd.setup{
-                cmd = { "/opt/clang/latest/bin/clangd" },
-            }
+            lspconfig.clangd.setup{}
             lspconfig.pylsp.setup{}
             lspconfig.zls.setup{}
             lspconfig.bashls.setup{}
         end
-    }
+    },
 
-    use { 'Shougo/ddc-source-nvim-lsp',
-        requires = {'Shougo/ddc.vim', 'neovim/nvim-lspconfig'}
-    }
-    use { 'vim-denops/denops.vim',
-        config = function()
-            -- vim.g.denops_server_addr = '127.0.0.1:32123'
-        end
-    }
-
-    use { 'Shougo/ddc.vim',
-        requires = {
+    { 'Shougo/ddc.vim',
+        dependencies = {
             'Shougo/ddc-ui-native',
             'vim-denops/denops.vim',
-            'Shougo/ddc-source-nvim-lsp',
+            'Shougo/ddc-source-lsp',
+            'Shougo/ddc-source-around',
+            'LumaKernel/ddc-source-file',
             'Shougo/ddc-sorter_rank',
-            'Shougo/ddc-matcher_head'
+            'Shougo/ddc-matcher_head',
         },
+        lazy = false,
         config = function()
+            require("lspconfig").denols.setup({
+                capabilities = require("ddc_source_lsp").make_client_capabilities(),
+            })
             vim.fn['ddc#custom#patch_global']('ui', 'native')
             vim.fn['ddc#custom#patch_global']({
-                sources = {'nvim-lsp'},
+                sources = {'lsp', 'around', 'file'},
                 sourceOptions = {
                     _ = {
                         matchers = {'matcher_head'},
                         sorters = {'sorter_rank'}
                     },
-                    ["nvim-lsp"] = {
+                    lsp = {
                         mark = 'L',
-                        forceCompletionPattern = '\\.\\w*| =\\w*|->\\w*' },
+                        forceCompletionPattern = '\\.\\w*| =\\w*|->\\w*'
+                    },
+                    around = {
+                        mark = 'A'
+                    },
+                    file = {
+                        mark = 'F',
+                        isVolatile = true,
+                        forceCompletionPattern = '\\S/\\S*'
                     }
-                })
+                },
+                sourceParams = {
+                    enableResolveItem = true,
+                    enableAdditionalTextEdit = true,
+                }
+            })
             vim.keymap.set('i', '<Tab>', function()
                 local col = vim.fn.col('.') - 1
                 if vim.fn.pumvisible() == 1 then
@@ -208,7 +230,6 @@ require('packer').startup(function(use)
             end, {expr = true, silent = true})
 
             vim.fn["ddc#enable"]()
-        end
+        end,
     }
-
-end)
+})

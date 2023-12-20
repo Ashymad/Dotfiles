@@ -2,8 +2,6 @@ if &compatible
   set nocompatible
 endif
 
-autocmd BufNewFile,BufRead *.fish set filetype=fish
-
 autocmd BufNewFile,BufRead Jenkinsfile,*.Jenkinsfile set filetype=groovy
 
 autocmd BufNewFile,BufRead *.bats set filetype=sh

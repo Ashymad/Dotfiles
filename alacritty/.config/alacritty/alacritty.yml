@@ -63,7 +63,7 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 9
+  size: 10
 
   # Offset is the extra space around each character. offset.y can be thought of
   # as modifying the linespacing, and offset.x as modifying the letter spacing.
@@ -152,7 +152,7 @@ bell:
 
 # Background opacity
 window:
-  opacity: 0.9
+  opacity: 0.8
 
 # Mouse bindings
 #
