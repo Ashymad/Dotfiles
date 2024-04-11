@@ -4,6 +4,8 @@ endif
 
 autocmd BufNewFile,BufRead Jenkinsfile,*.Jenkinsfile set filetype=groovy
 
+autocmd BufNewFile,BufRead *.zig set shell=bash
+
 autocmd BufNewFile,BufRead *.bats set filetype=sh
 
 autocmd CompleteDone * silent! pclose

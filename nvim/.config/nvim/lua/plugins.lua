@@ -25,6 +25,18 @@ require('lazy').setup({
         end
     },
 
+    { "m00qek/baleia.nvim",
+        config = function()
+            vim.g.baleia = require("baleia").setup()
+            vim.api.nvim_create_user_command("BaleiaColorize", function()
+                vim.g.baleia.once(vim.api.nvim_get_current_buf())
+            end, { bang = true })
+        end,
+        keys = {
+            {"<C-h>", "<cmd>BaleiaColorize<CR>"},
+        }
+    },
+
     { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
     { "nvimdev/lspsaga.nvim",
@@ -57,8 +69,15 @@ require('lazy').setup({
         end
     },
 
-    {
-        "NeogitOrg/neogit",
+    { "ibhagwan/fzf-lua",
+        keys = {
+            {"<c-P>", "<cmd>FzfLua files<CR>"},
+            {"gs", "<cmd>FzfLua grep_cword<CR>"},
+            {"gs", "<cmd>FzfLua grep_visual<CR>", mode="x"},
+        }
+    },
+
+    { "NeogitOrg/neogit",
         dependencies = {
             "nvim-lua/plenary.nvim",         -- required
             "nvim-telescope/telescope.nvim", -- optional

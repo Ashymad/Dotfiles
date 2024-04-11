@@ -1,5 +1,7 @@
 #!/bin/env fish
 
+alias docker "env DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$(id -u)/bus podman"
+
 #fish_config theme choose "Rosé Pine"
 
 set fish_greeting ""

@@ -3,12 +3,13 @@
 from os import path
 import configparser
 import sys
+import pathlib
 
 from nacl.public import PrivateKey
 import kpxcnm
 
 CONFIG = configparser.ConfigParser()
-CONFIG.read(path.expanduser("~/.config/astroid/keys.ini"))
+CONFIG.read(path.expanduser(pathlib.Path(__file__).parent.resolve() / "keys.ini"))
 
 k = kpxcnm.Kpxcnm(PrivateKey(kpxcnm.Kpxcnm._from_b64_str(CONFIG['DEFAULT']['privkey'])),
                   CONFIG['DEFAULT']['dbid'])
