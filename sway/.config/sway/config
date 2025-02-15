@@ -1,6 +1,4 @@
 # vim: filetype=i3config
-exec 'readlink -n /tmp/wallpaper/0 > ~/.cache/swww/eDP-1; swww init'
-
 include /etc/sway/config.d/*
 
 set $mod Mod4
@@ -93,14 +91,13 @@ mode "resize" {
 }
 bindsym $mod+r mode "resize"
 
-set $power_control "[l]ock log[o]ut [s]uspend [h]ibernate [r]eboot [p]oweroff"
+set $power_control "[l]ock log[o]ut [s]uspend [r]eboot [p]oweroff"
 mode  $power_control {
     bindsym l exec ~/.config/sway/lock.sh; mode "default"
     bindsym o exec swaymsg exit; mode "default"
-    bindsym s exec systemctl suspend; mode "default"
-    bindsym h exec systemctl hibernate; mode "default"
-    bindsym r exec systemctl reboot; mode "default"
-    bindsym p exec systemctl poweroff; mode "default"
+    bindsym s exec sudo /usr/sbin/acpiconf -s 3; exec ~/.config/sway/lock.sh; mode "default"
+    bindsym r exec sudo /sbin/reboot; mode "default"
+    bindsym p exec sudo /sbin/poweroff; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -113,9 +110,9 @@ titlebar_padding 2 2
 gaps inner 10
 
  # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
-bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # C* Music Player controls
 bindsym XF86AudioPlay exec --no-startup-id mpc toggle
@@ -126,14 +123,11 @@ bindsym XF86AudioPrev exec --no-startup-id mpc prev
 bindsym $mod+c exec alacritty --class CMUS -e fish -c cmus
 
 # Screen brightness controls
-bindsym XF86MonBrightnessUp exec brightnessctl set +25
-bindsym XF86MonBrightnessDown exec brightnessctl set 25-
+bindsym Ctrl+F8 exec backlight - 10
+bindsym Ctrl+F9 exec backlight + 10
 
-bindsym Ctrl+XF86MonBrightnessUp exec brightnessctl set +5
-bindsym Ctrl+XF86MonBrightnessDown exec brightnessctl set 5-
-
-bindsym Shift+XF86MonBrightnessUp exec brightnessctl --device "kbd_backlight" set +25
-bindsym Shift+XF86MonBrightnessDown exec brightnessctl --device "kbd_backlight" set 25-
+bindsym Ctrl+Shift+F8 exec backlight - 5
+bindsym Ctrl+Shift+F9 exec backlight + 5
 
 bindsym Shift+XF86LaunchA input type:touchpad events toggle enabled disabled
 
@@ -148,7 +142,7 @@ input type:touchpad {
 }
 
 # Change wallpaper
-bindsym $mod+p exec swww img "$(wallpaper-change)"
+bindsym $mod+p exec ~/.fehbg r
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -166,10 +160,9 @@ for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
 for_window [app_id="CMUS"] floating enable
 
+exec ~/.fehbg
 exec mako
-exec nm-applet --indicator
 exec wlsunset -l 50 -L 20
-exec bt-agent -c NoInputNoOutput
 
 exec swayidle \
          timeout 300 '~/.config/sway/lock.sh' \

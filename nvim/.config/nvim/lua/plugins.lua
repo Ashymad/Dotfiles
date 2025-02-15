@@ -25,18 +25,6 @@ require('lazy').setup({
         end
     },
 
-    { "m00qek/baleia.nvim",
-        config = function()
-            vim.g.baleia = require("baleia").setup()
-            vim.api.nvim_create_user_command("BaleiaColorize", function()
-                vim.g.baleia.once(vim.api.nvim_get_current_buf())
-            end, { bang = true })
-        end,
-        keys = {
-            {"<C-h>", "<cmd>BaleiaColorize<CR>"},
-        }
-    },
-
     { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
     { "nvimdev/lspsaga.nvim",
@@ -62,10 +50,10 @@ require('lazy').setup({
             ft('cpp'):fmt('clang-format')
             ft('c'):fmt('clang-format')
 
-            require('guard').setup({
+            vim.g.guard_config = {
                 fmt_on_save = true,
                 lsp_as_default_formatter = false,
-            })
+            }
         end
     },
 
@@ -78,7 +66,6 @@ require('lazy').setup({
     },
 
     { "NeogitOrg/neogit",
-        branch = 'nightly',
         dependencies = {
             "nvim-lua/plenary.nvim",         -- required
             "nvim-telescope/telescope.nvim", -- optional
@@ -190,10 +177,10 @@ require('lazy').setup({
     { 'neovim/nvim-lspconfig',
         config = function()
             local lspconfig = require("lspconfig");
-            lspconfig.clangd.setup{}
-            lspconfig.pylsp.setup{}
-            lspconfig.zls.setup{}
-            lspconfig.bashls.setup{}
+            if 1 == vim.fn.executable('clangd') then lspconfig.clangd.setup{} end
+            if 1 == vim.fn.executable('pylsp') then lspconfig.pylsp.setup{} end
+            if 1 == vim.fn.executable('zls') then lspconfig.zls.setup{} end
+            if 1 == vim.fn.executable('bashls') then lspconfig.bashls.setup{} end
         end
     },
 
