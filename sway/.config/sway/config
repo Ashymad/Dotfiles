@@ -7,7 +7,7 @@ font pango:Tamsyn 7
 
 floating_modifier $mod
 
-bindsym $mod+Return exec alacritty
+bindsym $mod+Return exec foot
 
 bindsym $mod+Shift+q kill
 
@@ -95,9 +95,9 @@ set $power_control "[l]ock log[o]ut [s]uspend [r]eboot [p]oweroff"
 mode  $power_control {
     bindsym l exec ~/.config/sway/lock.sh; mode "default"
     bindsym o exec swaymsg exit; mode "default"
-    bindsym s exec sudo /usr/sbin/acpiconf -s 3; exec ~/.config/sway/lock.sh; mode "default"
-    bindsym r exec sudo /sbin/reboot; mode "default"
-    bindsym p exec sudo /sbin/poweroff; mode "default"
+    bindsym s exec loginctl suspend; mode "default"
+    bindsym r exec loginctl reboot; mode "default"
+    bindsym p exec loginctl poweroff; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
@@ -107,11 +107,11 @@ bindsym $mod+n mode $power_control
 default_border pixel 2
 titlebar_border_thickness 1
 titlebar_padding 2 2
-gaps inner 10
+gaps inner 2
 
  # Pulse Audio controls
-bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5%
-bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5%
+bindsym XF86AudioRaiseVolume exec --no-startup-id ~/.local/bin/pwctl 0.1
+bindsym XF86AudioLowerVolume exec --no-startup-id ~/.local/bin/pwctl -0.1
 bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 # C* Music Player controls
@@ -171,4 +171,4 @@ exec swayidle \
          lock '~/.config/sway/lock.sh' \
          before-sleep '~/.config/sway/lock.sh'
 
-exec_always "killall waybar; waybar"
+exec_always "pkill waybar; waybar"
