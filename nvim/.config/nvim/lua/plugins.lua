@@ -27,6 +27,8 @@ require('lazy').setup({
 
     { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
+    { 'janet-lang/janet.vim', ft = {'janet'}},
+
     { "nvimdev/lspsaga.nvim",
         config = function()
             require('lspsaga').setup({})
@@ -98,23 +100,20 @@ require('lazy').setup({
     },
 
     { 'xiyaowong/nvim-transparent',
+        dependencies = {
+            'akinsho/bufferline.nvim',
+            'nvim-lualine/lualine.nvim'
+        },
         config = function()
-            require("transparent").setup({
-                extra_groups = {
-                    "BufferLineTabClose",
-                    "BufferlineBufferSelected",
-                    "BufferLineFill",
-                    "BufferLineBackground",
-                    "BufferLineSeparator",
-                    "BufferLineIndicatorSelected",
-                },
-                exclude_groups = {}, -- table: groups you don't want to clear
-            })
+            require("transparent").setup({})
+            require('transparent').clear_prefix('BufferLine')
+            require 'transparent'.clear_prefix("TabLine")
         end
     },
 
     {'akinsho/bufferline.nvim',
         dependencies = 'nvim-tree/nvim-web-devicons',
+        lazy = false,
         config = function()
             vim.opt.termguicolors = true
             require("bufferline").setup({
