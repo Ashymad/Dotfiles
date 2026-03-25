@@ -1,9 +1,0 @@
-set output_plugin=pulse
-set dsp.alsa.device=sysdefault:CARD=CODEC
-set mixer.alsa.device=sysdefault:CARD=CODEC
-set mixer.alsa.channel=master
-set mouse=true
-set resume=true
-colorscheme night
-shell tmux set status off
-bind -f common q shell tmux bind-key -n 'q' detach \\\; unbind-key -n 'q'; sleep 1; tmux unbind-key -n 'q'

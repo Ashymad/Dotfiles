@@ -25,6 +25,23 @@ require('lazy').setup({
         end
     },
 
+    {
+        "rachartier/tiny-inline-diagnostic.nvim",
+        event = "VeryLazy",
+        priority = 1000,
+        config = function()
+            require("tiny-inline-diagnostic").setup({
+                options = {
+                    multilines = {
+                        enabled = true,
+                        always_show = false,
+                    },
+                },
+            })
+            vim.diagnostic.config({ virtual_text = false }) -- Disable Neovim's default virtual text diagnostics
+        end,
+    },
+
     { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
     { 'janet-lang/janet.vim', ft = {'janet'}},
@@ -42,21 +59,53 @@ require('lazy').setup({
         }
     },
 
-    { "nvimdev/guard.nvim",
-        dependencies = {
-            'nvimdev/guard-collection',
+    { 'stevearc/conform.nvim',
+        opts = {
+            formatters_by_ft = {
+                c = { "clang-format" },
+                cpp = { "clang-format" },
+            },
+            format_on_save = {
+                -- These options will be passed to conform.format()
+                timeout_ms = 500,
+                lsp_format = "fallback",
+            },
         },
-        config = function()
-            local ft = require('guard.filetype')
+    },
 
-            ft('cpp'):fmt('clang-format')
-            ft('c'):fmt('clang-format')
+    {
+        "folke/noice.nvim",
+        event = "VeryLazy",
+        opts = {
+            lsp = {
+                -- override markdown rendering so that **cmp** and other plugins use **Treesitter**
+                override = {
+                    ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
+                    ["vim.lsp.util.stylize_markdown"] = true,
+                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
+                },
+            },
+            -- you can enable a preset for easier configuration
+            presets = {
+                bottom_search = true, -- use a classic bottom cmdline for search
+                command_palette = true, -- position the cmdline and popupmenu together
+                long_message_to_split = true, -- long messages will be sent to a split
+                inc_rename = false, -- enables an input dialog for inc-rename.nvim
+                lsp_doc_border = false, -- add a border to hover docs and signature help
+            },
 
-            vim.g.guard_config = {
-                fmt_on_save = true,
-                lsp_as_default_formatter = false,
-            }
-        end
+            cmdline = {
+                view = "cmdline",
+            },
+        },
+        dependencies = {
+            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+            "MunifTanjim/nui.nvim",
+            -- OPTIONAL:
+            --   `nvim-notify` is only needed, if you want to use the notification view.
+            --   If not available, we use `mini` as the fallback
+            "rcarriga/nvim-notify",
+        }
     },
 
     { "ibhagwan/fzf-lua",
@@ -155,13 +204,12 @@ require('lazy').setup({
         }
     },
 
-    'vimwiki/vimwiki',
-
     { "lukas-reineke/indent-blankline.nvim",
         config = function()
             require("ibl").setup() 
         end
     },
+
     'chaoren/vim-wordmotion',
 
     { 'goolord/alpha-nvim',
@@ -175,17 +223,18 @@ require('lazy').setup({
 
     { 'neovim/nvim-lspconfig',
         config = function()
-            local lspconfig = require("lspconfig");
-            if 1 == vim.fn.executable('clangd') then lspconfig.clangd.setup{} end
-            if 1 == vim.fn.executable('pylsp') then lspconfig.pylsp.setup{} end
-            if 1 == vim.fn.executable('zls') then lspconfig.zls.setup{} end
-            if 1 == vim.fn.executable('bashls') then lspconfig.bashls.setup{} end
+            if 1 == vim.fn.executable('clangd') then vim.lsp.enable('clangd') end
+            if 1 == vim.fn.executable('pylsp') then vim.lsp.enable('pylsp') end
+            if 1 == vim.fn.executable('zls') then vim.lsp.enable('zls') end
+            if 1 == vim.fn.executable('bashls') then vim.lsp.enable('bashls') end
+            if 1 == vim.fn.executable('beancount-language-server') then vim.lsp.enable('beancount') end
         end
     },
 
     { 'Shougo/ddc.vim',
         dependencies = {
-            'Shougo/ddc-ui-native',
+            'Shougo/pum.vim',
+            'Shougo/ddc-ui-pum',
             'vim-denops/denops.vim',
             'Shougo/ddc-source-lsp',
             'Shougo/ddc-source-around',
@@ -195,10 +244,11 @@ require('lazy').setup({
         },
         lazy = false,
         config = function()
-            require("lspconfig").denols.setup({
+            vim.lsp.config('denols', {
                 capabilities = require("ddc_source_lsp").make_client_capabilities(),
             })
-            vim.fn['ddc#custom#patch_global']('ui', 'native')
+            vim.lsp.enable('denols')
+            vim.fn['ddc#custom#patch_global']('ui', 'pum')
             vim.fn['ddc#custom#patch_global']({
                 sources = {'lsp', 'around', 'file'},
                 sourceOptions = {
@@ -224,16 +274,16 @@ require('lazy').setup({
                     enableAdditionalTextEdit = true,
                 }
             })
-            vim.keymap.set('i', '<Tab>', function()
-                local col = vim.fn.col('.') - 1
-                if vim.fn.pumvisible() == 1 then
-                    return "<C-n>"
-                elseif col <= 1 or vim.fn.getline('.'):sub(col, col):match('%s') then
-                    return "<TAB>"
-                else
-                    return vim.cmd("call ddc#map#manual_complete()")
-                end
-            end, {expr = true, silent = true})
+            -- vim.keymap.set('i', '<Tab>', function()
+            --     local col = vim.fn.col('.') - 1
+            --     if vim.fn["pum#visible"]() then
+            --         return vim.fn["pum#map#insert_relative"](1)
+            --     elseif col <= 1 or vim.fn.getline('.'):sub(col, col):match('%s') then
+            --         return "<TAB>"
+            --     else
+            --         return vim.fn["ddc#map#manual_complete"]()
+            --     end
+            -- end, {expr = true, silent = true})
 
             vim.fn["ddc#enable"]()
         end,

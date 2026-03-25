@@ -56,3 +56,8 @@ inoremap <C-v> <C-r>+
 vnoremap <C-c> "+y
 
 lua require('plugins')
+
+inoremap <silent><expr> <TAB>
+    \ pum#visible() ? '<Cmd>call pum#map#insert_relative(+1)<CR>' :
+    \ (col('.') <= 1 <Bar><Bar> getline('.')[col('.') - 2] =~# '\s') ?
+    \ '<TAB>' : ddc#map#manual_complete()

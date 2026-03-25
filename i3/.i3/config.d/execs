@@ -1,7 +1,0 @@
-// vim: filetype=i3config
-exec --no-startup-id picom
-exec --no-startup-id xss-lock -l -- ~/.i3/lock.sh
-exec --no-startup-id nm-applet
-exec --no-startup-id /usr/lib/geoclue-2.0/demos/agent
-exec --no-startup-id redshift-gtk
-exec sleep 1 && ~/.screenlayout/default.sh && ~/.fehbg && ~/.config/polybar/launch.sh
