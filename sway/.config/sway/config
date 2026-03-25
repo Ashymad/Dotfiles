@@ -119,15 +119,11 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl prev
 
-bindsym $mod+c exec ymuse
-
 # Screen brightness controls
 bindsym XF86MonBrightnessDown      exec brightnessctl s 10%-
 bindsym XF86MonBrightnessUp        exec brightnessctl s +10%
 bindsym Ctrl+XF86MonBrightnessDown exec brightnessctl s 1%-
 bindsym Ctrl+XF86MonBrightnessUp   exec brightnessctl s +1%
-
-bindsym $mod+c exec foot --app-id CMUS -- fish -c cmus
 
 # Screen brightness controls
 bindsym Ctrl+F8 exec brightnessctl s 10%-
@@ -177,7 +173,7 @@ exec wlsunset -l 50 -L 20
 bar {
     font pango:DejaVu Sans Mono, FontAwesome 7
     position top
-    status_command $HOME/.instow/bin/i3status-rs $HOME/.config/i3status-rust/config.toml
+    status_command fish -c i3status-rs
     colors {
         separator #666666
         background #22222288
@@ -198,7 +194,6 @@ exec swayidle \
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-exec_always "pkill waybar; waybar"
 exec nm-applet
 
 for_window [app_id="firefox"] inhibit_idle fullscreen
