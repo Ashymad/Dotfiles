@@ -11,7 +11,7 @@ bindsym $mod+Return exec foot
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec fish -c fuzzel
+bindsym $mod+d exec zsh -c "fuzzel"
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -173,7 +173,7 @@ exec wlsunset -l 50 -L 20
 bar {
     font pango:DejaVu Sans Mono, FontAwesome 7
     position top
-    status_command fish -c i3status-rs
+    status_command zsh -c "i3status-rs"
     colors {
         separator #666666
         background #22222288
