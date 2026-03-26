@@ -1,4 +1,5 @@
 use_multi_column_char = true
+mod_meta_mode=esc
 use_ot_layout = true
 use_dynamic_comb = false
 use_combining = true
