@@ -7,7 +7,7 @@ font pango:Tamsyn 10
 
 floating_modifier $mod
 
-bindsym $mod+Return exec foot
+bindsym $mod+Return exec $HOME/.usr/local/bin/mlterm-wl
 
 bindsym $mod+Shift+q kill
 
@@ -119,6 +119,8 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl prev
 
+bindsym $mod+c exec $HOME/.usr/local/bin/mlterm-wl -g 100x30 -N com.sub.tui -e tmux new-session -A -s subtui SubTUI
+
 # Screen brightness controls
 bindsym XF86MonBrightnessDown      exec brightnessctl s 10%-
 bindsym XF86MonBrightnessUp        exec brightnessctl s +10%
@@ -164,14 +166,14 @@ for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
-for_window [app_id="ymuse"] floating enable
+for_window [app_id="com.sub.tui"] floating enable
 
 exec ~/.fehbg
 exec mako
-exec wlsunset -l 50 -L 20
+exec wlsunset -l 50.049683 -L 19.944544
 
 bar {
-    font pango:DejaVu Sans Mono, FontAwesome 7
+    font pango:Powerline Symbols, DejaVu Sans Mono, FontAwesome 10
     position top
     status_command zsh -c "i3status-rs"
     colors {

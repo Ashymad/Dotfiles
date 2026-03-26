@@ -27,10 +27,13 @@ if test -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
     set -x SSH_AUTH_SOCK "$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
 end
 
+set PYTHONDIR (python3 --version | sed 's/Python \([0-9]*\)\.\([0-9]*\)\.\([0-9]*\)/python\1.\2/')
 set -x PERL5LIB "$HOME/.usr/local/lib/perl5/"
 set -x XDG_DATA_DIRS $XDG_DATA_DIRS "$HOME/.usr/local/share"
-
-#direnv hook fish | source
+set -x PYTHONPATH "$HOME/.usr/local/lib/$PYTHONDIR/dist-packages"
+set -x EDITOR (which nvim)
+set -x VISUAL $EDITOR
+set -x SUDOEDIT $EDITOR
 
 # pnpm
 set -gx PNPM_HOME "/home/shyman/.local/share/pnpm"

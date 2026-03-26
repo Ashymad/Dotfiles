@@ -25,13 +25,13 @@ require('lazy').setup({
         end
     },
 
-    {
-        "rachartier/tiny-inline-diagnostic.nvim",
+    { "rachartier/tiny-inline-diagnostic.nvim",
         event = "VeryLazy",
         priority = 1000,
         config = function()
             require("tiny-inline-diagnostic").setup({
                 options = {
+                    overwrite_events = {"DiagnosticChanged"},
                     multilines = {
                         enabled = true,
                         always_show = false,
@@ -44,7 +44,9 @@ require('lazy').setup({
 
     { 'mboughaba/i3config.vim', ft = {'i3config'}},
 
-    { 'janet-lang/janet.vim', ft = {'janet'}},
+    { "aserowy/tmux.nvim",
+        config = function() return require("tmux").setup() end
+    },
 
     { "nvimdev/lspsaga.nvim",
         config = function()
@@ -73,8 +75,7 @@ require('lazy').setup({
         },
     },
 
-    {
-        "folke/noice.nvim",
+    { "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
             lsp = {
@@ -106,6 +107,49 @@ require('lazy').setup({
             --   If not available, we use `mini` as the fallback
             "rcarriga/nvim-notify",
         }
+    },
+
+    { 'tac',
+        dependencies = { 'nvim-treesitter/nvim-treesitter' },
+        enabled = function()
+            return vim.fn.isdirectory('/src/ArEditorPlugins/nvim/plugins/tac.nvim') ~= 0
+        end,
+        dir = '/src/ArEditorPlugins/nvim/plugins/tac.nvim',
+        config = function()
+            require('tac').setup()
+        end
+    },
+
+    { 'stevearc/conform.nvim',
+        dependencies = { 'lewis6991/gitsigns.nvim' },
+        opts = {
+            formatters_by_ft = {
+                -- cpp = {"clang-format"},
+                -- python = {"yapf"},
+            },
+            format_on_save = {},
+            formatters = {
+                yapf = {
+                    prepend_args = {"--style", "/home/szymon/.config/yapf/style"}
+                }
+            }
+        }
+    },
+
+    { "mfussenegger/nvim-lint",
+        event = 'VeryLazy',
+        priority = '500',
+        config = function()
+            require('lint').linters_by_ft = {
+                python = {'pylint'},
+            }
+
+            vim.api.nvim_create_autocmd({"TextChanged"}, {
+                callback = function()
+                    require("lint").try_lint()
+                end
+            })
+        end
     },
 
     { "ibhagwan/fzf-lua",
@@ -160,7 +204,13 @@ require('lazy').setup({
         end
     },
 
-    {'akinsho/bufferline.nvim',
+    { 'mcauley-penney/visual-whitespace.nvim',
+        config = true,
+        event = "ModeChanged *:[vV\22]", -- optionally, lazy load on entering visual mode
+        opts = {},
+    },
+
+    { 'akinsho/bufferline.nvim',
         dependencies = 'nvim-tree/nvim-web-devicons',
         lazy = false,
         config = function()
@@ -198,10 +248,7 @@ require('lazy').setup({
                     },
                 },
             })
-        end,
-        keys = {
-            { "<C-k>", "<cmd>NvimTreeToggle<CR>" }
-        }
+        end
     },
 
     { "lukas-reineke/indent-blankline.nvim",
@@ -211,6 +258,8 @@ require('lazy').setup({
     },
 
     'chaoren/vim-wordmotion',
+
+    'janet-lang/janet.vim',
 
     { 'goolord/alpha-nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
@@ -223,11 +272,19 @@ require('lazy').setup({
 
     { 'neovim/nvim-lspconfig',
         config = function()
-            if 1 == vim.fn.executable('clangd') then vim.lsp.enable('clangd') end
-            if 1 == vim.fn.executable('pylsp') then vim.lsp.enable('pylsp') end
-            if 1 == vim.fn.executable('zls') then vim.lsp.enable('zls') end
-            if 1 == vim.fn.executable('bashls') then vim.lsp.enable('bashls') end
-            if 1 == vim.fn.executable('beancount-language-server') then vim.lsp.enable('beancount') end
+            vim.lsp.config.artaclsp = {
+                cmd = { 'artaclsp' },
+                root_dir = '/src',
+                filetypes = { 'tac' },
+            }
+            lsp_enable = function(srvs)
+                for i,srv in ipairs(srvs) do
+                    if 1 == vim.fn.executable(vim.lsp.config[srv].cmd[1]) then
+                        vim.lsp.enable(srv) 
+                    end
+                end
+            end
+            lsp_enable({'clangd', 'pylsp', 'zls', 'bashls', 'artaclsp', 'beancount'})
         end
     },
 
@@ -274,17 +331,6 @@ require('lazy').setup({
                     enableAdditionalTextEdit = true,
                 }
             })
-            -- vim.keymap.set('i', '<Tab>', function()
-            --     local col = vim.fn.col('.') - 1
-            --     if vim.fn["pum#visible"]() then
-            --         return vim.fn["pum#map#insert_relative"](1)
-            --     elseif col <= 1 or vim.fn.getline('.'):sub(col, col):match('%s') then
-            --         return "<TAB>"
-            --     else
-            --         return vim.fn["ddc#map#manual_complete"]()
-            --     end
-            -- end, {expr = true, silent = true})
-
             vim.fn["ddc#enable"]()
         end,
     }
