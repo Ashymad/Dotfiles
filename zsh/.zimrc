@@ -19,18 +19,6 @@ zmodule termtitle
 zmodule utility
 
 #
-# Prompt
-#
-
-# Exposes how long the last command took to run to prompts.
-zmodule duration-info
-# Exposes git repository status information to prompts.
-zmodule git-info
-zmodule prompt-pwd
-# A heavily reduced, ASCII-only version of the Spaceship and Starship prompts.
-zmodule sorin
-
-#
 # Completion
 #
 
@@ -56,3 +44,4 @@ source ~/.zimrc.d/module-custom.zsh
 
 zmodule-custom mise --if-command "mise" --comp "mise completion zsh" --eval "mise activate zsh"
 zmodule-custom zoxide --if-command "zoxide" --eval "zoxide init zsh"
+zmodule-custom starship --if-command "starship" --eval "starship init zsh"
