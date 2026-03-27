@@ -1,0 +1,28 @@
+#!/bin/sh
+
+case "$1" in
+a)    sub="add" ;;
+bi)   sub="bisect" ;;
+b|br) sub="branch" ;;
+cl)   sub="clone" ;;
+c|co) sub="commit" ;;
+d)    sub="diff" ;;
+f)    sub="fetch" ;;
+g)    sub="grep" ;;
+i)    sub="init" ;;
+l)    sub="log" ;;
+m|me) sub="merge" ;;
+p|pl) sub="pull" ;;
+ps)   sub="push" ;;
+rb)   sub="rebase" ;;
+rs)   sub="reset" ;;
+rr)   sub="restore" ;;
+sh)   sub="show" ;;
+s|st) sub="status" ;;
+sw)   sub="switch" ;;
+t)    sub="tag" ;;
+*)    sub="$1" ;;
+esac
+
+shift
+exec git "$sub" "$@"
