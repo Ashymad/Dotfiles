@@ -1,19 +1,18 @@
 use_multi_column_char = true
 mod_meta_mode=esc
 use_ot_layout = true
-use_dynamic_comb = false
 use_combining = true
 use_anti_alias = true
 use_scrollbar = false
-depth=32
+depth = 32
 vt_color_mode = true
-alpha=200
+alpha = 200
 termtype = xterm-256color
 borderless = true
 use_variable_column_width = true
 
-fg_color=#e0def4
-bg_color=#232136
+fg_color = #e0def4
+bg_color = #232136
 
-cursor_bg_color=#56526e
-cursor_fg_color=#e0def4
+cursor_bg_color = #56526e
+cursor_fg_color = #e0def4

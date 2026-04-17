@@ -5,4 +5,5 @@ export SUDO_EDITOR=nvim
 export PERL5LIB="$HOME/.usr/local/lib/perl5/"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.usr/local/share"
 export PYTHONPATH="$HOME/.usr/local/lib/python3/dist-packages"
+which vivid &>/dev/null && export LS_COLORS="$(vivid generate rose-pine-moon)"
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
