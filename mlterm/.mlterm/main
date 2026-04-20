@@ -11,6 +11,7 @@ alpha=200
 termtype = xterm-256color
 borderless = true
 use_variable_column_width = true
+fontsize = 11
 
 fg_color=#e0def4
 bg_color=#232136
