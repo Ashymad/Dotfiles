@@ -1,7 +1,21 @@
 skip_global_compinit=1
 export PATH="$HOME/.local/bin:$HOME/.usr/local/bin:$PATH"
-export EDITOR=nvim
-export SUDO_EDITOR=nvim
+
+export MISE_Found="$(which mise &>/dev/null; echo $?)"
+tools=( 'vivid' 'nvim' )
+declare -A tool_paths
+
+for tool in "${tools[@]}"; do
+    if [[ $MISE_Found == 0 ]] && tool_path="$(mise x -- which $tool)"; then
+        tool_paths[$tool]="$tool_path"
+    elif tool_path="$(which $tool)"; then
+        tool_paths[$tool]="$tool_path"
+    fi
+done
+
+[ -n ${tool_paths[nvim]} ] && export EDITOR="${tool_paths[nvim]}" && export SUDO_EDITOR="$EDITOR"
+[ -n ${tool_paths[vivid]} ] && export LS_COLORS="$(${tool_paths[vivid]} generate rose-pine-moon)"
+
 export PERL5LIB="$HOME/.usr/local/lib/perl5/"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.usr/local/share"
 export PYTHONPATH="$HOME/.usr/local/lib/python3/dist-packages"

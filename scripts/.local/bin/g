@@ -5,6 +5,7 @@ a)    sub="add" ;;
 bi)   sub="bisect" ;;
 b|br) sub="branch" ;;
 cl)   sub="clone" ;;
+cn)   sub="clean" ;;
 c|co) sub="commit" ;;
 d)    sub="diff" ;;
 f)    sub="fetch" ;;
