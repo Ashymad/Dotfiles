@@ -45,3 +45,4 @@ source ~/.zimrc.d/module-custom.zsh
 zmodule-custom mise --if-command "mise" --comp "mise completion zsh" --eval "mise activate zsh"
 zmodule-custom zoxide --if-command "zoxide" --eval "zoxide init zsh"
 zmodule-custom starship --if-command "starship" --eval "starship init zsh"
+zmodule-custom atuin --if-command "atuin" --eval "atuin init zsh"
