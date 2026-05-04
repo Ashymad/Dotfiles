@@ -94,9 +94,9 @@ set $power_control "[l]ock log[o]ut [s]uspend [r]eboot [p]oweroff"
 mode  $power_control {
     bindsym l exec ~/.config/sway/lock.sh; mode "default"
     bindsym o exec swaymsg exit; mode "default"
-    bindsym s exec systemctl suspend; mode "default"
-    bindsym r exec systemctl reboot; mode "default"
-    bindsym p exec systemctl poweroff; mode "default"
+    bindsym s exec loginctl suspend; mode "default"
+    bindsym r exec loginctl reboot; mode "default"
+    bindsym p exec loginctl poweroff; mode "default"
 
     bindsym Return mode "default"
     bindsym Escape mode "default"
