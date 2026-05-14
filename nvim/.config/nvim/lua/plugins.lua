@@ -61,20 +61,6 @@ require('lazy').setup({
         }
     },
 
-    { 'stevearc/conform.nvim',
-        opts = {
-            formatters_by_ft = {
-                c = { "clang-format" },
-                cpp = { "clang-format" },
-            },
-            format_on_save = {
-                -- These options will be passed to conform.format()
-                timeout_ms = 500,
-                lsp_format = "fallback",
-            },
-        },
-    },
-
     { "folke/noice.nvim",
         event = "VeryLazy",
         opts = {
@@ -118,22 +104,6 @@ require('lazy').setup({
         config = function()
             require('tac').setup()
         end
-    },
-
-    { 'stevearc/conform.nvim',
-        dependencies = { 'lewis6991/gitsigns.nvim' },
-        opts = {
-            formatters_by_ft = {
-                -- cpp = {"clang-format"},
-                -- python = {"yapf"},
-            },
-            format_on_save = {},
-            formatters = {
-                yapf = {
-                    prepend_args = {"--style", "/home/szymon/.config/yapf/style"}
-                }
-            }
-        }
     },
 
     { "mfussenegger/nvim-lint",
@@ -270,7 +240,22 @@ require('lazy').setup({
         end
     },
 
+    { 'stevearc/conform.nvim',
+        dependencies = { 'lewis6991/gitsigns.nvim' },
+        opts = {
+            formatters_by_ft = {
+                cpp = {"clang-format"},
+            },
+            format_on_save = {
+                timeout_ms = 500,
+                lsp_format = "fallback",
+            },
+            formatters = {}
+        }
+    },
+
     { 'neovim/nvim-lspconfig',
+        lazy = false,
         config = function()
             vim.lsp.config.artaclsp = {
                 cmd = { 'artaclsp' },
@@ -280,6 +265,7 @@ require('lazy').setup({
             lsp_enable = function(srvs)
                 for i,srv in ipairs(srvs) do
                     if 1 == vim.fn.executable(vim.lsp.config[srv].cmd[1]) then
+                      --  vim.lsp.config(srv, coq.lsp_ensure_capabilities())
                         vim.lsp.enable(srv) 
                     end
                 end
@@ -292,7 +278,7 @@ require('lazy').setup({
         dependencies = {
             'Shougo/pum.vim',
             'Shougo/ddc-ui-pum',
-            'vim-denops/denops.vim',
+            { 'vim-denops/denops.vim', branch = 'fallback_version' },
             'Shougo/ddc-source-lsp',
             'Shougo/ddc-source-around',
             'LumaKernel/ddc-source-file',
@@ -301,6 +287,15 @@ require('lazy').setup({
         },
         lazy = false,
         config = function()
+            vim.g["denops#deno"] = "podman"
+            vim.g["denops#server#deno_args"] = {
+                "-v", vim.env.HOME .. ":" .. vim.env.HOME,
+                "-e", "DENO_DIR=" .. vim.env.HOME .. "/.cache/deno", 
+                "--network=host",
+                "ghcr.io/denoland/deno:distroless",
+                "run",
+                unpack(vim.g["denops#server#deno_args"])
+            }
             vim.lsp.config('denols', {
                 capabilities = require("ddc_source_lsp").make_client_capabilities(),
             })

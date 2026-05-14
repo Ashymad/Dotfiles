@@ -1,6 +1,6 @@
 add_newline = false
 command_timeout = 200
-format = "[$hostname$directory$git_branch$git_status$character]($style)"
+format = "[$hostname$directory$git_branch$git_commit$git_status$character]($style)"
 
 [character]
 error_symbol = "[!>](bold cyan)"
@@ -10,12 +10,18 @@ success_symbol = "[>](bold cyan)"
 truncation_length = 2
 truncation_symbol = "…/"
 format = '[$path]($style)[$read_only]($read_only_style)'
-#repo_root_style = "bold cyan"
-#repo_root_format = "[$repo_root]($repo_root_style)[$path]($style)[$read_only]($read_only_style)"
 fish_style_pwd_dir_length = 2
+
+[git_commit]
+format = '[ \($tag]($style)'
+tag_symbol = ''
+only_detached = true
+tag_disabled = false
+style = "blue"
 
 [git_branch]
 format = '[ \($branch]($style)'
+only_attached = true
 style = "blue"
 
 [git_status]

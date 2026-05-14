@@ -18,5 +18,6 @@ done
 
 export PERL5LIB="$HOME/.usr/local/lib/perl5/"
 export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.usr/local/share"
-export PYTHONPATH="/usr/lib/python3.13/site-packages:$HOME/.usr/local/lib/python3/site-packages"
+export PYTHONPATH="/usr/lib/python3.13/site-packages:$HOME/.usr/local/lib/python3/site-packages:$HOME/.usr/local/lib/python3/dist-packages"
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
+export ZSH_EXEC=1

@@ -11,7 +11,8 @@ bindsym $mod+Return exec $HOME/.usr/local/bin/mlterm-wl
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec zsh -c "fuzzel"
+bindsym $mod+d exec zsh -lc "$($HOME/.usr/local/bin/tofi-drun)"
+bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' | sed "s@$HOME/.password-store/@@;"'s/\.gpg$//' | $HOME/.usr/local/bin/tofi | xargs -i pass "{}" -c
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -150,7 +151,7 @@ input type:touchpad {
 output LVDS-1 resolution 1366x768 position 0,0 scale 1
 
 # Change wallpaper
-bindsym $mod+p exec ~/.fehbg r
+bindsym $mod+p exec $HOME/.usr/local/bin/wpaperctl next
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -168,7 +169,7 @@ for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
 for_window [app_id="com.sub.tui"] floating enable
 
-exec ~/.fehbg
+exec $HOME/.usr/local/bin/wpaperd
 exec mako
 exec wlsunset -l 50.049683 -L 19.944544
 
