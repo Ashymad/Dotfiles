@@ -151,7 +151,7 @@ input type:touchpad {
 output LVDS-1 resolution 1366x768 position 0,0 scale 1
 
 # Change wallpaper
-bindsym $mod+p exec $HOME/.usr/local/bin/wpaperctl next
+bindsym $mod+p exec $HOME/.usr/local/bin/hpaper next
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -169,7 +169,7 @@ for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
 for_window [app_id="com.sub.tui"] floating enable
 
-exec $HOME/.usr/local/bin/wpaperd
+exec $HOME/.usr/local/bin/hpaper start
 exec mako
 exec wlsunset -l 50.049683 -L 19.944544
 
