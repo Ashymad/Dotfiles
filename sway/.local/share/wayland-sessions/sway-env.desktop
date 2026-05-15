@@ -1,0 +1,6 @@
+[Desktop Entry]
+Name=Sway (Env)
+Comment=An i3-compatible Wayland compositor
+Exec=sh -c 'exec env $(envsubst < ~/.config/sway/env) sway'
+Type=Application
+DesktopNames=sway

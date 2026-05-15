@@ -7,12 +7,12 @@ font pango:Tamsyn 10
 
 floating_modifier $mod
 
-bindsym $mod+Return exec $HOME/.usr/local/bin/mlterm-wl
+bindsym $mod+Return exec mlterm-wl
 
 bindsym $mod+Shift+q kill
 
-bindsym $mod+d exec zsh -lc "$($HOME/.usr/local/bin/tofi-drun)"
-bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' | sed "s@$HOME/.password-store/@@;"'s/\.gpg$//' | $HOME/.usr/local/bin/tofi | xargs -i pass "{}" -c
+bindsym $mod+d exec j4-dmenu-desktop -t mlterm-wl -I -d tofi
+bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' | sed "s@$HOME/.password-store/@@;"'s/\.gpg$//' | tofi | xargs -i pass "{}" -c
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
@@ -120,7 +120,7 @@ bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl prev
 
-bindsym $mod+c exec $HOME/.usr/local/bin/mlterm-wl -g 100x30 -N com.sub.tui -e tmux new-session -A -s subtui SubTUI
+bindsym $mod+c exec mlterm-wl -g 100x30 -N com.sub.tui -e tmux new-session -A -s subtui SubTUI
 
 # Screen brightness controls
 bindsym XF86MonBrightnessDown      exec brightnessctl s 10%-
@@ -169,15 +169,15 @@ for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
 for_window [app_id="com.sub.tui"] floating enable
 
-exec $HOME/.usr/local/bin/awww-daemon
-exec zsh -c "randpaper --daemon"
+exec awww-daemon
+exec randpaper --daemon
 exec mako
 exec wlsunset -l 50.049683 -L 19.944544
 
 bar {
     font pango:Powerline Symbols, DejaVu Sans Mono, FontAwesome 10
     position top
-    status_command zsh -c "i3status-rs"
+    status_command i3status-rs
     colors {
         separator #666666
         background #232136c8
