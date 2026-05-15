@@ -1,3 +1,4 @@
 XDG_SESSION_TYPE=wayland
 XDG_DATA_DIRS=$XDG_DATA_DIRS:$HOME/.usr/local/share
 PATH=$HOME/.usr/local/bin:$HOME/.usr/local/sbin:$PATH
+PYTHONPATH=/usr/lib/python3.13/site-packages:$HOME/.usr/local/lib/python3/site-packages:$HOME/.usr/local/lib/python3/dist-packages
