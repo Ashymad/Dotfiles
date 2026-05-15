@@ -1,0 +1,8 @@
+wallpaper_dir = "/home/szymon/Pictures/Wallpapers"
+backend = "sway"        # "sway" | "hyprland"
+renderer = "awww"       # "swaybg" | "awww"
+time = "30m"            # used only in daemon mode
+
+transition_type = "fade"
+transition_step = 90
+transition_fps = 60
