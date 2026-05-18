@@ -119,6 +119,8 @@ bindsym XF86AudioPlay exec --no-startup-id playerctl play-pause
 bindsym XF86AudioStop exec --no-startup-id playerctl stop
 bindsym XF86AudioNext exec --no-startup-id playerctl next
 bindsym XF86AudioPrev exec --no-startup-id playerctl prev
+bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id playerctl next
+bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id playerctl next
 
 bindsym $mod+c exec mlterm-wl -g 100x30 -N com.sub.tui -e tmux new-session -A -s subtui SubTUI
 
@@ -146,7 +148,6 @@ input type:keyboard {
 input type:touchpad {
     tap enabled
 }
-
 
 output LVDS-1 resolution 1366x768 position 0,0 scale 1
 
