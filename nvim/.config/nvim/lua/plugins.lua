@@ -274,20 +274,11 @@ require('lazy').setup({
         end
     },
 
-    { 'Shougo/ddc.vim',
-        dependencies = {
-            'Shougo/pum.vim',
-            'Shougo/ddc-ui-pum',
-            { 'vim-denops/denops.vim', branch = 'fallback_version' },
-            'Shougo/ddc-source-lsp',
-            'Shougo/ddc-source-around',
-            'LumaKernel/ddc-source-file',
-            'Shougo/ddc-sorter_rank',
-            'Shougo/ddc-matcher_head',
-        },
-        lazy = false,
-        config = function()
+    { 'vim-denops/denops.vim',
+        init = function()
             vim.g["denops#deno"] = "podman"
+        end,
+        config = function()
             vim.g["denops#server#deno_args"] = {
                 "-v", vim.env.HOME .. ":" .. vim.env.HOME,
                 "-e", "DENO_DIR=" .. vim.env.HOME .. "/.cache/deno", 
@@ -296,6 +287,22 @@ require('lazy').setup({
                 "run",
                 unpack(vim.g["denops#server#deno_args"])
             }
+        end
+    },
+
+    { 'Shougo/ddc.vim',
+        dependencies = {
+            'vim-denops/denops.vim',
+            'Shougo/pum.vim',
+            'Shougo/ddc-ui-pum',
+            'Shougo/ddc-source-lsp',
+            'Shougo/ddc-source-around',
+            'Shougo/ddc-sorter_rank',
+            'Shougo/ddc-matcher_head',
+            'LumaKernel/ddc-source-file',
+        },
+        lazy = false,
+        config = function()
             vim.lsp.config('denols', {
                 capabilities = require("ddc_source_lsp").make_client_capabilities(),
             })
