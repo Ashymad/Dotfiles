@@ -1,0 +1,22 @@
+#!/bin/sh
+
+which systemctl >/dev/null 2>&1 && ctlcmd=systemctl || ctlcmd=loginctl
+
+case $1 in
+    lock)
+        exec swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
+        ;;
+    reboot)
+        exec $ctlcmd reboot
+        ;;
+    suspend)
+        exec $ctlcmd suspend
+        ;;
+    poweroff)
+        exec $ctlcmd poweroff
+        ;;
+    *)
+        echo "Unknown command: '$1'"
+        exit 1
+        ;;
+esac
