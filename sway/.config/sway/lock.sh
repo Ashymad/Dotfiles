@@ -1,2 +1,2 @@
 #!/usr/bin/env bash
-exec swaylock -i "$(awww query --json | jq -r '."".[0].displaying.image')" -s fill
+exec swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
