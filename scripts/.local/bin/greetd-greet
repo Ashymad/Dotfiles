@@ -1,0 +1,7 @@
+#!/bin/sh
+H="$(readlink -f $(dirname "$0")/../..)"
+U="$(awk "-vH=$H" -F: '{if ($6 == H) print $1}' /etc/passwd)"
+
+export PATH="$H/.local/bin:$H/.usr/local/bin:$PATH"
+
+exec fbterm-bi "$H/Pictures/Wallpapers/02.jpg"  -- tuigreet -u "$U" --asterisks -c sway-env

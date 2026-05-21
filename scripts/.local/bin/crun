@@ -1,3 +1,0 @@
-#!/usr/bin/bash
-CLANG_VERSION=${CLANG_VERSION:-$(clang -dumpversion | cut -d. -f1)}
-tail -n+2 "$1" | clang-$CLANG_VERSION -S -emit-llvm -x c -o - - | exec lli-$CLANG_VERSION --fake-argv0 "$1" - "${@:2}"

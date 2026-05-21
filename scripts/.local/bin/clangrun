@@ -1,0 +1,2 @@
+#!/usr/bin/bash
+tail -n+2 "$1" | clang -S -emit-llvm -x c -o - - | exec lli --fake-argv0 "$1" - "${@:2}"

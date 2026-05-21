@@ -1,0 +1,2 @@
+#!/bin/sh
+withenv ~/.config/sway/env sway

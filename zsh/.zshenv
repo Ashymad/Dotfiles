@@ -1,5 +1,4 @@
 skip_global_compinit=1
-export PATH="$HOME/.local/bin:$HOME/.usr/local/bin:$HOME/.usr/local/sbin:$PATH"
 
 export MISE_Found="$(which mise &>/dev/null; echo $?)"
 tools=( 'vivid' 'nvim' )
@@ -16,8 +15,10 @@ done
 [ -n "${tool_paths[nvim]}" ] && export EDITOR="${tool_paths[nvim]}" && export SUDO_EDITOR="$EDITOR"
 [ -n "${tool_paths[vivid]}" ] && export LS_COLORS="$(${tool_paths[vivid]} generate rose-pine-moon)"
 
+if [[ $SWAY_ENV != 1 ]]; then
+    source <(withenv --export ~/.config/sway/env)
+fi
+
 export PERL5LIB="$HOME/.usr/local/lib/perl5/"
-export XDG_DATA_DIRS="$XDG_DATA_DIRS:$HOME/.usr/local/share"
-export PYTHONPATH="/usr/lib/python3.13/site-packages:$HOME/.usr/local/lib/python3/site-packages:$HOME/.usr/local/lib/python3/dist-packages"
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
 export ZSH_EXEC=1

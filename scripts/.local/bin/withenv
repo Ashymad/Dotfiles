@@ -1,0 +1,8 @@
+#!/bin/sh
+if [ "$1" = "--export" ]; then
+    awk '{print "export \"" $0 "\""}' "$2"
+else
+    ENVFILE="$1"
+    shift
+    exec env "$(envsubst < "$ENVFILE")" "$@"
+fi
