@@ -20,6 +20,7 @@ rs)   sub="reset" ;;
 rr)   sub="restore" ;;
 sh)   sub="show" ;;
 s|st) sub="status" ;;
+ss)   sub="stash" ;;
 sw)   sub="switch" ;;
 t)    sub="tag" ;;
 *)    sub="$1" ;;
