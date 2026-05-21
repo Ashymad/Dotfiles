@@ -152,7 +152,7 @@ input type:touchpad {
 output LVDS-1 resolution 1366x768 position 0,0 scale 1
 
 # Change wallpaper
-bindsym $mod+p exec pkill -SIGUSR1 randpaper
+bindsym $mod+p exec randpaper
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -172,7 +172,7 @@ for_window [app_id="com.sub.tui"] floating enable
 for_window [app_id="upplay"] floating enable
 
 exec awww-daemon
-exec randpaper --daemon
+exec sleep 30m && randpaper --daemon
 exec mako
 exec wlsunset -l 50.049683 -L 19.944544
 
