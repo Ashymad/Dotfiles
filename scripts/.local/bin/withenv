@@ -1,8 +1,18 @@
 #!/bin/sh
+
 if [ "$1" = "--export" ]; then
     awk '{print "export \"" $0 "\""}' "$2"
-else
-    ENVFILE="$1"
-    shift
-    exec env "$(envsubst < "$ENVFILE")" "$@"
+    exit 0
 fi
+
+ENVFILE="$1"
+shift
+fifo="$(mktemp -d)/fifo"
+mkfifo "$fifo"
+(
+    envsubst < "$ENVFILE" | tr '\n' '\0'
+    printf "%s\0" "$@"
+    rm -rf "$(dirname "$fifo")"
+) >> "$fifo" &
+
+exec xargs -0 -a "$fifo" env
