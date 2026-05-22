@@ -1,6 +1,0 @@
-#!/bin/sh
-tput civis
-fbv -ciukery "$1"
-shift
-export FBTERM_BACKGROUND_IMAGE=1
-exec fbterm "$@"
