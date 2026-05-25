@@ -1,0 +1,9 @@
+#!/bin/sh
+[ -z "$SWAYSOCK" ] && {
+    echo "Not sway"
+    exit 2
+}
+SWAY_PID="$(lsof -Ua "$SWAYSOCK" | awk '{if ($11 == "(LISTEN)") {print $2; exit}}')"
+SWAY="$(/proc/$SWAY_PID/exe --version | cut -d' ' -f1)"
+echo "Running $SWAY"
+[ "$SWAY" = swayfx ] && exit 0 || exit 1
