@@ -11,7 +11,7 @@ fifo="$(mktemp -d)/fifo"
 mkfifo "$fifo"
 (
     envsubst < "$ENVFILE" | tr '\n' '\0'
-    printf "%s\0" "$@"
+    [ "$#" -gt 0 ] && printf "%s\0" "$@"
     rm -rf "$(dirname "$fifo")"
 ) >> "$fifo" &
 

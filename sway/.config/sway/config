@@ -1,5 +1,7 @@
 # vim: filetype=i3config
 include /etc/sway/config.d/*
+include ~/.config/sway/config.d/*
+exec_always ~/.config/sway/isfx && xargs -a ~/.config/sway/fxconfig -i swaymsg '{}'
 
 set $mod Mod4
 
@@ -7,7 +9,7 @@ font pango:Tamsyn 10
 
 floating_modifier $mod
 
-bindsym $mod+Return exec mlterm-wl
+bindsym $mod+Return exec exec mlterm-wl
 
 bindsym $mod+Shift+q kill
 
@@ -149,10 +151,8 @@ input type:touchpad {
     tap enabled
 }
 
-output LVDS-1 resolution 1366x768 position 0,0 scale 1
-
 # Change wallpaper
-bindsym $mod+p exec randpaper
+bindsym $mod+p exec exec randpaper
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -171,10 +171,10 @@ for_window [instance="^matplotlib$"] floating enable
 for_window [app_id="com.sub.tui"] floating enable
 for_window [app_id="upplay"] floating enable
 
-exec awww-daemon
+exec exec awww-daemon
 exec sleep 30m && randpaper --daemon
-exec mako
-exec wlsunset -l 50.049683 -L 19.944544
+exec exec mako
+exec exec wlsunset -l 50.049683 -L 19.944544
 
 bar {
     font pango:Powerline Symbols, DejaVu Sans Mono, FontAwesome 10
@@ -191,7 +191,7 @@ bar {
     }
 }
 
-exec swayidle \
+exec exec swayidle \
          timeout 300 'sys lock' \
          timeout 600 'swaymsg "output * dpms off"' \
          resume 'swaymsg "output * dpms on"' \
@@ -200,7 +200,7 @@ exec swayidle \
 
 exec dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=sway
 
-exec nm-applet
+exec exec nm-applet
 
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
