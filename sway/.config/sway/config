@@ -1,7 +1,5 @@
 # vim: filetype=i3config
 include /etc/sway/config.d/*
-include ~/.config/sway/config.d/*
-exec_always ~/.config/sway/isfx && xargs -a ~/.config/sway/fxconfig -i swaymsg '{}'
 
 set $mod Mod4
 
@@ -204,3 +202,6 @@ exec exec nm-applet
 
 for_window [app_id="firefox"] inhibit_idle fullscreen
 for_window [app_id="mpv"] inhibit_idle fullscreen
+
+exec_always ~/.config/sway/isfx && ~/.config/sway/load ~/.config/sway/fxconfig
+include ~/.config/sway/config.d/*

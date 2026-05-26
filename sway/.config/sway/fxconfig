@@ -1,2 +1,6 @@
+# vim: set ft=swayconfig:
 # Swayfx additional config
 corner_radius 8
+for_window [app_id="mlterm"] blur enable
+blur_passes 1
+layer_effects "panel" "blur enable"

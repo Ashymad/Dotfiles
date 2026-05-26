@@ -3,6 +3,6 @@
     echo "Not sway"
     exit 2
 }
-SWAY="$(swaymsg -t get_version | jq -r '.variant')"
-echo "Running $SWAY"
-[ "$SWAY" = swayfx ] && exit 0 || exit 1
+FX="$(swaymsg -t get_version | jq -r '.sway_original_version != null')"
+echo "$FX"
+[ "$FX" = "true" ] && exit 0 || exit 1
