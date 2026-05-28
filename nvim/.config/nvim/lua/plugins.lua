@@ -282,6 +282,7 @@ require('lazy').setup({
             vim.g["denops#server#deno_args"] = {
                 "-v", vim.env.HOME .. ":" .. vim.env.HOME,
                 "-e", "DENO_DIR=" .. vim.env.HOME .. "/.cache/deno", 
+                "--rm",
                 "--network=host",
                 "ghcr.io/denoland/deno:distroless",
                 "run",
