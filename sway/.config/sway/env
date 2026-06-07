@@ -1,5 +1,5 @@
 XDG_SESSION_TYPE=wayland
 XDG_DATA_DIRS=$HOME/.usr/local/share:$XDG_DATA_DIRS
 PATH=$HOME/.local/bin:$HOME/.usr/local/bin:$HOME/.usr/local/sbin:$PATH
-PYTHONPATH=$HOME/.usr/local/lib/python3/site-packages:$HOME/.usr/local/lib/python3/dist-packages:/usr/lib/python3.13/site-packages
+PYTHONPATH=$HOME/.usr/local/lib/python3.14/site-packages:/usr/lib/python3.14/site-packages
 SWAY_ENV=1

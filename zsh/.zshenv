@@ -22,3 +22,4 @@ done
 export PERL5LIB="$HOME/.usr/local/lib/perl5/"
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
 export ZSH_EXEC=1
+export HOST

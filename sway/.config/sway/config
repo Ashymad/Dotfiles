@@ -12,7 +12,12 @@ bindsym $mod+Return exec exec mlterm-wl
 bindsym $mod+Shift+q kill
 
 bindsym $mod+d exec j4-dmenu-desktop -t mlterm-wl -I -d tofi
-bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' | sed "s@$HOME/.password-store/@@;"'s/\.gpg$//' | tofi | xargs -i pass "{}" -c
+bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' \
+                  | sed "s@$HOME/.password-store/@@;"'s/\.gpg$//' \
+                  | tofi \
+                  | xargs -I{} pass show '{}' \
+                  | head -1 \
+                  | timeout 5 wl-copy -f -n --sensitive
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down
