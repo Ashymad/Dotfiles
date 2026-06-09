@@ -46,3 +46,4 @@ zmodule-custom mise --if-command "mise" --comp "mise completion zsh" --eval "mis
 zmodule-custom zoxide --if-command "zoxide" --eval "zoxide init zsh"
 zmodule-custom starship --if-command "starship" --eval "starship init zsh"
 zmodule-custom atuin --if-command "atuin" --eval "atuin init zsh"
+zmodule-custom vivid --if-command "vivid" --eval 'echo export LS_COLORS=\"$(vivid generate ${VIVID_THEME})\"'
