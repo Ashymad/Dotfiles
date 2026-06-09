@@ -1,0 +1,4 @@
+[ -f ~/.cargo/env ] && source ~/.cargo/env
+
+alias :e="$EDITOR"
+alias :q=exit
