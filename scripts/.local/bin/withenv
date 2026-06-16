@@ -1,18 +1,44 @@
 #!/bin/sh
+set -e
 
-if [ "$1" = "--export" ]; then
-    awk '{print "export \"" $0 "\""}' "$2"
+ENVFILE="-"
+
+while :; do
+    case $1 in
+        -e|--export) EXPORT=1; shift ;;
+        -i|--ignore) IGNORE=1; shift ;;
+        -f|--file)   ENVFILE="$2"; shift 2 ;;
+        --) break ;;
+        -*) echo "Invalid option $1"; exit 1 ;;
+        *) break ;;
+    esac
+done
+
+subst() {
+    cat "$1" \
+      | { tee /dev/fd/3 \
+        | sha1sum \
+        | awk '{print "SHA1SUM=" $1}'; \
+        } 3>&1 \
+      | tail -r \
+      | xargs sh -c 'printf "%s\n" "${@}" | tail -r | env "$0" envsubst' --
+}
+
+if [ "$IGNORE" = 1 ]; then
+    ENVARGS="-i"
+fi
+
+if [ "$EXPORT" = 1 ]; then
+    subst "$ENVFILE" | sed 's/^\([^=]*\)=\(.*\)$/export \1="\2"/'
     exit 0
 fi
 
-ENVFILE="$1"
-shift
 fifo="$(mktemp -d)/fifo"
 mkfifo "$fifo"
 (
-    envsubst < "$ENVFILE" | tr '\n' '\0'
+    subst "$ENVFILE" | tr '\n' '\0'
     [ "$#" -gt 0 ] && printf "%s\0" "$@"
     rm -rf "$(dirname "$fifo")"
 ) >> "$fifo" &
 
-exec xargs -0 -a "$fifo" env
+exec xargs -0 -a "$fifo" env $ENVARGS

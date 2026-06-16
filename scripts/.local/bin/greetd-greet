@@ -7,7 +7,7 @@ export _greetd_withenv="$H/.local/bin/withenv"
 
 for bin in fbterm_bi fbterm fbv awww tuigreet; do
     echo -n "Resolving ${bin}"
-    bin_path="$(env HOME="$H" "${_greetd_withenv}" "$H/.config/sway/env" which $bin 2>/dev/null)"
+    bin_path="$(env HOME="$H" "${_greetd_withenv}" -f "$H/.config/sway/env" which $bin 2>/dev/null)"
     [ -z "$bin_path" ] && {
         echo " [ERR]"
         exit 1
@@ -19,4 +19,4 @@ done
 
 P="$(xargs -a "$H/.cache/awww/$("${_greetd_awww}" --version | cut -d' ' -f2)"/* -0 sh -c 'echo "$3"' 0)"
 
-exec "${_greetd_fbterm_bi}" "$P" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} $H/.config/sway/env sway"
+exec "${_greetd_fbterm_bi}" "$P" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
