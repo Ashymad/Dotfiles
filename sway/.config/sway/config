@@ -127,7 +127,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id playerctl next
 bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id playerctl previous
 
-bindsym $mod+c exec mlterm-wl -g 100x30 -N com.sub.tui -e tmux new-session -A -s subtui SubTUI
+bindsym $mod+c exec exec upplay
 
 # Screen brightness controls
 bindsym XF86MonBrightnessDown      exec brightnessctl s 10%-

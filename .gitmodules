@@ -7,3 +7,6 @@
 [submodule "polybar/.config/polybar/polybar-scripts"]
 	path = polybar/.config/polybar/polybar-scripts
 	url = https://github.com/polybar/polybar-scripts.git
+[submodule "tmux/.local/share/oh-my-tmux"]
+	path = tmux/.local/share/oh-my-tmux
+	url = https://github.com/gpakosz/.tmux.git

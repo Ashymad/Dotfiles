@@ -130,4 +130,4 @@ unset key
 
 # Created by newuser for 5.9
 
-[ -f ~/.cargo/env ] && source ~/.cargo/env
+source ~/.zshrc.local

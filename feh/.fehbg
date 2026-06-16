@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-if [[ $1 == "r" ]]; then
-    WP="$(find ~/Pictures/Wallpapers/ -type f -name '*.jpg' -o -name '*.png' | perl -MList::Util -e 'print List::Util::shuffle <>' | head -1)"
-    echo "$WP"
-    ln -fs "$WP" ~/.config/sway/BG
-fi
-swaymsg "output * background ~/.config/sway/BG fill"
