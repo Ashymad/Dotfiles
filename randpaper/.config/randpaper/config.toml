@@ -1,4 +1,4 @@
-wallpaper_dir = "/home/szymon/Pictures/Wallpapers"
+wallpaper_dir = "/home/szymon/img/wallpapers"
 backend = "sway"        # "sway" | "hyprland"
 renderer = "awww"       # "swaybg" | "awww"
 time = "30m"            # used only in daemon mode

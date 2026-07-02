@@ -17,7 +17,7 @@ bindsym $mod+o exec find $HOME/.password-store -name '*.gpg' \
                   | tofi \
                   | xargs -I{} pass show '{}' \
                   | head -1 \
-                  | timeout 5 wl-copy -f -n --sensitive
+                  | timeout 5 wl-copy -f -n
 
 bindsym $mod+h focus left
 bindsym $mod+j focus down

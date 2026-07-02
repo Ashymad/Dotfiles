@@ -1,4 +1,5 @@
 [ -f ~/.cargo/env ] && source ~/.cargo/env
+[ -d /opt/bin ] && [[ "$PATH" != *:/opt/bin* ]] && export PATH="$PATH:/opt/bin"
 
 alias :e="$EDITOR"
 alias :q=exit

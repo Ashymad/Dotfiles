@@ -1,6 +1,6 @@
 add_newline = false
 command_timeout = 200
-format = "[$hostname$directory$git_branch$git_commit$git_status$character]($style)"
+format = "[$hostname$container$directory$git_branch$git_commit$git_status$character]($style)"
 
 [character]
 error_symbol = "[!>](bold cyan)"
@@ -41,3 +41,7 @@ deleted    = ""
 
 [hostname]
 format     = '[@$hostname]($style) '
+
+
+[container]
+format = '[$symbol$name]($style) '
