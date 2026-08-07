@@ -5,13 +5,13 @@ for dir in ~/.usr/src/*; do
 
     tag="$(git -C "$dir" tag --sort=creatordate --points-at HEAD | tail -1)"
     if [ -n "$tag" ]; then
-        [ "$1" = "-u" ] && git -C "$dir" fetch --tags 2>/dev/null 1>&2
+        [ "$1" = "-u" ] && git -C "$dir" fetch --tags
         remote_tag="$(git -C "$dir" for-each-ref --sort=creatordate --format '%(refname)' refs/tags | cut -d/ -f3 | tail -1)"
         if [ "${tag#v}" != "${remote_tag#v}" ]; then
-            printf "%-25s %10s -> %-10s\n" "$(basename $dir)" "$tag" "$remote_tag"
+            printf "%-25s %15s -> %s\n" "$(basename $dir)" "$tag" "$remote_tag"
         fi
     else
-        [ "$1" = "-u" ] && git -C "$dir" remote update 2>/dev/null 1>&2
+        [ "$1" = "-u" ] && git -C "$dir" remote update
         branch="$(git -C "$dir" rev-parse --abbrev-ref HEAD)"
         if [ "$branch" = "HEAD" ]; then
             echo "No branch or tag found for $pkg"
@@ -20,7 +20,7 @@ for dir in ~/.usr/src/*; do
         if remote="$(git -C "$dir" rev-parse --abbrev-ref --symbolic-full-name @{u} 2>/dev/null)"; then
             commits="$(git -C "$dir" rev-list --left-only --count "$remote...@")"
             if [ "$commits" != 0 ]; then
-                printf "%-25s %10s ++ %-10s\n" "$(basename $dir)" "$branch" "$commits"
+                printf "%-25s %15s ++ %s\n" "$(basename $dir)" "$branch" "$commits"
             fi
         fi
     fi
