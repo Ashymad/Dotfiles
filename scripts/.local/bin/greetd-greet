@@ -10,13 +10,23 @@ for bin in fbterm_bi fbterm fbv awww tuigreet; do
     bin_path="$(env HOME="$H" "${_greetd_withenv}" -f "$H/.config/sway/env" which $bin 2>/dev/null)"
     [ -z "$bin_path" ] && {
         echo " [ERR]"
-        exit 1
     } || {
         echo " [OK]"
+        export _greetd_${bin}="$bin_path"
     }
-    export _greetd_${bin}="$bin_path"
 done
 
-P="$(xargs -a "$H/.cache/awww/$("${_greetd_awww}" --version | cut -d' ' -f2)"/* -0 sh -c 'echo "$3"' 0)"
+if [ -z "${_greetd_tuigreet}" ]; then
+    echo "Tuigreet not found, starting agreety"
+    exec agreety --cmd "${_greetd_withenv} -f $H/.config/sway/env sway"
+elif [ -z "${_greetd_fbterm}" ]; then
+    echo "Fbterm not found, starting in TTY"
+    exec "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
+elif [ -z "${_greetd_awww}" ] || [ -z "${_greetd_fbterm_bi}" ] || [ -z "${_greetd_fbv}" ]; then
+    echo "Fbv or awww not found, not setting background"
+    exec "${_greetd_fbterm}" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
+else
+    P="$(xargs -a "$H/.cache/awww/$("${_greetd_awww}" --version | cut -d' ' -f2)"/* -0 sh -c 'echo "$3"' 0)"
+    exec "${_greetd_fbterm_bi}" "$P" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
+fi
 
-exec "${_greetd_fbterm_bi}" "$P" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
