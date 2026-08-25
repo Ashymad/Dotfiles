@@ -189,7 +189,7 @@ require('lazy').setup({
                 options = {
                     offsets = {
                         {
-                            filetype = "NvimTree",
+                            filetype = "neo-tree",
                             text = "File Explorer",
                             text_align = "center",
                             separator = true
@@ -200,25 +200,42 @@ require('lazy').setup({
         end
     },
 
-    { 'nvim-tree/nvim-tree.lua',
-        dependencies = 'nvim-tree/nvim-web-devicons',
+    { "nvim-neo-tree/neo-tree.nvim",
+        branch = "v3.x",
+        dependencies = {
+            "nvim-lua/plenary.nvim",
+            "MunifTanjim/nui.nvim",
+            "nvim-tree/nvim-web-devicons",
+        },
+    },
+
+    { "Crysthamus/nvim-file-operations",
+        -- branch = "compat" -- if you are on Neovim <= 0.10
+        dependencies = {
+            "nvim-neo-tree/neo-tree.nvim", -- makes sure that this loads after Neo-tree.
+        },
         config = function()
-            vim.g.loaded_netrw = 1
-            vim.g.loaded_netrwPlugin = 1
+            require("nvim-file-operations").setup()
+        end,
+    },
 
-            vim.opt.termguicolors = true
-
-            require("nvim-tree").setup({
-                view = {
-                    preserve_window_proportions = true,
-                },
-                actions = {
-                    open_file = {
-                        resize_window = false,
+    { "s1n7ax/nvim-window-picker",
+        version = "2.*",
+        config = function()
+            require("window-picker").setup({
+                filter_rules = {
+                    include_current_win = false,
+                    autoselect_one = true,
+                    -- filter using buffer options
+                    bo = {
+                        -- if the file type is one of following, the window will be ignored
+                        filetype = { "neo-tree", "neo-tree-popup", "notify" },
+                        -- if the buffer type is one of following, the window will be ignored
+                        buftype = { "terminal", "quickfix" },
                     },
                 },
             })
-        end
+        end,
     },
 
     { "lukas-reineke/indent-blankline.nvim",
@@ -245,6 +262,7 @@ require('lazy').setup({
         opts = {
             formatters_by_ft = {
                 cpp = {"clang-format"},
+                c = {"clang-format"},
             },
             format_on_save = {
                 timeout_ms = 500,
