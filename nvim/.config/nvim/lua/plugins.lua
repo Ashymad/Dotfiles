@@ -15,12 +15,13 @@ vim.g.mapleader = " "
 
 require('lazy').setup({
     { "nvim-treesitter/nvim-treesitter",
+        lazy = false,
         build = ":TSUpdate",
         config = function () 
-            require("nvim-treesitter.configs").setup({
-                ensure_installed = { "c", "cpp", "python", "bash", "lua", "vim", "vimdoc", "fish", "yaml", "markdown", "markdown_inline" },
-                highlight = { enable = true },
-                indent = { enable = true },  
+            require('nvim-treesitter').install { "c", "cpp", "python", "bash", "lua", "vim", "vimdoc", "fish", "yaml", "markdown", "markdown_inline", "zig" }
+            vim.api.nvim_create_autocmd('FileType', {
+                pattern = { "c", "cpp", "python", "bash", "lua", "vim", "vimdoc", "fish", "yaml", "markdown", "zig" },
+                callback = function() vim.treesitter.start() end,
             })
         end
     },
