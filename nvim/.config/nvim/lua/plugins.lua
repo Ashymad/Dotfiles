@@ -69,10 +69,9 @@ require('lazy').setup({
                 override = {
                     ["vim.lsp.util.convert_input_to_markdown_lines"] = true,
                     ["vim.lsp.util.stylize_markdown"] = true,
-                    ["cmp.entry.get_documentation"] = true, -- requires hrsh7th/nvim-cmp
                 },
             },
-            -- you can enable a preset for easier configuration
+
             presets = {
                 bottom_search = true, -- use a classic bottom cmdline for search
                 command_palette = true, -- position the cmdline and popupmenu together
@@ -86,11 +85,7 @@ require('lazy').setup({
             },
         },
         dependencies = {
-            -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
             "MunifTanjim/nui.nvim",
-            -- OPTIONAL:
-            --   `nvim-notify` is only needed, if you want to use the notification view.
-            --   If not available, we use `mini` as the fallback
             "rcarriga/nvim-notify",
         }
     },
@@ -207,6 +202,9 @@ require('lazy').setup({
             "MunifTanjim/nui.nvim",
             "nvim-tree/nvim-web-devicons",
         },
+        keys = {
+            { "<C-s>", "<cmd>Neotree<CR>" }
+        }
     },
 
     { "Crysthamus/nvim-file-operations",
@@ -283,7 +281,6 @@ require('lazy').setup({
             lsp_enable = function(srvs)
                 for i,srv in ipairs(srvs) do
                     if 1 == vim.fn.executable(vim.lsp.config[srv].cmd[1]) then
-                      --  vim.lsp.config(srv, coq.lsp_ensure_capabilities())
                         vim.lsp.enable(srv) 
                     end
                 end
@@ -294,18 +291,22 @@ require('lazy').setup({
 
     { 'vim-denops/denops.vim',
         init = function()
-            vim.g["denops#deno"] = "podman"
+            if 1 ~= vim.fn.executable("deno") then
+                vim.g["denops#deno"] = "podman"
+            end
         end,
         config = function()
-            vim.g["denops#server#deno_args"] = {
-                "-v", vim.env.HOME .. ":" .. vim.env.HOME,
-                "-e", "DENO_DIR=" .. vim.env.HOME .. "/.cache/deno", 
-                "--rm",
-                "--network=host",
-                "ghcr.io/denoland/deno:distroless",
-                "run",
-                unpack(vim.g["denops#server#deno_args"])
-            }
+            if vim.g["denops#deno"] == "podman" then
+                vim.g["denops#server#deno_args"] = {
+                   "-v", vim.env.HOME .. ":" .. vim.env.HOME,
+                   "-e", "DENO_DIR=" .. vim.env.HOME .. "/.cache/deno", 
+                   "--rm",
+                   "--network=host",
+                   "ghcr.io/denoland/deno:distroless",
+                   "run",
+                   unpack(vim.g["denops#server#deno_args"])
+                }
+            end
         end
     },
 
