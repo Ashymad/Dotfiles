@@ -26,3 +26,4 @@ export VIVID_THEME=rose-pine-moon
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"
 export ZSH_EXEC=1
 export HOST
+[ -f "$HOME/.cargo/env" ] && . "$HOME/.cargo/env"
