@@ -8,7 +8,7 @@ for dir in ~/.usr/src/*; do
     [ -d "$dir"/.git ] || continue
 
     if git -C "$dir" symbolic-ref -q HEAD >/dev/null; then
-        [ "$1" = "-u" ] && git -C "$dir" remote update -v 2>&1 | disp "$(basename $dir)"
+        [ "$1" = "-u" ] && git -C "$dir" remote -v update 2>&1 | disp "$(basename $dir)"
         branch="$(git -C "$dir" rev-parse --abbrev-ref HEAD)"
         if [ "$branch" = "HEAD" ]; then
             echo "No branch or tag found for $pkg"
