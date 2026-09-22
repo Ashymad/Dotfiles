@@ -1,7 +1,7 @@
 #!/bin/sh
 
 disp() {
-    xargs -d '\n' -i printf "\x1b[2K%-25s %.60s\r" "$1" '{}'
+    tr '\n' '\0' | xargs -0 -I '{}' printf "\x1b[2K%-25s %.60s\r" "$1" '{}'
 }
 
 for dir in ~/.usr/src/*; do
