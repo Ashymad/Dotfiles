@@ -11,6 +11,9 @@
 ;; Turn off menu
 (menu-bar-mode -1)
 
+;; Always follow symlinks
+(setq vc-follow-symlinks t)
+
 ;; Bootstrap straight.el
 (defvar bootstrap-version)
 (let ((bootstrap-file
@@ -34,25 +37,29 @@
 
 ;; Initialize Evil
 (use-package evil
-  :ensure t
   :config
   ;; Global evil mode
   (evil-mode 1))
 
-(use-package raku-mode
-  :ensure t
-  :defer t)
+(use-package raku-mode)
 
+(use-package autothemer)
 
-(use-package kaolin-themes
-  :init
-  (defun on-after-init ()
-    (unless (display-graphic-p (selected-frame))
-	(set-face-background 'default "unspecified-bg" (selected-frame))))
-  (add-hook 'window-setup-hook 'on-after-init)
-  :config
-  (load-theme 'kaolin-aurora t))
+(use-package rose-pine-theme
+  :straight
+  `(rose-pine-theme
+    :host github
+    :repo "konrad1977/pinerose-emacs"
+    :branch "main"))
 
+(load-theme 'rose-pine t)
+(defun set-background-for-terminal (&optional frame)
+  (or frame (setq frame (selected-frame)))
+  "unsets the background color in terminal mode"
+  (unless (display-graphic-p frame)
+    (set-face-background 'default "unspecified-bg" frame)))
+(add-hook 'after-make-frame-functions 'set-background-for-terminal)
+(add-hook 'window-setup-hook 'set-background-for-terminal)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
