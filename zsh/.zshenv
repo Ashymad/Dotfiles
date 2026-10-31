@@ -8,7 +8,7 @@ fi
 unset SWAY_ENV_FILE
 unset SWAY_ENV_SHA
 
-export EDITOR="$(which nvim)"
+export EDITOR="env TERM=mlterm-direct $(which emacsclient)"
 export SUDO_EDITOR="$EDITOR"
 export VIVID_THEME=rose-pine-moon
 export ZSH_EXEC=1

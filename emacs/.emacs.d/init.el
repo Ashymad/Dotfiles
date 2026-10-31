@@ -3,6 +3,11 @@
 ;; Sane amount of scroll
 (setq mouse-wheel-scroll-amount '(3))
 (setq mouse-wheel-progressive-speed nil)
+(setq scroll-conservatively 10
+            scroll-margin 15)
+
+;; Enable mouse in terminal
+(add-hook 'after-make-frame-functions (lambda (f) (xterm-mouse-mode 1) (mouse-wheel-mode 1))) 
 
 ;; Relnum
 (setq display-line-numbers-type 'relative) 
@@ -43,8 +48,19 @@
 
 (use-package raku-mode)
 
-(use-package autothemer)
+;; Emacs terminal
+(use-package eat
+ :straight
+ '(eat :type git
+       :host codeberg
+       :repo "akib/emacs-eat"
+       :files ("*.el" ("term" "term/*.el") "*.texi"
+	       "*.ti" ("terminfo/e" "terminfo/e/*")
+	       ("terminfo/65" "terminfo/65/*")
+	       ("integration" "integration/*")
+	       (:exclude ".dir-locals.el" "*-tests.el"))))
 
+(use-package autothemer)
 (use-package rose-pine-theme
   :straight
   `(rose-pine-theme
@@ -53,6 +69,8 @@
     :branch "main"))
 
 (load-theme 'rose-pine t)
+
+;; Trasparent background
 (defun set-background-for-terminal (&optional frame)
   (or frame (setq frame (selected-frame)))
   "unsets the background color in terminal mode"
@@ -61,15 +79,17 @@
 (add-hook 'after-make-frame-functions 'set-background-for-terminal)
 (add-hook 'window-setup-hook 'set-background-for-terminal)
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(package-selected-packages '(evil)))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Enable Corfu completion UI
+(use-package corfu
+  :hook (after-init . global-corfu-mode))
+
+;; Add extensions
+(use-package cape
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file)
+  (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+(setq tab-always-indent 'complete)
+(setq text-mode-ispell-word-completion nil)
+(setq read-extended-command-predicate #'command-completion-default-include-p)
