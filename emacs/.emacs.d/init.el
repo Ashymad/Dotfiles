@@ -11,7 +11,13 @@
 
 ;; Relnum
 (setq display-line-numbers-type 'relative) 
-(global-display-line-numbers-mode)
+
+(defun my-display-numbers-hook ()
+    (display-line-numbers-mode 1))
+
+(add-hook 'prog-mode-hook 'my-display-numbers-hook)
+(add-hook 'text-mode-hook 'my-display-numbers-hook)
+(add-hook 'conf-mode-hook 'my-display-numbers-hook)
 
 ;; Turn off menu
 (menu-bar-mode -1)
@@ -42,9 +48,16 @@
 
 ;; Initialize Evil
 (use-package evil
+  :init
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
   :config
-  ;; Global evil mode
   (evil-mode 1))
+
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
 
 (use-package raku-mode)
 
@@ -89,6 +102,42 @@
   (add-hook 'completion-at-point-functions #'cape-dabbrev)
   (add-hook 'completion-at-point-functions #'cape-file)
   (add-hook 'completion-at-point-functions #'cape-elisp-block))
+
+(use-package treemacs
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode 'always)
+    (when treemacs-python-executable
+      (treemacs-git-commit-diff-mode t))
+
+    (pcase (cons (not (null (executable-find "git")))
+		 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple)))
+
+    (treemacs-hide-gitignored-files-mode nil))
+  :bind
+  (:map global-map
+	("M-0"       . treemacs-select-window)
+	("C-x t 1"   . treemacs-delete-other-windows)
+	("C-x t t"   . treemacs)
+	("C-x t d"   . treemacs-select-directory)
+	("C-x t B"   . treemacs-bookmark)
+	("C-x t C-t" . treemacs-find-file)
+	("C-x t M-t" . treemacs-find-tag)))
+
+(use-package treemacs-evil
+  :after (treemacs evil))
+
+(treemacs-start-on-boot)
 
 (setq tab-always-indent 'complete)
 (setq text-mode-ispell-word-completion nil)

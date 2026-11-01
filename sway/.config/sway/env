@@ -1,6 +1,6 @@
 XDG_SESSION_TYPE=wayland
 XDG_DATA_DIRS=$HOME/.usr/local/share:$XDG_DATA_DIRS
-PATH=$HOME/.local/bin:$HOME/.usr/local/bin:$HOME/.usr/local/sbin:$PATH
+PATH=$HOME/.local/bin:$HOME/.usr/local/bin:$HOME/.usr/local/sbin:$HOME/.usr/local/share/perl6/site/bin:$PATH
 PYTHONPATH=$HOME/.usr/local/lib/python3.14/site-packages:/usr/lib/python3.14/site-packages
 PERL5LIB=$HOME/.usr/local/lib/perl5/
 PKG_CONFIG_PATH=$HOME/.usr/local/lib/pkgconfig/

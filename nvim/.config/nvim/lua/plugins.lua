@@ -248,6 +248,8 @@ require('lazy').setup({
 
     'janet-lang/janet.vim',
 
+    'Raku/vim-raku',
+
     { 'goolord/alpha-nvim',
         dependencies = { 'nvim-tree/nvim-web-devicons' },
         config = function ()
