@@ -142,3 +142,9 @@
 (setq tab-always-indent 'complete)
 (setq text-mode-ispell-word-completion nil)
 (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode))
+
+(set-background-for-terminal)
