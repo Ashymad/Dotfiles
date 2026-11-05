@@ -146,3 +146,9 @@
 (setq read-extended-command-predicate #'command-completion-default-include-p)
 
 (global-set-key (kbd "C-^") 'swap-buffer)
+
+(use-package diff-hl
+  :init
+  (global-diff-hl-mode))
+
+(set-background-for-terminal)
