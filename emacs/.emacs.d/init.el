@@ -19,6 +19,8 @@
 (add-hook 'text-mode-hook 'my-display-numbers-hook)
 (add-hook 'conf-mode-hook 'my-display-numbers-hook)
 
+(defun swap-buffer () (switch-to-buffer (other-buffer)))
+
 ;; Turn off menu
 (menu-bar-mode -1)
 
@@ -142,3 +144,5 @@
 (setq tab-always-indent 'complete)
 (setq text-mode-ispell-word-completion nil)
 (setq read-extended-command-predicate #'command-completion-default-include-p)
+
+(global-set-key (kbd "C-^") 'swap-buffer)
