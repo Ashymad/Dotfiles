@@ -21,7 +21,7 @@ zmodule utility
 # Gitster prompt and dependencies
 zmodule prompt-pwd
 zmodule git-info
-zmodule gitster
+zmodule sorin
 
 #
 # Completion
