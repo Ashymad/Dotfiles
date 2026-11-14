@@ -2,31 +2,42 @@
 
 H="$(readlink -f $(dirname "$0")/../..)"
 U="$(awk "-vH=$H" -F: '{if ($6 == H) print $1}' /etc/passwd)"
+E="$H/.global/env"
+S="$H/.dotfiles/sway/.local/share/wayland-sessions"
 
-export _greetd_withenv="$H/.local/bin/withenv"
+fbterm_bi() {
+    tput civis
+    "${fbv}" -ciukery "$1"
+    shift
+    export FBTERM_BACKGROUND_IMAGE=1
+    exec "${fbterm}" "$@"
+}
 
-for bin in fbterm_bi fbterm fbv awww tuigreet; do
-    echo -n "Resolving ${bin}"
-    bin_path="$(env HOME="$H" "${_greetd_withenv}" -f "$H/.config/sway/env" which $bin 2>/dev/null)"
+export withenv="$H/.local/bin/withenv"
+
+printf "[    ]\r["
+for bin in fbterm fbv awww tuigreet; do
+    bin_path="$(env HOME="$H" "${withenv}" -f "$E" which $bin 2>/dev/null)"
     [ -z "$bin_path" ] && {
-        echo " [ERR]"
+	printf "!"
     } || {
-        echo " [OK]"
-        export _greetd_${bin}="$bin_path"
+        printf "#"
+        export ${bin}="$bin_path"
     }
 done
+printf "]\n"
 
-if [ -z "${_greetd_tuigreet}" ]; then
+if [ -z "${tuigreet}" ]; then
     echo "Tuigreet not found, starting agreety"
-    exec agreety --cmd "${_greetd_withenv} -f $H/.config/sway/env sway"
-elif [ -z "${_greetd_fbterm}" ]; then
+    exec agreety --cmd "${withenv} -f $E sway"
+elif [ -z "${fbterm}" ]; then
     echo "Fbterm not found, starting in TTY"
-    exec "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
-elif [ -z "${_greetd_awww}" ] || [ -z "${_greetd_fbterm_bi}" ] || [ -z "${_greetd_fbv}" ]; then
+    exec "${tuigreet}" -u "$U" --asterisks -s "$S"
+elif [ -z "${awww}" ] || [ -z "${fbv}" ]; then
     echo "Fbv or awww not found, not setting background"
-    exec "${_greetd_fbterm}" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
+    exec "${fbterm}" -- "${tuigreet}" -u "$U" --asterisks -s "$S"
 else
-    P="$(xargs -a "$H/.cache/awww/$("${_greetd_awww}" --version | cut -d' ' -f2)"/* -0 sh -c 'echo "$3"' 0)"
-    exec "${_greetd_fbterm_bi}" "$P" -- "${_greetd_tuigreet}" -u "$U" --asterisks -c "${_greetd_withenv} -f $H/.config/sway/env sway"
+    P="$(xargs -a "$H/.cache/awww/$("${awww}" --version | cut -d' ' -f2)"/* -0 sh -c 'echo "$3"' 0)"
+    fbterm_bi "$P" -- "${tuigreet}" -u "$U" --asterisks -s "$S"
 fi
 

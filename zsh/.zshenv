@@ -1,12 +1,12 @@
 skip_global_compinit=1
 
-SWAY_ENV_FILE=~/.config/sway/env
-SWAY_ENV_SHA="$(sha1sum "$SWAY_ENV_FILE" | cut -d' ' -f1)"
-if [[ $SWAY_ENV != $SWAY_ENV_SHA ]]; then
-    source <(~/.local/bin/withenv -e -f "$SWAY_ENV_FILE")
+ENV_FILE=~/.global/env
+ENV_SHA="$(sha1sum "$ENV_FILE" | cut -d' ' -f1)"
+if [[ $SHA1ENV != $ENV_SHA ]]; then
+    source <(~/.local/bin/withenv -e -f "$ENV_FILE")
 fi
-unset SWAY_ENV_FILE
-unset SWAY_ENV_SHA
+unset ENV_FILE
+unset ENV_SHA
 
 export EDITOR="$(which emacsclient) -nw -a ''"
 export SUDO_EDITOR="$EDITOR"
