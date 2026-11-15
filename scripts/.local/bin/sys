@@ -4,17 +4,39 @@ which systemctl >/dev/null 2>&1 && ctlcmd=systemctl || ctlcmd=loginctl
 
 case $1 in
     lock)
-        exec swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
+        swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
         ;;
     reboot)
-        exec $ctlcmd reboot
+        $ctlcmd reboot
         ;;
     suspend)
-        exec $ctlcmd suspend
+        $ctlcmd suspend
         ;;
     poweroff)
-        exec $ctlcmd poweroff
+        $ctlcmd poweroff
         ;;
+    update)
+	if which apk &>/dev/null; then
+	    sudo apk update
+	elif which apt &>/dev/null; then
+	    sudo apt update
+	elif which nix &>/dev/null; then
+	    nix flake update --flake ~/.config/nixos
+	else
+	    echo "Unsupported system"
+	fi
+	;;
+    upgrade)
+	if which apk &>/dev/null; then
+	    sudo apk upgrade
+	elif which apt &>/dev/null; then
+	    sudo apt upgrade
+	elif which nix &>/dev/null; then
+	    nixos-rebuild switch --sudo --flake ~/.config/nixos
+	else
+	    echo "Unsupported system"
+	fi
+	;;
     *)
         echo "Unknown command: '$1'"
         exit 1

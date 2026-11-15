@@ -8,7 +8,7 @@ fi
 unset ENV_FILE
 unset ENV_SHA
 
-export EDITOR="$(which emacsclient) -nw -a ''"
+export EDITOR="env TERM=mlterm-direct $(which emacsclient) -nw -a ''"
 export SUDO_EDITOR="$EDITOR"
 export VIVID_THEME=rose-pine-moon
 export ZSH_EXEC=1
