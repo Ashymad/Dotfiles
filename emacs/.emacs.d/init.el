@@ -152,3 +152,5 @@
   (global-diff-hl-mode))
 
 (set-background-for-terminal)
+
+(setq warning-minimum-level :error)

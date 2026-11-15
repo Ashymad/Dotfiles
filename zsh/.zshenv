@@ -2,7 +2,7 @@ skip_global_compinit=1
 
 ENV_FILE=~/.global/env
 ENV_SHA="$(sha1sum "$ENV_FILE" | cut -d' ' -f1)"
-if [[ $SHA1ENV != $ENV_SHA ]]; then
+if [[ ${_ENV_SHA1SUM} != $ENV_SHA ]]; then
     source <(~/.local/bin/withenv -e -f "$ENV_FILE")
 fi
 unset ENV_FILE
