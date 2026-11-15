@@ -1,8 +1,11 @@
 #!/bin/sh
 
+cmd="$1"
+shift
+
 which systemctl >/dev/null 2>&1 && ctlcmd=systemctl || ctlcmd=loginctl
 
-case $1 in
+case $cmd in
     lock)
         swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
         ;;
@@ -17,22 +20,22 @@ case $1 in
         ;;
     update)
 	if which apk &>/dev/null; then
-	    sudo apk update
+	    sudo apk update "$@"
 	elif which apt &>/dev/null; then
-	    sudo apt update
+	    sudo apt update "$@"
 	elif which nix &>/dev/null; then
-	    nix flake update --flake ~/.config/nixos
+	    nix flake update --flake ~/.config/nixos "$@"
 	else
 	    echo "Unsupported system"
 	fi
 	;;
     upgrade)
 	if which apk &>/dev/null; then
-	    sudo apk upgrade
+	    sudo apk upgrade "$@"
 	elif which apt &>/dev/null; then
-	    sudo apt upgrade
+	    sudo apt upgrade "$@"
 	elif which nix &>/dev/null; then
-	    nixos-rebuild switch --sudo --flake ~/.config/nixos
+	    nixos-rebuild switch --sudo --flake ~/.config/nixos "$@"
 	else
 	    echo "Unsupported system"
 	fi
