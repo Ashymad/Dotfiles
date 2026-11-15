@@ -151,6 +151,9 @@
   :init
   (global-diff-hl-mode))
 
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
 (set-background-for-terminal)
 
 (setq warning-minimum-level :error)
