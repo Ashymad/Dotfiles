@@ -3,39 +3,51 @@
 cmd="$1"
 shift
 
-which systemctl >/dev/null 2>&1 && ctlcmd=systemctl || ctlcmd=loginctl
+has() {
+    exec which "$1" >/dev/null 2>&1
+}
+
+has systemctl && ctlcmd=systemctl || ctlcmd=loginctl
+
+if [ $UID -ne 0 ]; then
+    if has doas; then
+	sudo=doas
+    else
+	sudo=sudo
+    fi
+fi
 
 case $cmd in
     lock)
         swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
         ;;
     reboot)
-        $ctlcmd reboot
+        $sudo $ctlcmd reboot
         ;;
     suspend)
-        $ctlcmd suspend
+        $sudo $ctlcmd suspend
         ;;
     poweroff)
-        $ctlcmd poweroff
+        $sudo $ctlcmd poweroff
         ;;
     update)
-	if which apk &>/dev/null; then
-	    sudo apk update "$@"
-	elif which apt &>/dev/null; then
-	    sudo apt update "$@"
-	elif which nix &>/dev/null; then
+	if has apk; then
+	    $sudo apk update "$@"
+	elif has apt; then
+	    $sudo apt update "$@"
+	elif has nix; then
 	    nix flake update --flake ~/.config/nixos "$@"
 	else
 	    echo "Unsupported system"
 	fi
 	;;
     upgrade)
-	if which apk &>/dev/null; then
-	    sudo apk upgrade "$@"
-	elif which apt &>/dev/null; then
-	    sudo apt upgrade "$@"
-	elif which nix &>/dev/null; then
-	    nixos-rebuild switch --sudo --flake ~/.config/nixos "$@"
+	if has apk; then
+	    $sudo apk upgrade "$@"
+	elif has apt; then
+	    $sudo apt upgrade "$@"
+	elif has nixos-rebuild; then
+	    nixos-rebuild switch ${sudo:+--sudo} --flake ~/.config/nixos "$@"
 	else
 	    echo "Unsupported system"
 	fi
