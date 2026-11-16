@@ -4,7 +4,7 @@ cmd="$1"
 shift
 
 has() {
-    exec which "$1" >/dev/null 2>&1
+    which "$1" >/dev/null 2>&1
 }
 
 has systemctl && ctlcmd=systemctl || ctlcmd=loginctl
