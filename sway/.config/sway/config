@@ -127,7 +127,7 @@ bindsym XF86AudioPrev exec --no-startup-id playerctl previous
 bindsym Ctrl+XF86AudioRaiseVolume exec --no-startup-id playerctl next
 bindsym Ctrl+XF86AudioLowerVolume exec --no-startup-id playerctl previous
 
-bindsym $mod+c exec exec upplay
+bindsym $mod+c exec exec mlterm-wl -N SubTUI -g 100x30 -e $(which shpool) attach SubTUI
 
 # Screen brightness controls
 bindsym XF86MonBrightnessDown      exec brightnessctl s 10%-
@@ -171,7 +171,7 @@ for_window [instance="mpv"] pixel 0
 for_window [instance="^r_x11$"] floating enable
 for_window [instance="^octave\-gui$"] floating enable
 for_window [instance="^matplotlib$"] floating enable
-for_window [app_id="com.sub.tui"] floating enable
+for_window [app_id="SubTUI"] floating enable
 for_window [app_id="upplay"] floating enable
 
 exec exec awww-daemon

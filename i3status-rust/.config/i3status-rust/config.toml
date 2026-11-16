@@ -11,7 +11,7 @@ icons = "awesome4"
 
 [[block]]
 block = "music"
-player = "mpd"
+player = "subtui"
 
 [[block]]
 block = "battery"
