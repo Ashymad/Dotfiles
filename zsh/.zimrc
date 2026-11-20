@@ -19,6 +19,7 @@ zmodule termtitle
 zmodule utility
 
 # prompt and dependencies
+zmodule mafredri/zsh-async --source async.zsh --cmd 'async_init'
 zmodule jackharrisonsherlock/common
 
 #
