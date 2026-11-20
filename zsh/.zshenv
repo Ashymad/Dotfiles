@@ -12,6 +12,7 @@ export EDITOR="$(which emacsclient) -nw -a ''"
 export SUDO_EDITOR="$EDITOR"
 export VIVID_THEME=rose-pine-moon
 export ZSH_EXEC=1
+export LNKO_CONFIG=~/.dotfiles/.lnkorc
 export HOST
 
 [ -f "$XDG_RUNTIME_DIR/arista-ssh/agent.sock" ] && export SSH_AUTH_SOCK="$XDG_RUNTIME_DIR/arista-ssh/agent.sock"

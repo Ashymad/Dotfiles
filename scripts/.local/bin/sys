@@ -1,15 +1,23 @@
 #!/bin/sh
 
-cmd="$1"
-shift
+set -e
 
 has() {
     which "$1" >/dev/null 2>&1
 }
 
+auntil() {
+    for arg in "$@"; do
+	if [ "$arg" = "-t" ]; then
+	    break
+	fi
+	echo "$arg"
+    done
+}
+
 has systemctl && ctlcmd=systemctl || ctlcmd=loginctl
 
-if [ $UID -ne 0 ]; then
+if [ $(id -u) -ne 0 ]; then
     if has doas; then
 	sudo=doas
     else
@@ -17,43 +25,54 @@ if [ $UID -ne 0 ]; then
     fi
 fi
 
-case $cmd in
-    lock)
-        swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
-        ;;
-    reboot)
-        $sudo $ctlcmd reboot
-        ;;
-    suspend)
-        $sudo $ctlcmd suspend
-        ;;
-    poweroff)
-        $sudo $ctlcmd poweroff
-        ;;
-    update)
-	if has apk; then
-	    $sudo apk update "$@"
-	elif has apt; then
-	    $sudo apt update "$@"
-	elif has nix; then
-	    nix flake update --flake ~/.config/nixos "$@"
-	else
-	    echo "Unsupported system"
-	fi
-	;;
-    upgrade)
-	if has apk; then
-	    $sudo apk upgrade "$@"
-	elif has apt; then
-	    $sudo apt upgrade "$@"
-	elif has nixos-rebuild; then
-	    nixos-rebuild switch ${sudo:+--sudo} --flake ~/.config/nixos "$@"
-	else
-	    echo "Unsupported system"
-	fi
-	;;
-    *)
-        echo "Unknown command: '$1'"
-        exit 1
-        ;;
-esac
+while true; do
+    arg="$1"
+    shift
+    case "$arg" in
+	lock)
+	    swaylock $(awww query --json | jq -r '."".[] | ("-i\n" + .name + ":" + .displaying.image)') -s fill
+	    ;;
+	reboot)
+	    $sudo $ctlcmd reboot
+	    ;;
+	suspend)
+	    $sudo $ctlcmd suspend
+	    ;;
+	poweroff)
+	    $sudo $ctlcmd poweroff
+	    ;;
+	update)
+	    if has apk; then
+		auntil "$@" | $sudo xargs -o apk update
+	    elif has apt; then
+		auntil "$@" | $sudo xargs -o apt update
+	    elif has nix; then
+		auntil "$@" | $sudo xargs -o nix flake update --flake ~/.config/nixos
+	    else
+		echo "Unsupported system"
+	    fi
+	    ;;
+	upgrade)
+	    if has apk; then
+		auntil "$@" | $sudo xargs -o apk upgrade
+	    elif has apt; then
+		auntil "$@" | $sudo xargs -o apt upgrade
+	    elif has nixos-rebuild; then
+		auntil "$@" | $sudo xargs -o nixos-rebuild switch ${sudo:+--sudo} --flake ~/.config/nixos
+	    else
+		echo "Unsupported system"
+	    fi
+	    ;;
+	*)
+	    echo "Unknown command: '$1'"
+	    exit 1
+	    ;;
+    esac
+    while true; do
+	case $1 in
+	    -t|--then) shift; break ;;
+	    '') exit 0 ;;
+	esac
+	shift
+    done
+done

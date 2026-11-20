@@ -96,7 +96,7 @@
 (use-package dired-subtree
   :commands (dired-subtree-toggle dired-subtree-cycle)
   :config
-  (setq dired-subtree-line-prefix " ")
+  (setq dired-subtree-line-prefix "  |")
   (setq dired-subtree-use-backgrounds nil))
 
 (use-package dired-sidebar

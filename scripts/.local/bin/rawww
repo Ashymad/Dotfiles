@@ -1,0 +1,11 @@
+#!/bin/sh
+
+while true; do
+    case $1 in
+	-s) seed="$2"; shift 2;;
+	-d) dir="$2"; shift 2;;
+	-h) echo "Usage: $0 [-s <seed>] [-d <dir]"; exit 0;;
+	'') break;;
+	*) echo "Unknown option '$1'"; exit 1;;
+    esac
+done

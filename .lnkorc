@@ -1,0 +1,6 @@
+return {
+  dir = "~/.dotfiles/",
+  target = "~",
+  no_folding = true,
+  ignore = { ".#*", "#*" },
+}
