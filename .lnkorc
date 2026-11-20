@@ -1,6 +1,18 @@
+local function get_target(default)
+      local found = false;
+      for i,value in ipairs(arg) do
+      	  if found then
+	     return value
+	  elseif value == "-d" or value == "--dir" then
+	     found = true
+	  end
+      end
+      return default
+end
+
 return {
   dir = "~/.dotfiles/",
-  target = "~",
+  target = get_target("~/.dotfiles") .. "/..",
   no_folding = true,
   ignore = { ".#*", "#*" },
 }
