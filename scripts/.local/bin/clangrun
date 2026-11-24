@@ -1,2 +1,18 @@
-#!/usr/bin/bash
-tail -n+2 "$1" | clang -S -emit-llvm -x c -o - - | exec lli --fake-argv0 "$1" - "${@:2}"
+#!/bin/sh
+
+clang="$(readlink $(which clang))"
+version="$(echo $clang | cut -d- -f2)"
+lli="lli${version:+-}${version}"
+
+file="$1"
+shift
+fifo="$(mktemp -d)/fifo"
+mkfifo "$fifo"
+
+(
+    tail -n+2 "$file" | $clang -S -emit-llvm -x c -o - -
+    rm -rf "$(dirname "$fifo")" >/dev/null 2>&1
+) >> "$fifo" &
+
+
+exec $lli --fake-argv0 "$file" "$fifo" "$@"
