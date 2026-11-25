@@ -1,8 +1,11 @@
 #!/bin/sh
 
-clang="$(readlink $(which clang))"
-version="$(echo $clang | cut -d- -f2)"
-lli="lli${version:+-}${version}"
+if which lli >/dev/null 2>&1; then
+    lli=lli
+else
+    version="$(readlink $(which clang) | cut -d- -f2)"
+    lli="lli${version:+-}${version}"
+fi
 
 file="$1"
 shift
@@ -10,7 +13,7 @@ fifo="$(mktemp -d)/fifo"
 mkfifo "$fifo"
 
 (
-    tail -n+2 "$file" | $clang -S -emit-llvm -x c -o - -
+    tail -n+2 "$file" | clang -S -emit-llvm -x c -o - -
     rm -rf "$(dirname "$fifo")" >/dev/null 2>&1
 ) >> "$fifo" &
 

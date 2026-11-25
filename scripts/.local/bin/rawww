@@ -2,10 +2,21 @@
 
 while true; do
     case $1 in
-	-s) seed="$2"; shift 2;;
-	-d) dir="$2"; shift 2;;
-	-h) echo "Usage: $0 [-s <seed>] [-d <dir]"; exit 0;;
-	'') break;;
-	*) echo "Unknown option '$1'"; exit 1;;
+	-n) name="$2"; shift 2;;
+	-w) wait="$2"; shift 2;;
+	-h) echo "Usage: $0 [ -n <name> ] [ -w <time> ] -- args ..."; exit 0;;
+	--) shift 1; break;;
+	*) break;;
     esac
 done
+
+[ -z "$name" ] && name="$(uuidgen)"
+[ -z "$wait" ] && wait=1
+
+sleep "$wait" &
+trap "kill $!" SIGUSR1
+wait $! || true
+
+teed $PPID | head -1 | xargs -I'{}' "$@"
+
+exec $0 -n $name -w $wait -- "$@" < $(tofifo awk 'NR==1{F=$0}NR>1{print}END{print F}' $(tofifo teed $PPID))

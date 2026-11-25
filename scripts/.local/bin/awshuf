@@ -1,0 +1,27 @@
+#!/usr/bin/awk -f
+BEGIN {
+  if (ARGC > 1) {
+    srand(ARGV[1]);
+    ARGV[1] = "";
+  } else {
+    "od -vAn -N4 -t u4 < /dev/urandom" | getline seed;
+    srand(seed);
+  }
+}
+{
+  LINES[idx++]=$0
+}
+END {
+  pwr = 10^int(1+log(idx)/log(10));
+  i = int(rand()*pwr) % idx;
+  while(printed < idx) {
+      if (LINES[i] != "") {
+	print LINES[i];
+	printed++;
+	LINES[i] = "";
+	i = int(rand()*pwr) % idx;
+      } else {
+        i = (i+1) % idx;
+      }
+  }
+}
