@@ -1,5 +1,5 @@
 #!/bin/sh
-PRT=$(echo $PPID | sum | cut -d' ' -f1)
+PRT=$(echo ${1:-$PPID} | sum | cut -d' ' -f1)
 
 if ! nc 127.0.0.1 $PRT </dev/null; then
     exec 3<&1

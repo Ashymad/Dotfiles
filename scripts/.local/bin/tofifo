@@ -1,0 +1,12 @@
+#!/bin/sh
+
+fifo="$(mktemp -d)/fifo"
+mkfifo "$fifo"
+echo "$fifo"
+
+exec 2>&- 1>&-
+
+{
+    "$@"
+    rm -rf "$(dirname "$fifo")" >/dev/null
+} >> "$fifo" &
