@@ -1,7 +1,6 @@
 #!/bin/sh
 
-exec 3<&1
-
 if ! nc 127.0.0.1 9999 </dev/null; then
-    tee /dev/fd/3 | fork nc -lN 127.0.0.1 9999
+    exec 3<&1
+    tee /dev/fd/3 | fork nc -lN 127.0.0.1 9999 3>&- 2>&- >&-
 fi

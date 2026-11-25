@@ -3,11 +3,5 @@
 #include <unistd.h>
 
 int main(int argc, char ** argv) {
-  if (fork()) {
-    for (int i = 0; i < 3; i++)
-	close(i);
-    return 0;
-  } else {
-    return execvp(argv[1], &argv[1]);
-  }
+  return fork() ? 0 : execvp(argv[1], &argv[1]);
 }
