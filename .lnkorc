@@ -14,5 +14,5 @@ return {
   dir = "~/.dotfiles/",
   target = get_target("~/.dotfiles") .. "/..",
   no_folding = true,
-  ignore = { ".#*", "#*" },
+  ignore = { ".#*", "#*", "*~" },
 }

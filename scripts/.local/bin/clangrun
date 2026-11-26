@@ -1,21 +1,6 @@
 #!/bin/sh
 
-if which lli >/dev/null 2>&1; then
-    lli=lli
-else
-    version="$(readlink $(which clang) | cut -d- -f2)"
-    lli="lli${version:+-}${version}"
-fi
-
+lli="$(which lli 2>/dev/null)" || lli="lli-$(readlink $(which clang) | cut -d- -f2)"
 file="$1"
 shift
-fifo="$(mktemp -d)/fifo"
-mkfifo "$fifo"
-
-(
-    tail -n+2 "$file" | clang -S -emit-llvm -x c -o - -
-    rm -rf "$(dirname "$fifo")" >/dev/null 2>&1
-) >> "$fifo" &
-
-
-exec $lli --fake-argv0 "$file" "$fifo" "$@"
+exec $lli --fake-argv0 "$file" $(tofifo clang -S -emit-llvm -x c -o - $(tofifo tail -n+2 "$file")) "$@"
