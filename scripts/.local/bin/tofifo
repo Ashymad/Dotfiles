@@ -3,9 +3,8 @@
 fifo="$(mktemp -d)/fifo"
 mkfifo "$fifo"
 echo "$fifo"
-exec 2>&- 1>&-
-{
-    "$@"
-    rm -rf "$(dirname "$fifo")" >/dev/null
-} >> "$fifo" &
+exec 1>&- 2>&-
 
+[ $# -eq 0 ] && set -- cat
+
+fork sh -c '"$@"'" >>$fifo; rm -rf $(dirname "$fifo")" -- "$@"

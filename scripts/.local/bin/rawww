@@ -12,9 +12,10 @@ done
 
 [ -z "$name" ] && name="$(uuidgen)"
 [ -z "$wait" ] && wait=1
+[ $# -eq 0 ] && set -- echo '{}'
 
 sleep "$wait" &
-trap "kill $!" SIGUSR1
+trap "kill $!" USR1
 wait $! || true
 
 teed $PPID | head -1 | xargs -I'{}' "$@"
