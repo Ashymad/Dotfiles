@@ -155,7 +155,11 @@ input type:touchpad {
 }
 
 # Change wallpaper
-bindsym $mod+p exec exec randpaper
+exec swaymsg -t get_outputs \
+   | jq '.[].id' \
+   | xargs -n1 sh -c "find ~/img/Wallpapers -type f | sort --random-sort | loopr -w 30m -n wallpaper -- awww img '{}'"
+
+bindsym $mod+p exec kill -usr1 "$(pidoptarg loopr -n wallpaper)"
 
 # Take screenshot
 bindsym $mod+Shift+s exec grim -g "$(slurp)" - | wl-copy
@@ -175,12 +179,11 @@ for_window [app_id="SubTUI"] floating enable
 for_window [app_id="upplay"] floating enable
 
 exec exec awww-daemon
-exec sleep 30m && randpaper --daemon
 exec exec mako
 exec exec wlsunset -l 50.049683 -L 19.944544
 
 bar {
-    font pango:Powerline Symbols, DejaVu Sans Mono, FontAwesome 10
+    font pango:Powerline Symbols, DejaVu Sans Mono, FontAwesome 6
     position top
     status_command i3status-rs
     colors {

@@ -1,0 +1,40 @@
+#!/bin/sh
+
+set -eo pipefail
+
+pidarg() {
+    grep -z '' -n /proc/$1/cmdline 2>/dev/null | grep -z "^$2:" | cut -d: -f2-
+}
+
+pidopt() {
+    grep -z "^$2" -m1 -A1 /proc/$1/cmdline 2>/dev/null | xargs -0 sh -c 'echo $1' -
+}
+
+exe="$(which $1)"
+shift
+
+if [ "$(head -c 2 "$exe")" = '#!' ]; then
+    set -- $(tail -c+3 "$exe" | head -1) "$exe" "$@"
+    exe="$(which $1)"
+    shift
+fi
+
+for pid in $(pidof "$exe"); do
+    pos=2
+    lastopt=""
+    for arg in "$@"; do
+	case $arg in
+	    -*) lastopt="$(pidopt $pid $arg)" || break
+		;;
+	    *)  if [ -n "$lastopt" ]; then
+		    [ "$arg" != "$lastopt" ] && break
+		    lastopt=""
+		elif [ "$(pidarg $pid $pos)" != "$arg" ]; then
+		    break
+		fi
+		;;
+	esac
+	pos=$(expr $pos + 1)
+    done
+    [ "$pos" -eq $(expr "$#" + 2) ] && echo $pid
+done

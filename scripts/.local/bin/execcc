@@ -1,0 +1,15 @@
+#!/bin/sh
+
+file="$1"
+shift
+set -e
+SHA="$(sha1sum $file | cut -d' ' -f1)"
+OUT=~/.cache/execcc/$SHA
+
+if ! [ -f $OUT ]; then
+    CC="$(which gcc 2>/dev/null)" || CC="$(which clang)"
+    mkdir -p "$(dirname $OUT)"
+    tail -n+2 $file | $CC -x c - -o $OUT
+fi
+
+exec $OUT "$@"

@@ -26,6 +26,11 @@ subst() {
       | xargs sh -c 'printf "%s\n" "${@}" | '"$TAC"' | env '$ENVARGS' "$0" envsubst' --
 }
 
+apparg() {
+    tr '\n' '\0'
+    [ "$#" -gt 0 ] && printf "%s\0" "$@"
+}
+
 if [ "$IGNORE" = 1 ]; then
     ENVARGS="-i"
 fi
@@ -35,12 +40,4 @@ if [ "$EXPORT" = 1 ]; then
     exit 0
 fi
 
-fifo="$(mktemp -d)/fifo"
-mkfifo "$fifo"
-(
-    subst "$ENVFILE" | tr '\n' '\0'
-    [ "$#" -gt 0 ] && printf "%s\0" "$@"
-    rm -rf "$(dirname "$fifo")"
-) >> "$fifo" &
-
-exec xargs -0 -a "$fifo" env $ENVARGS
+exec xargs -0 -a $(subst "$ENVFILE" | apparg "$@" | PATH=$PATH:~/.local/bin tofifo) env $ENVARGS

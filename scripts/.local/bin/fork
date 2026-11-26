@@ -1,4 +1,4 @@
-#!/usr/bin/env clangrun
+#!/usr/bin/env execcc
 // -*- c -*-
 #include <unistd.h>
 

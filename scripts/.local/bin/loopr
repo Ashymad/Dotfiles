@@ -20,4 +20,4 @@ wait $! || true
 
 teed $PPID | head -1 | xargs -I'{}' "$@"
 
-exec $0 -n $name -w $wait -- "$@" < $(tofifo awk 'NR==1{F=$0}NR>1{print}END{print F}' $(tofifo teed $PPID))
+exec $0 -n $name -w $wait -- "$@" < $(teed $PPID | tofifo awk 'NR==1{F=$0}NR>1{print}END{print F}')
