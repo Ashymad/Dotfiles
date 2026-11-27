@@ -1,8 +1,9 @@
 #!/bin/sh
 
+set -e
+
 file="$1"
 shift
-set -e
 SHA="$(sha1sum $file | cut -d' ' -f1)"
 OUT=~/.cache/execcc/$SHA
 
