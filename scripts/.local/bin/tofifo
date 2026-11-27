@@ -7,4 +7,4 @@ exec 1>&- 2>&-
 
 [ $# -eq 0 ] && set -- cat
 
-exec fork sh -c 'fifo="$1"; shift; "$@" >> "$fifo"; rm -rf $(dirname $fifo)' -- - "$fifo" "$@"
+exec fork sh -c 'fifo="$1"; shift; "$@" >> "$fifo"; rm -rf $(dirname $fifo)' "$0" "$fifo" "$@"

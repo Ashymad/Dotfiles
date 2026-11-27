@@ -7,7 +7,7 @@ pidarg() {
 }
 
 pidopt() {
-    grep -z "^$2" -m1 -A1 /proc/$1/cmdline 2>/dev/null | xargs -0 sh -c 'echo $1' -
+    grep -z "^$2" -m1 -A1 /proc/$1/cmdline 2>/dev/null | xargs -0 sh -c 'echo "$1"'
 }
 
 exe="$(which $1)"
